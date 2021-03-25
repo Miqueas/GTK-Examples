@@ -1,12 +1,7 @@
 #include <gtk/gtk.h>
 
-void app_startup(GApplication *self, gpointer data) {
-  g_print("Initializing the app... Done!\n");
-}
-
-void app_activate(GApplication *self, gpointer data) {
-  g_print("Hello, world!\n");
-}
+void app_activate(GApplication *self, gpointer data);
+void app_startup(GApplication *self, gpointer data);
 
 int main(int argc, char **argv) {
   GtkApplication *app = g_object_new(
@@ -23,4 +18,12 @@ int main(int argc, char **argv) {
   g_object_unref(app);
 
   return res;
+}
+
+void app_activate(GApplication *self, gpointer data) {
+  g_print("Hello, world!\n");
+}
+
+void app_startup(GApplication *self, gpointer data) {
+  g_print("Initializing the app... Done!\n");
 }
