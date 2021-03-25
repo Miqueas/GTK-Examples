@@ -2,7 +2,6 @@
 
 void app_activate(GApplication *self, gpointer data);
 void app_startup(GApplication *self, gpointer data);
-void btn_clicked(GtkButton *self, gpointer data);
 
 int main(int argc, char **argv) {
   GtkApplication *app = g_object_new(
@@ -68,9 +67,4 @@ void app_startup(GApplication *self, gpointer data) {
 
   gtk_container_add(GTK_CONTAINER(win), grid);
   gtk_window_set_titlebar(GTK_WINDOW(win), header);
-}
-
-void btn_clicked(GtkButton *self, gpointer data) {
-  static int count = 0;
-  g_print("You clicked %d times!\n", ++count);
 }
