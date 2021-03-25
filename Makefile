@@ -4,7 +4,7 @@ Files = $(wildcard *.c)
 Names = $(subst .c, ${empty}, ${Files})
 
 %:
-	${CC} $@.c -o $@ ${GTK3}
+	${CC} ${GTK3} $@.c -o $@
 
 all: ${Names}
 	@echo "Compiled all the examples"
