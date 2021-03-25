@@ -1,11 +1,10 @@
-CFLAGS  = $(shell pkg-config --cflags gtk+-3.0)
-LDFLAGS = $(shell pkg-config --libs gtk+-3.0)
-CC      = gcc
-Files   = $(wildcard *.c)
-Names   = $(subst .c, ${empty}, ${Files})
+GTK3  = `pkg-config --cflags --libs gtk+-3.0`
+CC    = gcc
+Files = $(wildcard *.c)
+Names = $(subst .c, ${empty}, ${Files})
 
 %:
-	${CC} ${CFLAGS} $@.c -o $@ ${LDFLAGS}
+	${CC} $@.c -o $@ ${GTK3}
 
 all: ${Names}
 	@echo "Compiled all the examples"
