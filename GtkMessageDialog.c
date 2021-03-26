@@ -53,6 +53,7 @@ void app_startup(GApplication *self, gpointer data) {
     GTK_TYPE_MESSAGE_DIALOG,
     "application", GTK_APPLICATION(self),
     "buttons", GTK_BUTTONS_NONE,
+    "message-type", GTK_MESSAGE_QUESTION,
     "title", "GtkMessageDialog",
     "text", title,
     "use-markup", TRUE,
