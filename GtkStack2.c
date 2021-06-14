@@ -7,7 +7,7 @@ GtkWidget* build_stack();
 int main(int argc, char **argv) {
   GtkApplication *app = g_object_new(
     GTK_TYPE_APPLICATION,
-    "application-id", "com.github.Miqueas.c-gtk-examples.GtkStack1",
+    "application-id", "com.github.Miqueas.c-gtk-examples.GtkStack2",
     "flags", G_APPLICATION_FLAGS_NONE,
     NULL
   );
@@ -27,14 +27,13 @@ void app_activate(GtkApplication *self, gpointer data) {
 }
 
 void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win, *header, *stack, *switcher, *box;
+  GtkWidget *win, *header, *stack, *sidebar, *box;
 
   win = g_object_new(
     GTK_TYPE_APPLICATION_WINDOW,
     "application", self,
     "default-width", 400,
     "default-height", 400,
-    "border-width", 10,
     NULL
   );
 
@@ -43,14 +42,14 @@ void app_startup(GApplication *self, gpointer data) {
     "visible", TRUE,
     "show-close-button", TRUE,
     "title", "GtkStack",
-    "subtitle", "GtkStack with GtkStackSwitcher example",
+    "subtitle", "GtkStack with GtkStackSidebar example",
     NULL
   );
 
   stack = build_stack();
 
-  switcher = g_object_new(
-    GTK_TYPE_STACK_SWITCHER,
+  sidebar = g_object_new(
+    GTK_TYPE_STACK_SIDEBAR,
     "visible", TRUE,
     "stack", stack,
     "halign", GTK_ALIGN_CENTER,
@@ -60,14 +59,14 @@ void app_startup(GApplication *self, gpointer data) {
   box = g_object_new(
     GTK_TYPE_BOX,
     "visible", TRUE,
-    "orientation", GTK_ORIENTATION_VERTICAL,
+    "orientation", GTK_ORIENTATION_HORIZONTAL,
     "spacing", 10,
     "homogeneous", FALSE,
     NULL
   );
 
+  gtk_box_pack_start(GTK_BOX(box), sidebar, FALSE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box), stack, TRUE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box), switcher, FALSE, TRUE, 0);
 
   gtk_container_add(GTK_CONTAINER(win), box);
   gtk_window_set_titlebar(GTK_WINDOW(win), header);
