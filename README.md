@@ -12,7 +12,7 @@ To compile all the examples, just run:
 make
 ```
 
-And you'll get all the examples compiled. If you want to compile only an specific example, then run `make` with the name of the example:
+And you'll get all the examples compiled in the folder `Bin/`. If you want to compile only an specific example, then run `make` with the name of the example:
 
 ```
 make GtkBox
