@@ -1,14 +1,16 @@
-GTK3_INC = `pkg-config --cflags gtk+-3.0`
-GTK3_LIB  = `pkg-config --libs gtk+-3.0`
-CC         = gcc
-Files      = $(wildcard *.c)
-Names      = $(subst .c, ${empty}, ${Files})
+CFLAGS  = `pkg-config --cflags gtk+-3.0`
+LDFLAGS = `pkg-config --libs gtk+-3.0`
+CC      = gcc
+Files   = $(wildcard *.c)
+Names   = $(subst .c, ${empty}, ${Files})
 
 %:
-	${CC} ${GTK3_INC} $@.c -o $@ ${GTK3_LIB}
+	@echo -e "\e[2m>\e[0m \e[1;34mBuilding \e[33m$@.c\e[0m"
+	${CC} ${CFLAGS} $@.c -o $@ ${LDFLAGS}
+	@echo
 
 all: ${Names}
-	@echo "Compiled all the examples"
+	@echo -e "\e[2m>\e[0m \e[1;32mDone\e[0m"
 
 clean:
 	rm ${Names}
