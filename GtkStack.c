@@ -2,6 +2,7 @@
 
 void app_activate(GtkApplication *self, gpointer data);
 void app_startup(GApplication *self, gpointer data);
+GtkWidget* build_stack();
 
 int main(int argc, char **argv) {
   GtkApplication *app = g_object_new(
@@ -26,21 +27,51 @@ void app_activate(GtkApplication *self, gpointer data) {
 }
 
 void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win = g_object_new(
+  GtkWidget *win, *header, *stack, *switcher, *box;
+
+  win = g_object_new(
     GTK_TYPE_APPLICATION_WINDOW,
     "application", self,
     "default-width", 400,
     "default-height", 400,
+    "border-width", 10,
     NULL
   );
 
-  GtkWidget *header = g_object_new(
+  header = g_object_new(
     GTK_TYPE_HEADER_BAR,
     "visible", TRUE,
     "show-close-button", TRUE,
     NULL
   );
 
+  stack = build_stack();
+
+  switcher = g_object_new(
+    GTK_TYPE_STACK_SWITCHER,
+    "visible", TRUE,
+    "stack", stack,
+    "halign", GTK_ALIGN_CENTER,
+    NULL
+  );
+  
+  box = g_object_new(
+    GTK_TYPE_BOX,
+    "visible", TRUE,
+    "orientation", GTK_ORIENTATION_VERTICAL,
+    "spacing", 10,
+    "homogeneous", FALSE,
+    NULL
+  );
+
+  gtk_box_pack_start(GTK_BOX(box), stack, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(box), switcher, FALSE, TRUE, 0);
+
+  gtk_container_add(GTK_CONTAINER(win), box);
+  gtk_window_set_titlebar(GTK_WINDOW(win), header);
+}
+
+GtkWidget* build_stack() {
   GtkWidget *stack = g_object_new(
     GTK_TYPE_STACK,
     "visible", TRUE,
@@ -48,38 +79,26 @@ void app_startup(GApplication *self, gpointer data) {
     NULL
   );
 
-  gtk_stack_add_titled(
-    GTK_STACK(stack),
-    g_object_new(
-      GTK_TYPE_LABEL,
-      "visible", TRUE,
-      "label", "Sexo 1",
-      NULL
-    ),
-    "label1",
-    "Label 1"
-  );
+  for (int i = 0; i < 3; i++) {
+    char label[56], title[7], name[6];
 
-  gtk_stack_add_titled(
-    GTK_STACK(stack),
-    g_object_new(
-      GTK_TYPE_LABEL,
-      "visible", TRUE,
-      "label", "Sexo 2",
-      NULL
-    ),
-    "label2",
-    "Label 2"
-  );
+    sprintf(label, "<span size='xx-large' font_weight='bold'>Page %d</span>", i + 1);
+    sprintf(title, "Page %d", i + 1);
+    sprintf(name, "page%d", i + 1);
 
-  GtkWidget *switcher = g_object_new(
-    GTK_TYPE_STACK_SWITCHER,
-    "visible", TRUE,
-    "stack", stack,
-    NULL
-  );
+    gtk_stack_add_titled(
+      GTK_STACK(stack),
+      g_object_new(
+        GTK_TYPE_LABEL,
+        "visible", TRUE,
+        "label", label,
+        "use-markup", TRUE,
+        NULL
+      ),
+      name,
+      title
+    );
+  }
 
-  gtk_header_bar_set_custom_title(GTK_HEADER_BAR(header), switcher);
-  gtk_container_add(GTK_CONTAINER(win), stack);
-  gtk_window_set_titlebar(GTK_WINDOW(win), header);
+  return stack;
 }
