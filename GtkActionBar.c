@@ -22,8 +22,30 @@ int main(int argc, char **argv) {
 
 void app_activate(GtkApplication *self, gpointer data) {
   GtkWindow *win = gtk_application_get_active_window(GTK_APPLICATION(self));
+  gtk_window_present(win);
+}
 
-  GtkWidget *bar = g_object_new(
+void app_startup(GApplication *self, gpointer data) {
+  GtkWidget *win, *header, *bar, *box;
+
+  win = g_object_new(
+    GTK_TYPE_APPLICATION_WINDOW,
+    "application", self,
+    "default-width", 400,
+    "default-height", 400,
+    NULL
+  );
+
+  header = g_object_new(
+    GTK_TYPE_HEADER_BAR,
+    "visible", TRUE,
+    "show-close-button", TRUE,
+    "title", "My App",
+    "subtitle", "An awesome app that you'll love",
+    NULL
+  );
+
+  bar = g_object_new(
     GTK_TYPE_ACTION_BAR,
     "visible", TRUE,
     NULL
@@ -39,7 +61,7 @@ void app_activate(GtkApplication *self, gpointer data) {
     g_object_new(GTK_TYPE_BUTTON, "visible", TRUE, "label", "A button", NULL)
   );
 
-  GtkWidget *box = g_object_new(
+  box = g_object_new(
     GTK_TYPE_BOX,
     "visible", TRUE,
     "orientation", GTK_ORIENTATION_VERTICAL,
@@ -63,26 +85,5 @@ void app_activate(GtkApplication *self, gpointer data) {
   );
 
   gtk_container_add(GTK_CONTAINER(win), box);
-  gtk_window_present(win);
-}
-
-void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win = g_object_new(
-    GTK_TYPE_APPLICATION_WINDOW,
-    "application", self,
-    "default-width", 400,
-    "default-height", 400,
-    NULL
-  );
-
-  GtkWidget *header = g_object_new(
-    GTK_TYPE_HEADER_BAR,
-    "visible", TRUE,
-    "show-close-button", TRUE,
-    "title", "My App",
-    "subtitle", "An awesome app that you'll love",
-    NULL
-  );
-
   gtk_window_set_titlebar(GTK_WINDOW(win), header);
 }

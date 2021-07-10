@@ -26,10 +26,7 @@ void app_startup(GApplication *self, gpointer data) {
 
   GObject *win = gtk_builder_get_object(builder, "Window");
 
-  gtk_application_add_window(
-    GTK_APPLICATION(self),
-    GTK_WINDOW(win)
-  );
+  gtk_application_add_window(GTK_APPLICATION(self), GTK_WINDOW(win));
 }
 
 void app_activate(GApplication *self, gpointer data) {
