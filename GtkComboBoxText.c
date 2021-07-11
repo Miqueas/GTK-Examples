@@ -97,9 +97,5 @@ void app_startup(GApplication *self, gpointer data) {
 
 void on_combo_changed(GtkComboBox *self, gpointer data) {
   const gchar *id = gtk_combo_box_get_active_id(GTK_COMBO_BOX(self));
-  char text[64];
-
-  sprintf(text, "Option id: %s", id);
-
-  g_object_set(data, "label", text, NULL);
+  g_object_set(data, "label", g_strconcat("Option id: ", id, NULL), NULL);
 }

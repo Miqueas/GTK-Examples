@@ -102,8 +102,6 @@ void app_startup(GApplication *self, gpointer data) {
 void on_combo_changed(GtkComboBox *self, gpointer data) {
   int n = gtk_combo_box_get_active(GTK_COMBO_BOX(self));
   char text[128];
-
   sprintf(text, "Option %d selected (%s)", n, items[n]);
-
   g_object_set(data, "label", text, NULL);
 }
