@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 
-void app_activate(GtkApplication *self, gpointer data);
+void app_activate(GApplication *self, gpointer data);
 void app_startup(GApplication *self, gpointer data);
 void on_file_set(GtkFileChooserButton *self, gpointer data);
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
   return res;
 }
 
-void app_activate(GtkApplication *self, gpointer data) {
+void app_activate(GApplication *self, gpointer data) {
   GtkWindow *win = gtk_application_get_active_window(GTK_APPLICATION(self));
 
   GtkWidget *box = g_object_new(
