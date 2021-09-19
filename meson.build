@@ -30,5 +30,6 @@ sources = [
 ]
 
 foreach src : sources
-  executable(src.replace('.c', ''), src, dependencies: deps)
+  name = src.replace('Gtk', '').replace('.c', '')
+  executable(name, src, dependencies: deps)
 endforeach
