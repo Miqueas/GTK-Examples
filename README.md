@@ -6,22 +6,17 @@ A set of GTK 3 examples in C
 
 ## Building
 
-To compile all the examples, just run:
+You'll need (obviouslly) GTK 3 and Meson, then just:
 
 ```
-make
+meson . _BUILD
+ninja -C _BUILD
 ```
 
-And you'll get all the examples compiled in the folder `Bin/`. If you want to compile only an specific example, then run `make` with the name of the example:
+The above commands will compile all the examples, after that, you can run the examples like:
 
 ```
-make GtkBox
-```
-
-Clean all the compiled examples with:
-
-```
-make clean
+_BUILD/<ExampleName>
 ```
 
 [LicenseBadge]: https://img.shields.io/badge/License-Zlib-brightgreen?style=for-the-badge
