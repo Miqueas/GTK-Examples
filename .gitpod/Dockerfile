@@ -11,10 +11,10 @@ USER root
 # Install novnc
 RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
     && git clone --depth 1 https://github.com/novnc/websockify /opt/novnc/utils/websockify
-COPY novnc-index.html /opt/novnc/index.html
+COPY .gitpod/novnc-index.html /opt/novnc/index.html
 
 # Add VNC startup script
-COPY start-vnc-session.sh /usr/bin/
+COPY .gitpod/start-vnc-session.sh /usr/bin/
 RUN chmod +x /usr/bin/start-vnc-session.sh
 
 # This is a bit of a hack. At the moment we have no means of starting background
