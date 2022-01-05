@@ -1,6 +1,6 @@
 project('c-gtk3-examples', 'c')
 
-deps = [ dependency('gtk+-3.0', required: true) ]
+deps = dependency('gtk+-3.0', required: true)
 
 sources = [
   'GtkActionBar',
@@ -11,7 +11,8 @@ sources = [
   'GtkButton',
   'GtkComboBox',
   'GtkComboBoxText',
-  'GtkDialog',
+  'GtkDialog1',
+  'GtkDialog2',
   'GtkEntry',
   'GtkEntryCompletion',
   'GtkExpander',
