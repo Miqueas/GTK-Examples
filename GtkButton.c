@@ -7,7 +7,7 @@ void btn_clicked(GtkButton *self, gpointer data);
 int main(int argc, char **argv) {
   GtkApplication *app = g_object_new(
     GTK_TYPE_APPLICATION,
-    "application-id", "com.github.Miqueas.c-gtk-examples.GtkButton",
+    "application-id", "com.github.Miqueas.C-GTK3-Examples.GtkButton",
     "flags", G_APPLICATION_FLAGS_NONE,
     NULL
   );

@@ -48,7 +48,7 @@ void cell_toggled(GtkCellRendererToggle *cell, char *path, gpointer data);
 int main(int argc, char **argv) {
   GtkApplication *app = g_object_new(
     GTK_TYPE_APPLICATION,
-    "application-id", "com.github.Miqueas.c-gtk-examples.GtkTreeView",
+    "application-id", "com.github.Miqueas.C-GTK3-Examples.GtkTreeView",
     "flags", G_APPLICATION_FLAGS_NONE,
     NULL
   );
