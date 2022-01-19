@@ -6,7 +6,7 @@ void app_startup(GApplication *self, gpointer data);
 int main(int argc, char **argv) {
   GtkApplication *app = g_object_new(
     GTK_TYPE_APPLICATION,
-    "application-id", "com.github.Miqueas.C-GTK3-Examples.GtkGrid",
+    "application-id", "com.github.Miqueas.C-GTK3-Examples.GtkGrid2",
     "flags", G_APPLICATION_FLAGS_NONE,
     NULL
   );
@@ -56,18 +56,16 @@ void app_startup(GApplication *self, gpointer data) {
     NULL
   );
 
-  for (int i = 0; i < 3; ++i) {
-    for (int j = 0; j < 3; ++j) {
-      char str[20];
-      sprintf(str, "Top: %d. Left: %d", i, j);
-      gtk_grid_attach(GTK_GRID(grid), g_object_new(
-        GTK_TYPE_LABEL,
-        "visible", TRUE,
-        "label", str,
-        NULL
-      ), j, i, 1, 1);
-    }
-  }
+  // Que dolor de orto
+  gtk_grid_attach(GTK_GRID(grid), g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Top: 0. Left: 0", NULL), 0, 0, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Top: 0. Left: 1", NULL), 1, 0, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Top: 0. Left: 2", NULL), 2, 0, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Top: 1. Left: 0", NULL), 0, 1, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Top: 1. Left: 1", NULL), 1, 1, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Top: 1. Left: 2", NULL), 2, 1, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Top: 2. Left: 0", NULL), 0, 2, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Top: 2. Left: 1", NULL), 1, 2, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Top: 2. Left: 2", NULL), 2, 2, 1, 1);
 
   gtk_container_add(GTK_CONTAINER(win), grid);
   gtk_window_set_titlebar(GTK_WINDOW(win), header);
