@@ -86,11 +86,12 @@ void app_startup(GApplication *self, gpointer data) {
 
 void btn_clicked(GtkButton *self, gpointer data) {
   for (int i = 0; i < 100; i++) {
-    // TODO: use var `i` in GtkLabel's text
+    char str[16];
+    sprintf(str, "Some text %d", (i + 1));
     gtk_list_box_insert(GTK_LIST_BOX(data), g_object_new(
       GTK_TYPE_LABEL,
       "visible", TRUE,
-      "label", "Some text",
+      "label", str,
       NULL
     ), i);
   }
