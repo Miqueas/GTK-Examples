@@ -23,6 +23,7 @@ sources = [
   'GtkImage',
   'GtkInfoBar',
   'GtkLabel',
+  'GtkListBox',
   'GtkMessageDialog',
   'GtkStack1',
   'GtkStack2',
