@@ -26,7 +26,7 @@ void app_activate(GApplication *self, gpointer data) {
 }
 
 void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win, *header, *grid, *label;
+  GtkWidget *win, *header, *grid;
 
   win = g_object_new(
     GTK_TYPE_APPLICATION_WINDOW,
@@ -60,8 +60,12 @@ void app_startup(GApplication *self, gpointer data) {
     for (int j = 0; j < 3; ++j) {
       char str[20];
       sprintf(str, "Top: %d. Left: %d", i, j);
-      label = g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", str, NULL);
-      gtk_grid_attach(GTK_GRID(grid), label, j, i, 1, 1);
+      gtk_grid_attach(GTK_GRID(grid), g_object_new(
+        GTK_TYPE_LABEL,
+        "visible", TRUE,
+        "label", str,
+        NULL
+      ), j, i, 1, 1);
     }
   }
 
