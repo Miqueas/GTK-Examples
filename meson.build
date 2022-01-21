@@ -18,6 +18,7 @@ sources = [
   'GtkExpander',
   'GtkFileChooserButton',
   'GtkFileChooserDialog',
+  'GtkFlowBox',
   'GtkGrid1',
   'GtkGrid2',
   'GtkGrid3',
