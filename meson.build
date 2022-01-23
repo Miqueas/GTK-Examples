@@ -6,6 +6,7 @@ sources = [
   'GtkActionBar',
   'GtkApplication',
   'GtkApplicationWindow',
+  'GtkAssistant',
   'GtkBox',
   'GtkBuilder',
   'GtkButton',
