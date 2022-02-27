@@ -33,6 +33,7 @@ sources = [
   'GtkMessageDialog',
   'GtkStack1',
   'GtkStack2',
+  'GtkTextView',
   'GtkTreeView',
   'GtkWindow'
 ]
