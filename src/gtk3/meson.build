@@ -1,44 +1,43 @@
-project('c-gtk3-examples', 'c')
+project('c-gtk-examples', 'c')
 
 deps = dependency('gtk+-3.0', required: true)
 
 sources = [
-  'GtkActionBar',
-  'GtkApplication',
-  'GtkApplicationWindow',
-  'GtkAssistant',
-  'GtkBox',
-  'GtkBuilder',
-  'GtkButton',
-  'GtkComboBox',
-  'GtkComboBoxText',
-  'GtkDialog1',
-  'GtkDialog2',
-  'GtkEntry',
-  'GtkEntryCompletion',
-  'GtkExpander',
-  'GtkFileChooserButton',
-  'GtkFileChooserDialog',
-  'GtkFixed',
-  'GtkFlowBox',
-  'GtkGrid1',
-  'GtkGrid2',
-  'GtkGrid3',
-  'GtkHeaderBar',
-  'GtkImage1',
-  'GtkImage2',
-  'GtkInfoBar',
-  'GtkLabel',
-  'GtkListBox',
-  'GtkMessageDialog',
-  'GtkStack1',
-  'GtkStack2',
-  'GtkTextView',
-  'GtkTreeView',
-  'GtkWindow'
+  'ActionBar',
+  'Application',
+  'ApplicationWindow',
+  'Assistant',
+  'Box',
+  'Builder',
+  'Button',
+  'ComboBox',
+  'ComboBoxText',
+  'Dialog1',
+  'Dialog2',
+  'Entry',
+  'EntryCompletion',
+  'Expander',
+  'FileChooserButton',
+  'FileChooserDialog',
+  'Fixed',
+  'FlowBox',
+  'Grid1',
+  'Grid2',
+  'Grid3',
+  'HeaderBar',
+  'Image1',
+  'Image2',
+  'InfoBar',
+  'Label',
+  'ListBox',
+  'MessageDialog',
+  'Stack1',
+  'Stack2',
+  'TextView',
+  'TreeView',
+  'Window'
 ]
 
 foreach src : sources
-  name = src.replace('Gtk', '')
-  executable(name, src + '.c', dependencies: deps)
+  executable(src, src + '.c', dependencies: deps)
 endforeach
