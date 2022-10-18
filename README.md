@@ -1,12 +1,12 @@
 [![License][LicenseBadge]][LicenseURL]
 
-# GTK 3 Examples
+# GTK Examples
 
-A set of GTK 3 examples in C
+A set of GTK (3/4) examples in C
 
 ## Building
 
-You'll need (obviouslly) GTK 3 and Meson, then just:
+You'll need GTK 3/4 and Meson, then just go to the version of GTK you have the examples and:
 
 ```
 meson . _BUILD
