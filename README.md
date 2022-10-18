@@ -6,7 +6,7 @@ A set of GTK (3/4) examples in C
 
 ## Building
 
-You'll need GTK 3/4 and Meson, then just go to the version of GTK you have the examples and:
+You'll need GTK 3/4 and Meson, then just go to the version of GTK you have and build the examples with:
 
 ```
 meson . _BUILD
