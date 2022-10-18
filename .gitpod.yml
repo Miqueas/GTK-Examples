@@ -13,5 +13,5 @@ tasks:
 
 vscode:
   extensions:
-    - asabil.meson
+    - mesonbuild.mesonbuild
     - ccls-project.ccls
