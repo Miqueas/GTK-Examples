@@ -22,45 +22,28 @@ void app_activate(GApplication *self, gpointer data) {
 }
 
 void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win = g_object_new(
-    GTK_TYPE_APPLICATION_WINDOW,
-    "application", self,
-    "default-width", 400,
-    "default-height", 400,
-    NULL
-  );
+  GtkWidget *win, *title_label, *subtitle_label, *title_box, *header;
 
-  GtkWidget *title_label = g_object_new(
-    GTK_TYPE_LABEL,
-    "label", "<span weight='bold'>My app</span>",
-    "use-markup", TRUE,
-    NULL
-  );
+  win = gtk_application_window_new(GTK_APPLICATION(self));
+  title_label = gtk_label_new("<span weight='bold'>My app</span>");
+  subtitle_label = gtk_label_new("An awesome app that you'll love");
+  title_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+  header = gtk_header_bar_new();
 
-  GtkWidget *subtitle_label = g_object_new(
-    GTK_TYPE_LABEL,
-    "label", "An awesome app that you'll love",
-    NULL
-  );
+  gtk_window_set_titlebar(GTK_WINDOW(win), header);
+  gtk_window_set_default_size(GTK_WINDOW(win), 400, 400);
 
-  GtkWidget *title_box = g_object_new(
-    GTK_TYPE_BOX,
-    "orientation", GTK_ORIENTATION_VERTICAL,
-    "margin-top", 4,
-    "margin-bottom", 4,
-    "valign", GTK_ALIGN_CENTER,
-    NULL
-  );
+  gtk_label_set_use_markup(GTK_LABEL(title_label), TRUE);
+
+  gtk_widget_set_margin_top(title_box, 4);
+  gtk_widget_set_margin_bottom(title_box, 4);
+  gtk_widget_set_valign(title_box, GTK_ALIGN_CENTER);
 
   gtk_box_append(GTK_BOX(title_box), title_label);
   gtk_box_append(GTK_BOX(title_box), subtitle_label);
 
-  GtkWidget *header = g_object_new(
-    GTK_TYPE_HEADER_BAR,
-    "show-title-buttons", TRUE,
-    "title-widget", title_box,
-    NULL
-  );
-
-  gtk_window_set_titlebar(GTK_WINDOW(win), header);
+  // Since GTK 4, we need to manually add a title widget if we need/want it,
+  // because there's no longer `title` and `subtitle` properties
+  gtk_header_bar_set_title_widget(GTK_HEADER_BAR(header), title_box);
+  gtk_header_bar_set_show_title_buttons(GTK_HEADER_BAR(header), TRUE);
 }

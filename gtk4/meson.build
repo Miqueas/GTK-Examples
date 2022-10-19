@@ -6,6 +6,8 @@ sources = [
   'Application',
   'ApplicationWindow',
   'HeaderBar',
+  'Label',
+  'Box',
   'Window'
 ]
 
