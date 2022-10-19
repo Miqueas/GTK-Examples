@@ -5,6 +5,7 @@ deps = dependency('gtk4', required: true)
 sources = [
   'Application',
   'ApplicationWindow',
+  'HeaderBar',
   'Window'
 ]
 
