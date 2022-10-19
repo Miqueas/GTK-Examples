@@ -11,7 +11,7 @@ GtkWidget* make_page3(GtkWidget *win);
 GtkWidget* make_page4(void);
 
 int main(int argc, char **argv) {
-  const gchar *app_id = "com.github.Miqueas.C-GTK3-Examples.GtkAssistant";
+  const gchar *app_id = "com.github.Miqueas.C-GTK-Examples.Gtk3.Assistant";
   GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_FLAGS_NONE);
 
   g_signal_connect(app, "startup", G_CALLBACK(app_startup), NULL);
@@ -29,21 +29,18 @@ void app_activate(GApplication *self, gpointer data) {
 }
 
 void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win = g_object_new(
-    GTK_TYPE_ASSISTANT,
-    "use-header-bar", TRUE,
-    "default-width", 800,
-    "default-height", 400,
-    NULL
-  );
+  GtkWidget *win, *page1, *page2, *page3, *page4;
+
+  win = gtk_assistant_new();
+  page1 = make_page1();
+  page2 = make_page2(win);
+  page3 = make_page3(win);
+  page4 = make_page4();
+
+  gtk_window_set_default_size(GTK_WINDOW(win), 800, 400);
 
   g_signal_connect(win, "cancel", G_CALLBACK(gtk_widget_destroy), NULL);
   g_signal_connect(win, "close", G_CALLBACK(gtk_widget_destroy), NULL);
-
-  GtkWidget *page1 = make_page1();
-  GtkWidget *page2 = make_page2(win);
-  GtkWidget *page3 = make_page3(win);
-  GtkWidget *page4 = make_page4();
 
   gtk_assistant_append_page(GTK_ASSISTANT(win), page1);
   gtk_assistant_append_page(GTK_ASSISTANT(win), page2);
@@ -66,38 +63,51 @@ void app_startup(GApplication *self, gpointer data) {
 }
 
 GtkWidget* make_page1(void) {
-  return g_object_new(
-    GTK_TYPE_LABEL,
-    "visible", TRUE,
-    "label", "<span font_weight='bold' size='large'>Welcome to the GtkAssistant example</span>",
-    "use-markup", TRUE,
-    NULL
-  );
+  GtkWidget *lbl = gtk_label_new("<span font_weight='bold' size='large'>Welcome to the GtkAssistant example</span>");
+  gtk_widget_set_visible(lbl, TRUE);
+  gtk_label_set_use_markup(GTK_LABEL(lbl), TRUE);
+
+  return lbl;
 }
 
 GtkWidget* make_page2(GtkWidget *win) {
-  GtkWidget *grid = g_object_new(
-    GTK_TYPE_GRID,
-    "visible", TRUE,
-    "column-spacing", 10,
-    "row-spacing", 10,
-    "halign", GTK_ALIGN_CENTER,
-    "valign", GTK_ALIGN_CENTER,
-    NULL
-  );
+  GtkWidget *grid, *info_lbl, *name_lbl, *user_lbl, *pass_lbl;
+  GtkWidget *name_entry, *user_entry, *pass_entry, *done_btn;
+  GPtrArray *things;
 
-  GPtrArray *things = g_ptr_array_new_full(2, NULL);
+  grid = gtk_grid_new();
+  info_lbl = gtk_label_new("Fill this form");
+  name_lbl = gtk_label_new("Full name");
+  user_lbl = gtk_label_new("Username");
+  pass_lbl = gtk_label_new("Password");
+  name_entry = gtk_entry_new();
+  user_entry = gtk_entry_new();
+  pass_entry = gtk_entry_new();
+  done_btn = gtk_button_new_with_label("Done");
+  things = g_ptr_array_new_full(2, NULL);
+
+  GtkWidget *widgets[9] = { grid, info_lbl, name_lbl, user_lbl, pass_lbl, name_entry, user_entry, pass_entry, done_btn };
+
+  for (int i = 0; i < 9; i++)
+    gtk_widget_set_visible(widgets[i], TRUE);
+
   g_ptr_array_insert(things, 0, win);
   g_ptr_array_insert(things, 1, grid);
 
-  GtkWidget *info_lbl = g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Fill this form", NULL);
-  GtkWidget *name_lbl = g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "width-request", 110, "xalign", 0.0, "label", "Full name", NULL);
-  GtkWidget *user_lbl = g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "width-request", 110, "xalign", 0.0, "label", "Username", NULL);
-  GtkWidget *pass_lbl = g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "width-request", 110, "xalign", 0.0, "label", "Password", NULL);
-  GtkWidget *name_entry = g_object_new(GTK_TYPE_ENTRY, "visible", TRUE, "width-request", 120, NULL);
-  GtkWidget *user_entry = g_object_new(GTK_TYPE_ENTRY, "visible", TRUE, "width-request", 120, NULL);
-  GtkWidget *pass_entry = g_object_new(GTK_TYPE_ENTRY, "visible", TRUE, "input-purpose", GTK_INPUT_PURPOSE_PASSWORD, NULL);
-  GtkWidget *done_btn = g_object_new(GTK_TYPE_BUTTON, "visible", TRUE, "label", "Done", NULL);
+  gtk_grid_set_column_spacing(GTK_GRID(grid), 10);
+  gtk_grid_set_row_spacing(GTK_GRID(grid), 10);
+  g_object_set(grid, "halign", GTK_ALIGN_CENTER, "valign", GTK_ALIGN_CENTER, NULL);
+
+  for (int i = 2; i < 5; i++) {
+    gtk_label_set_xalign(GTK_LABEL(widgets[i]), 0.0);
+    gtk_widget_set_size_request(widgets[i], 110, -1);
+  }
+
+  gtk_widget_set_size_request(name_entry, 120, -1);
+  gtk_widget_set_size_request(user_entry, 120, -1);
+
+  gtk_entry_set_visibility(GTK_ENTRY(pass_entry), FALSE);
+  gtk_entry_set_input_purpose(GTK_ENTRY(pass_entry), GTK_INPUT_PURPOSE_PASSWORD);
 
   g_signal_connect(done_btn, "clicked", G_CALLBACK(on_done_btn_clicked), things);
 
@@ -114,23 +124,27 @@ GtkWidget* make_page2(GtkWidget *win) {
 }
 
 GtkWidget* make_page3(GtkWidget *win) {
-  GtkWidget *box = g_object_new(
-    GTK_TYPE_BOX,
-    "visible", TRUE,
-    "orientation", GTK_ORIENTATION_VERTICAL,
-    "spacing", 10,
-    "valign", GTK_ALIGN_CENTER,
-    "halign", GTK_ALIGN_CENTER,
-    NULL
-  );
+  GtkWidget *box, *info_lbl, *progress;
+  GPtrArray *things;
 
-  GtkWidget *info_lbl = g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Installing the system...", NULL);
-  GtkWidget *progress = g_object_new(GTK_TYPE_PROGRESS_BAR, "visible", TRUE, "pulse-step", 0.2, "width-request", 240, NULL);
+  box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+  info_lbl = gtk_label_new("Installing the system...");
+  progress = gtk_progress_bar_new();
+  things = g_ptr_array_new_full(2, NULL);
 
-  GPtrArray *things = g_ptr_array_new_full(2, NULL);
+  GtkWidget *widgets[3] = { box, info_lbl, progress };
+
+  for (int i = 0; i < 3; i++)
+    gtk_widget_set_visible(widgets[i], TRUE);
+
   g_ptr_array_insert(things, 0, win);
   g_ptr_array_insert(things, 1, box);
   g_ptr_array_insert(things, 2, progress);
+
+  g_object_set(box, "halign", GTK_ALIGN_CENTER, "valign", GTK_ALIGN_CENTER, NULL);
+
+  gtk_widget_set_size_request(progress, 240, -1);
+  gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(progress), 0.2);
 
   g_signal_connect(GTK_ASSISTANT(win), "apply", G_CALLBACK(on_assistant_apply), things);
 
@@ -141,12 +155,10 @@ GtkWidget* make_page3(GtkWidget *win) {
 }
 
 GtkWidget* make_page4(void) {
-  return g_object_new(
-    GTK_TYPE_LABEL,
-    "visible", TRUE,
-    "label", "System installed successfully!",
-    NULL
-  );
+  GtkWidget *lbl = gtk_label_new("System installed successfully!");
+  gtk_widget_set_visible(lbl, TRUE);
+
+  return lbl;
 }
 
 void on_done_btn_clicked(GtkButton *self, GPtrArray *data) {
