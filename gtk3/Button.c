@@ -5,10 +5,10 @@ void app_startup(GApplication *self, gpointer data);
 void btn_clicked(GtkButton *self, gpointer data);
 
 int main(int argc, char **argv) {
-  const gchar *app_id = "com.github.Miqueas.C-GTK3-Examples.GtkButton";
+  const gchar *app_id = "com.github.Miqueas.C-GTK-Examples.Gtk3.Button";
   GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_FLAGS_NONE);
 
-  g_signal_connect(app, "startup",  G_CALLBACK(app_startup),  NULL);
+  g_signal_connect(app, "startup", G_CALLBACK(app_startup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
 
   int res = g_application_run(G_APPLICATION(app), argc, argv);
@@ -23,35 +23,18 @@ void app_activate(GApplication *self, gpointer data) {
 }
 
 void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win = g_object_new(
-    GTK_TYPE_APPLICATION_WINDOW,
-    "application", self,
-    "default-width", 400,
-    "default-height", 400,
-    NULL
-  );
+  GtkWidget *win, *btn;
 
-  GtkWidget *header = g_object_new(
-    GTK_TYPE_HEADER_BAR,
-    "visible", TRUE,
-    "show-close-button", TRUE,
-    "title", "GtkButton",
-    NULL
-  );
+  win = gtk_application_window_new(GTK_APPLICATION(self));
+  btn = gtk_button_new_with_label("Click me");
 
-  GtkWidget *btn = g_object_new(
-    GTK_TYPE_BUTTON,
-    "visible", TRUE,
-    "label", "Click me!",
-    "halign", GTK_ALIGN_CENTER,
-    "valign", GTK_ALIGN_CENTER,
-    NULL
-  );
+  gtk_window_set_default_size(GTK_WINDOW(win), 400, 400);
+
+  g_object_set(btn, "halign", GTK_ALIGN_CENTER, "valign", GTK_ALIGN_CENTER, NULL);
 
   g_signal_connect(btn, "clicked", G_CALLBACK(btn_clicked), NULL);
 
   gtk_container_add(GTK_CONTAINER(win), btn);
-  gtk_window_set_titlebar(GTK_WINDOW(win), header);
 }
 
 void btn_clicked(GtkButton *self, gpointer data) {
