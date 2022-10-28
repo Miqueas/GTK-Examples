@@ -3,10 +3,6 @@
 void app_activate(GApplication *self, gpointer data);
 void app_startup(GApplication *self, gpointer data);
 
-const char *title_text = "<span size=\"x-large\" font-weight=\"bold\">Universe destruction</span>";
-const char *summary_text = "Our universe has a lot of problems and the only way to fix\nit is destroying the entire universe and this important decision\nis now in your hands.";
-const char *epilog_text = "<span size=\"large\" font-weight=\"bold\">Do you accept?</span>";
-
 int main(int argc, char **argv) {
   const gchar *app_id = "com.github.Miqueas.C-GTK-Examples.Gtk3.Dialog1";
   GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_FLAGS_NONE);
@@ -47,6 +43,9 @@ void app_activate(GApplication *self, gpointer data) {
 
 void app_startup(GApplication *self, gpointer data) {
   GtkWidget *dialog, *title, *summary, *epilog, *content;
+  const char *title_text = "<span size=\"x-large\" font-weight=\"bold\">Universe destruction</span>";
+  const char *summary_text = "Our universe has a lot of problems and the only way to fix\nit is destroying the entire universe and this important decision\nis now in your hands.";
+  const char *epilog_text = "<span size=\"large\" font-weight=\"bold\">Do you accept?</span>";
 
   dialog = gtk_dialog_new();
   title = gtk_label_new(title_text);

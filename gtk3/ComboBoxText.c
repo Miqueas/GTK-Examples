@@ -16,7 +16,7 @@ const char *items[8][2] = {
 };
 
 int main(int argc, char **argv) {
-  const gchar *app_id = "com.github.Miqueas.C-GTK3-Examples.GtkComboBoxText";
+  const gchar *app_id = "com.github.Miqueas.C-GTK-Examples.Gtk3.ComboBoxText";
   GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_FLAGS_NONE);
 
   g_signal_connect(app, "startup", G_CALLBACK(app_startup), NULL);
