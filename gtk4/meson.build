@@ -1,16 +1,12 @@
-project('c-gtk-examples', 'c')
-
-deps = dependency('gtk4', required: true)
-
-sources = [
-  'Application',
-  'ApplicationWindow',
-  'HeaderBar',
-  'Label',
-  'Box',
-  'Window'
+src = [
+  'application',
+  'application-window',
+  'header-bar',
+  'label',
+  'box',
+  'window'
 ]
 
-foreach src : sources
-  executable(src, src + '.c', dependencies: deps)
+foreach name : src
+  executable(name, name + '.c', dependencies: gtk4)
 endforeach

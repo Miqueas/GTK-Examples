@@ -1,8 +1,4 @@
-project('c-gtk-examples', 'c')
-
-deps = dependency('gtk+-3.0', required: true)
-
-sources = [
+src = [
   'ActionBar',
   'Application',
   'ApplicationWindow',
@@ -38,6 +34,6 @@ sources = [
   'Window'
 ]
 
-foreach src : sources
-  executable(src, src + '.c', dependencies: deps)
+foreach name : src
+  executable(name, name + '.c', dependencies: gtk3)
 endforeach
