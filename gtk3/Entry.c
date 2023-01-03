@@ -19,19 +19,28 @@ int main(int argc, char **argv) {
 
 void app_activate(GApplication *self, gpointer data) {
   GtkWindow *win = gtk_application_get_active_window(GTK_APPLICATION(self));
+  gtk_window_present(win);
+}
 
-  GtkWidget *label = g_object_new(GTK_TYPE_LABEL, "visible", TRUE, NULL);
-  GtkWidget *entry = g_object_new(GTK_TYPE_ENTRY, "visible", TRUE, NULL);
+void app_startup(GApplication *self, gpointer data) {
+  GtkWidget *win, *label, *entry, *box;
+  
+  win = gtk_application_window_new(GTK_APPLICATION(self));
+  label = gtk_label_new("");
+  entry = gtk_entry_new();
+  box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
-  GtkWidget *box = g_object_new(
-    GTK_TYPE_BOX,
-    "visible", TRUE,
-    "orientation", GTK_ORIENTATION_VERTICAL,
-    "spacing", 10,
-    "halign", GTK_ALIGN_CENTER,
-    "valign", GTK_ALIGN_CENTER,
-    NULL
-  );
+  GtkWidget *widgets[] = { label, entry, box };
+
+  for (int i = 0; i < 3; i++)
+    gtk_widget_set_visible(widgets[i], TRUE);
+
+  gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+  gtk_label_set_line_wrap_mode(GTK_LABEL(label), PANGO_WRAP_CHAR);
+  gtk_label_set_max_width_chars(GTK_LABEL(label), 18);
+
+  gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
 
   gtk_box_pack_start(
     GTK_BOX(box),
@@ -45,28 +54,7 @@ void app_activate(GApplication *self, gpointer data) {
   g_signal_connect(entry, "key-release-event", G_CALLBACK(on_entry_changed), label);
 
   gtk_container_add(GTK_CONTAINER(win), box);
-  gtk_window_present(win);
-}
-
-void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win = g_object_new(
-    GTK_TYPE_APPLICATION_WINDOW,
-    "application", self,
-    "default-width", 400,
-    "default-height", 400,
-    NULL
-  );
-
-  GtkWidget *header = g_object_new(
-    GTK_TYPE_HEADER_BAR,
-    "visible", TRUE,
-    "show-close-button", TRUE,
-    "title", "GtkEntry",
-    "subtitle", "Example 1",
-    NULL
-  );
-
-  gtk_window_set_titlebar(GTK_WINDOW(win), header);
+  gtk_window_set_default_size(GTK_WINDOW(win), 400, 400);
 }
 
 void on_entry_changed(GtkWidget *self, GdkEvent *ev, gpointer data) {
