@@ -1,0 +1,20 @@
+/**
+ * @author    Díaz Urbaneja Víctor Eduardo Diex <victor.vector008@gmail.com>
+ * @date 28.02.2021 02:26:39 -04
+ */
+
+/**
+ * I add to the children of window (GtkWindow) that are buttons (GtkButton)
+ * a blue color
+ */
+window button {
+  color: #1E90FF;
+}
+
+/**
+ * the labels that are inside the buttons and have the class red
+ * will have a red color
+ */
+button.red label {
+  color: #E32424;
+}
