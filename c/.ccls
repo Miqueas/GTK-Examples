@@ -1,0 +1,11 @@
+cc
+-fdiagnostics-color=always
+-D_FILE_OFFSET_BITS=64
+-Wall
+-Winvalid-pch
+-O0
+-g
+-pthread
+-MD
+-MQ
+-MF
