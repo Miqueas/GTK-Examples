@@ -1,10 +1,10 @@
 src = [
   'application',
+  'window',
   'application-window',
   'header-bar',
   'label',
-  'box',
-  'window'
+  'box'
 ]
 
 foreach name : src
