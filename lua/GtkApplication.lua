@@ -1,26 +1,25 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
---[[ GtkApplication:
+-- GtkApplication: Provides an application interface
 
-  Provides an application interface. I recommend you to read the
-  info in the links below.
+local app_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Application"
+local app = Gtk.Application({ application_id = app_id })
 
-]]
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Application"
-})
-
--- For more info about these signals, see this:
+-- I recommend to check out this links for more information:
 -- https://wiki.gnome.org/HowDoI/GtkApplication
 -- https://developer.gnome.org/gio/stable/GApplication.html
 -- https://developer.gnome.org/gtk3/stable/GtkApplication.html
-function App:on_startup()
+function app:on_startup()
+  -- The ::startup signal is called only once, so it's recommended to create/prepare
+  -- all the GUI here and then present it on the ::activate signal
   print("Application::startup called")
 end
 
-function App:on_activate()
+function app:on_activate()
+  -- The ::activate signal can be triggered indefinitely, so please try to not do heavy
+  -- things here. Check out the doc links above for more details
   print("Application::activate called")
 end
 
-return App:run(arg)
+return app:run(arg)

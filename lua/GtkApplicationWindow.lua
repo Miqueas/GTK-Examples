@@ -1,25 +1,25 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.ApplicationWindow"
-})
+-- GtkApplicationWindow: A GtkWindow with GtkApplication integration
 
-function App:on_startup()
-  --[[ GtkApplicationWindow:
+local app_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.ApplicationWindow"
+local app = Gtk.Application({ application_id = app_id })
 
-    A GtkWindow thats has a better integration with GtkApplication
-
-  ]]
+function app:on_startup()
+  -- Since we're not going to use this window, I don't store it in a variable
   Gtk.ApplicationWindow({
+    -- By setting the application to the new window is enough to to present it later
     application = self,
     default_width = 400,
     default_height = 400
   })
 end
 
-function App:on_activate()
+function app:on_activate()
+  -- Because we set the application to the window (line 13), now we have a "default/main"
+  -- window to present
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)
