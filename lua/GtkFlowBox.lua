@@ -1,7 +1,7 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local app = Gtk.Application { application_id = "com.github.Miqueas.Lua-GTK3-Examples.GtkFlowBox" }
+local app = Gtk.Application { application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.FlowBox" }
 
 function app:on_activate()
   self.active_window:present()

@@ -3,7 +3,7 @@ local Gtk = lgi.require("Gtk", "3.0")
 local GObject = lgi.require("GObject", "2.0")
 
 local App = Gtk.Application({
-  application_id = "com.github.Miqueas.Lua-GTK3-Examples.GtkComboBox"
+  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.ComboBox"
 })
 
 function App:on_startup()

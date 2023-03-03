@@ -8,7 +8,7 @@ local Builder = Gtk.Builder.new_from_file("GtkBuilder-02.ui")
 local UI      = Builder.objects
 
 local App = Gtk.Application{
-  application_id = "com.github.Miqueas.Lua-GTK3-Examples.GtkButton3"
+  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Button3"
 }
 
 function App:on_startup()

@@ -6,7 +6,7 @@ local Builder = Gtk.Builder.new_from_file("GtkBuilder.ui")
 -- Another way to use GtkBuilder in LGI
 local UI      = Builder.objects
 local App     = Gtk.Application({
-  application_id = "com.github.Miqueas.Lua-GTK3-Examples.GtkBuilder2"
+  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Builder2"
 })
 
 function App:on_startup()
