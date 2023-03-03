@@ -1,56 +1,35 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Box1"
-})
+-- GtkBox: An horizontal or vertical layout container
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+local app_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Box1"
+local app_tile = "GtkBox"
+local app = Gtk.Application({ application_id = app_id })
+
+function app:on_startup()
+  local win = Gtk.ApplicationWindow({
+    title = app_tile,
     application = self,
     default_width = 400,
     default_height = 400
   })
-end
 
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkBox",
-    subtitle = "Example 1"
-  }))
-
-  --[[ GtkBox:
-
-    A container thats organize widgets lineal in one of these directions:
-      - Vertical
-      - Horizontal
-
-  ]]
-  local Box = Gtk.Box({
+  local box = Gtk.Box({
     visible = true,
     orientation = Gtk.Orientation.VERTICAL,
     spacing = 10,
     valign = Gtk.Align.CENTER
   })
 
-  Box:pack_start(
-    Gtk.Label({ visible = true, label = "Label 1" }),
-    false,
-    true,
-    0
-  )
+  box:pack_start(Gtk.Label({ visible = true, label = "Label 1" }), false, true, 0)
+  box:pack_start(Gtk.Label({ visible = true, label = "Label 2" }), false, true, 0)
 
-  Box:pack_start(
-    Gtk.Label({ visible = true, label = "Label 2" }),
-    false,
-    true,
-    0
-  )
+  win:add(box)
+end
 
-  self.active_window:add(Box)
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)
