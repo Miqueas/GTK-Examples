@@ -7,8 +7,8 @@ void on_combo_changed(GtkComboBox *self, gpointer data);
 const char *items[8] = { "GNOME", "KDE Plasma", "XFCE", "MATE", "Cinnamon", "Pantheon", "LXDE", "LXQT" };
 
 int main(int argc, char **argv) {
-  const gchar *app_id = "com.github.Miqueas.C-GTK-Examples.Gtk3.ComboBox";
-  GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_FLAGS_NONE);
+  const gchar *app_id = "io.github.Miqueas.GTK-Examples.C.Gtk3.ComboBox";
+  GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_DEFAULT_FLAGS);
 
   g_signal_connect(app, "startup", G_CALLBACK(app_startup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
