@@ -1,4 +1,4 @@
-const string app_id = "io.github.Miqueas.Vala-GTK-Examples.Gtk3.Box";
+const string app_id = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Box";
 static int count = 0;
 
 int main(string[] args) {
