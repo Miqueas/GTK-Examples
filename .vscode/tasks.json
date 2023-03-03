@@ -6,6 +6,7 @@
     {
       "label": "Setup",
       "type": "shell",
+      // Note: my shell is Fish, this might fail if you're using Bash, Zsh or something else
       "command": "[ -e _BUILD ]; and rm -rf _BUILD; meson setup _BUILD .; ln -fs _BUILD/compile_commands.json",
       "runOptions": { "runOn": "folderOpen" }
     }
