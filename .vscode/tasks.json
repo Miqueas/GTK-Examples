@@ -1,0 +1,13 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setup",
+      "type": "shell",
+      "command": "[ -e _BUILD ]; and rm -rf _BUILD; meson setup _BUILD .; ln -fs _BUILD/compile_commands.json",
+      "runOptions": { "runOn": "folderOpen" }
+    }
+  ]
+}
