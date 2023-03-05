@@ -1,6 +1,3 @@
-
-if arg[#arg] == "-debug" then require"mobdebug".start() end
-
 local lgi = require"lgi"
 local Gtk = lgi.require("Gtk", "3.0")
 
