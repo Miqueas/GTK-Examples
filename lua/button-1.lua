@@ -1,67 +1,40 @@
 local lgi  = require("lgi")
 local Gtk  = lgi.require("Gtk", "3.0")
-local Gio  = lgi.require("Gio", "2.0")
-local GLib = lgi.require("GLib", "2.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Button1"
-})
+-- GtkButton: A button widget
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+local app_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Button1"
+local app_title = "GtkButton 1"
+local app = Gtk.Application({ application_id = app_id })
+
+function app:on_startup()
+  local win = Gtk.ApplicationWindow({
+    title = app_title,
     application = self,
     default_width = 400,
     default_height = 400
   })
-end
 
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkButton",
-    subtitle = "Example 1"
-  }))
-
-  --[[ GtkButton:
-
-    Just a button lol
-
-  ]]
-  local Button = Gtk.Button({
+  local button = Gtk.Button({
     visible = true,
     label = "Click me!",
     valign = Gtk.Align.CENTER,
     halign = Gtk.Align.CENTER
   })
 
-  local Notification_ID = 0
+  local counter = 1
 
-  --for k, v in pairs(GLib:_resolve(true)._struct) do print(k, v) end
-
-  -- The "clicked" signal is emited when the user clicks
-  -- the button
-  function Button:on_clicked()
-    -- Notifications are not yet supported on Windows
-    if GLib.get_os_info("ID") == "windows" then
-      print(("Clicked %d times!"):format(Notification_ID))
-    else
-      local Notification = Gio.Notification()
-      Notification:set_title("GtkButton example 1")
-      Notification:set_body("You cliked the button!")
-
-      -- 'self' can't be used here, because 'self' here
-      -- reffers to the GtkButton that's clicked
-      App:send_notification(Notification_ID, Notification)
-    end
-
-    -- Incrementing this value makes the app spawn various
-    -- notifications
-    Notification_ID = Notification_ID + 1
+  -- The "clicked" signal is emited when the user press the button
+  function button:on_clicked()
+    print(("Clicked %d times!"):format(counter))
+    counter = counter + 1
   end
 
-  self.active_window:add(Button)
+  win:add(button)
+end
+
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)
