@@ -3,13 +3,13 @@ local Gtk = lgi.require("Gtk", "3.0")
 
 -- GtkActionBar: A full width container to add contextual actions
 
-local app_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.ActionBar"
-local app_title = "GtkActionBar"
-local app = Gtk.Application { application_id = app_id }
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.ActionBar"
+local appTitle = "GtkActionBar"
+local app = Gtk.Application { application_id = appID }
 
 function app:on_startup()
   local win = Gtk.ApplicationWindow {
-    title = app_title,
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400

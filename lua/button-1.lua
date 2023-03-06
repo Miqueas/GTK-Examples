@@ -3,13 +3,13 @@ local Gtk  = lgi.require("Gtk", "3.0")
 
 -- GtkButton: A button widget
 
-local app_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Button1"
-local app_title = "GtkButton 1"
-local app = Gtk.Application({ application_id = app_id })
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Button1"
+local appTitle = "GtkButton 1"
+local app = Gtk.Application({ application_id = appID })
 
 function app:on_startup()
   local win = Gtk.ApplicationWindow({
-    title = app_title,
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400

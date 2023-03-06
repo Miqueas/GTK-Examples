@@ -3,9 +3,9 @@ local Gtk = lgi.require("Gtk", "3.0")
 
 -- GtkBox: An horizontal or vertical layout container
 
-local app_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Box1"
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Box1"
 local app_tile = "GtkBox"
-local app = Gtk.Application({ application_id = app_id })
+local app = Gtk.Application({ application_id = appID })
 
 function app:on_startup()
   local win = Gtk.ApplicationWindow({

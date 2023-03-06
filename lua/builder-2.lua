@@ -3,8 +3,8 @@ local Gtk = lgi.require("Gtk", "3.0")
 
 -- Another way to use GtkBuilder in LGI
 
-local app_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Builder2"
-local app = Gtk.Application({ application_id = app_id })
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Builder2"
+local app = Gtk.Application({ application_id = appID })
 local builder = Gtk.Builder.new_from_file("builder.ui")
 local ui = builder.objects
 
