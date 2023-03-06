@@ -1,4 +1,4 @@
-local lgi = require"lgi"
+local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
 local app_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Button2"
