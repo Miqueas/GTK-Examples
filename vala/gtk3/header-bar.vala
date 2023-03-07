@@ -1,26 +1,28 @@
-const string app_id = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.HeaderBar";
+const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.HeaderBar";
+const string appTitle = "GtkHeaderBar";
+const string appSubtitle = "A (client-side) window decoration widget";
 
 int main(string[] args) {
-  var app = new Gtk.Application(app_id, ApplicationFlags.FLAGS_NONE);
-  app.startup.connect(startup);
-  app.activate.connect(activate);
+  var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
+  app.startup.connect(onStartup);
+  app.activate.connect(onActivate);
 
   return app.run(args);
 }
 
-void activate(Application self) {
-  var win = (self as Gtk.Application)?.get_active_window();
-  win?.present();
+void onActivate(Application self) {
+  var window = (self as Gtk.Application)?.get_active_window();
+  window?.present();
 }
 
-void startup(Application self) {
-  var win = new Gtk.ApplicationWindow(self as Gtk.Application);
-  var header = new Gtk.HeaderBar();
+void onStartup(Application self) {
+  var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var header = new Gtk.HeaderBar() { visible = true };
 
-  header.title = "My app";
-  header.subtitle = "An awesome app that you'll love";
+  header.title = appTitle;
+  header.subtitle = appSubtitle;
   header.show_close_button = true;
 
-  win.set_titlebar(header);
-  win.set_default_size(400, 400);
+  window.set_titlebar(header);
+  window.set_default_size(400, 400);
 }
