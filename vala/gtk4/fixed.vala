@@ -1,26 +1,27 @@
-const string app_id = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.Fixed";
+const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.Fixed";
+const string appTitle = "GtkFixed";
 
 int main(string[] args) {
-  var app = new Gtk.Application(app_id, ApplicationFlags.FLAGS_NONE);
-  app.startup.connect(startup);
-  app.activate.connect(activate);
+  var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
+  app.startup.connect(onStartup);
+  app.activate.connect(onActivate);
 
   return app.run(args);
 }
 
-void activate(Application self) {
-  var win = (self as Gtk.Application)?.get_active_window();
-  win?.present();
+void onActivate(Application self) {
+  var window = (self as Gtk.Application)?.get_active_window();
+  window?.present();
 }
 
-void startup(Application self) {
-  var win = new Gtk.ApplicationWindow(self as Gtk.Application);
-  var fxd = new Gtk.Fixed();
+void onStartup(Application self) {
+  var window = new Gtk.ApplicationWindow(self as Gtk.Application) { title = appTitle };
+  var fixed = new Gtk.Fixed();
 
-  fxd.put(new Gtk.Label("A"), 10, 20);
-  fxd.put(new Gtk.Label("B"), 100, 200);
-  fxd.put(new Gtk.Label("C"), 99, 326);
+  fixed.put(new Gtk.Label("A"), 10, 20);
+  fixed.put(new Gtk.Label("B"), 100, 200);
+  fixed.put(new Gtk.Label("C"), 99, 326);
 
-  win.child = fxd;
-  win.set_default_size(400, 400);
+  window.child = fixed;
+  window.set_default_size(400, 400);
 }

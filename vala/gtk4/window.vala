@@ -1,7 +1,9 @@
+const string appTitle = "GtkWindow";
+
 void main() {
   Gtk.init();
 
-  var win = new Gtk.Window();
+  var win = new Gtk.Window() { title = appTitle };
   win.set_default_size(400, 400);
   win.present();
 
