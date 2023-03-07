@@ -3,6 +3,7 @@ src = [
   'window',
   'application-window',
   'box',
+  'button',
   'header-bar',
   'label',
   'fixed'
