@@ -1,35 +1,34 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local app = Gtk.Application { application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Fixed" }
+-- GtkFixed: a widget that can place widgets at fixed positions and fixed sizes
 
-function app:on_activate()
-  self.active_window:present()
-end
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Fixed"
+local appTitle = "GtkFixed"
+local app = Gtk.Application({ application_id = appID })
 
 function app:on_startup()
-  local win = Gtk.ApplicationWindow {
+  local win = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400,
     border_width = 10
-  }
-
-  win:set_titlebar(Gtk.HeaderBar {
-    visible = true,
-    show_close_button = true,
-    title = "GtkFlowBox"
   })
 
-  local fixed = Gtk.Fixed {
+  local fixed = Gtk.Fixed({
     visible = true,
 
     { Gtk.Label { visible = true, label = "A" }, y = 20, x = 10 },
     { Gtk.Label { visible = true, label = "B" }, y = 200, x = 100 },
     { Gtk.Label { visible = true, label = "C" }, y = 99, x = 326 }
-  }
+  })
 
   win:add(fixed)
+end
+
+function app:on_activate()
+  self.active_window:present()
 end
 
 return app:run(arg)
