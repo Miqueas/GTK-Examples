@@ -1,41 +1,36 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.FileChooserDialog"
-})
+-- GtkFileChooserDialog: a file selection dialog
 
-function App:on_startup()
-  --[[ GtkFileChooserDialog:
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.FileChooserDialog"
+local appTitle = "GtkFileChooserDialog"
+local app = Gtk.Application({ application_id = appID })
 
-    A file selection dialog
-
-  ]]
-  local Dialog  = Gtk.FileChooserDialog({
-    title = "Select a file",
+function app:on_startup()
+  local fileChooserDialog  = Gtk.FileChooserDialog({
+    title = appTitle,
+    application = self,
     action = Gtk.FileChooserAction.OPEN
   })
 
-  Dialog:add_button("Open", Gtk.ResponseType.OK)
-  Dialog:add_button("Cancel", Gtk.ResponseType.CANCEL)
-
-  self:add_window(Dialog)
+  fileChooserDialog:add_button("Open", Gtk.ResponseType.OK)
+  fileChooserDialog:add_button("Cancel", Gtk.ResponseType.CANCEL)
 end
 
-function App:on_activate()
-  local Res = self.active_window:run()
+function app:on_activate()
+  local response = self.active_window:run()
 
-  if Res == Gtk.ResponseType.OK then
+  if response == Gtk.ResponseType.OK then
     local name = self.active_window:get_filename()
-    self.active_window:destroy()
     print("You selected: " .. name)
-  elseif Res == Gtk.ResponseType.CANCEL then
-    self.active_window:destroy()
+  elseif response == Gtk.ResponseType.CANCEL then
     print("Canceled")
   else
-    self.active_window:destroy()
     print("Something else")
   end
+
+  self.active_window:destroy()
 end
 
-return App:run()
+return app:run()

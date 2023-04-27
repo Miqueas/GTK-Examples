@@ -1,27 +1,22 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.FileChooserButton"
-})
+-- GtkFileChooserButton: a button that exclusively opens a file selection dialog
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.FileChooserButton"
+local appTitle = "GtkFileChooserButton"
+local app = Gtk.Application({ application_id = appID })
+
+function app:on_startup()
+  local win = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400,
     border_width = 10
   })
-end
 
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkFileChooserButton"
-  }))
-
-  local Box = Gtk.Box({
+  local box = Gtk.Box({
     visible = true,
     spacing = 10,
     orientation = Gtk.Orientation.VERTICAL,
@@ -31,28 +26,25 @@ function App:on_activate()
     Gtk.Label({ visible = true, label = "Open a file" }),
   })
 
-  --[[ GtkFileChooserButton:
+  local label = Gtk.Label({ visible = true, wrap = true })
 
-    A button that exclusively opens a file selection dialog
-
-  ]]
-  local Btn = Gtk.FileChooserButton({
+  local fileChooserButton = Gtk.FileChooserButton({
     visible = true,
-    valign = Gtk.Align.CENTER,
     halign = Gtk.Align.CENTER
   })
 
-  local Lbl = Gtk.Label({ visible = true, wrap = true })
-
-  function Btn:on_file_set()
-    Lbl.label = "Selected file: " .. self:get_filename()
+  function fileChooserButton:on_file_set()
+    label.label = "Selected file: " .. self:get_filename()
   end
 
-  Box:pack_start(Btn, false, true, 0)
-  Box:pack_start(Lbl, false, true, 0)
+  box:pack_start(fileChooserButton, false, true, 0)
+  box:pack_start(label, false, true, 0)
 
-  self.active_window:add(Box)
+  win:add(box)
+end
+
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run()
+return app:run()
