@@ -1,32 +1,25 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local app = Gtk.Application { application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.FlowBox" }
-
-function app:on_activate()
-  self.active_window:present()
-end
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.FlowBox"
+local appTitle = "GtkFlowBox"
+local app = Gtk.Application({ application_id = appID })
 
 function app:on_startup()
-  local win = Gtk.ApplicationWindow {
+  local win = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400,
     border_width = 10
-  }
-
-  win:set_titlebar(Gtk.HeaderBar {
-    visible = true,
-    show_close_button = true,
-    title = "GtkFlowBox"
   })
 
-  local flowbox = Gtk.FlowBox {
+  local flowbox = Gtk.FlowBox({
     visible = true,
     valign = Gtk.Align.START,
     selection_mode = Gtk.SelectionMode.NONE,
     max_children_per_line = 30
-  }
+  })
 
   local scroll = Gtk.ScrolledWindow {
     visible = true,
@@ -58,6 +51,10 @@ function app:on_startup()
 
   scroll:add(flowbox)
   win:add(scroll)
+end
+
+function app:on_activate()
+  self.active_window:present()
 end
 
 return app:run(arg)
