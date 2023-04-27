@@ -1,43 +1,30 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
-local GObject = lgi.require("GObject", "2.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Entry"
-})
+-- GtkEntry: a generic input widget
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Entry"
+local appTitle = "GtkEntry"
+local app = Gtk.Application({ application_id = appID })
+
+function app:on_startup()
+  local win = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400,
     border_width = 10
   })
-end
 
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkEntry"
-  }))
-
-  -- Label to be updated
-  local Label = Gtk.Label({ visible = true })
-
-  --[[ GtkEntry:
-
-    An input widget
-
-  ]]
-  local Entry = Gtk.Entry({ visible = true })
+  local label = Gtk.Label({ visible = true })
+  local entry = Gtk.Entry({ visible = true })
 
   -- Updates the label text while typing
-  function Entry:on_key_release_event()
-    Label.label = Entry.text
+  function entry:on_key_release_event()
+    label.label = entry.text
   end
 
-  local Box = Gtk.Box({
+  local box = Gtk.Box({
     visible = true,
     orientation = Gtk.Orientation.VERTICAL,
     spacing = 10,
@@ -45,12 +32,15 @@ function App:on_activate()
     valign = Gtk.Align.CENTER,
 
     Gtk.Label({ visible = true, label = "Enter some text" }),
-    Entry,
-    Label
+    entry,
+    label
   })
 
-  self.active_window:add(Box)
+  win:add(box)
+end
+
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)
