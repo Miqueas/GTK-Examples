@@ -1,60 +1,53 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
-local GObject = lgi.require("GObject", "2.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.ComboBoxText"
-})
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.ComboBoxText"
+local appTitle = "GtkComboBoxText"
+local app = Gtk.Application({ application_id = appID })
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+function app:on_startup()
+  local window = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400,
     border_width = 10
   })
-end
-
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkComboBoxText"
-  }))
 
   -- Label to be updated
-  local Label = Gtk.Label({ visible = true, label = "Default id: gnome" })
+  local label = Gtk.Label({ visible = true, label = "Default id: gnome" })
 
   --[[ GtkComboBoxText:
 
     Just a text-only GtkComboBox
 
   ]]
-  local Combo = Gtk.ComboBoxText({ visible = true })
+  local combo = Gtk.ComboBoxText({ visible = true })
 
   local Items = {
-    gnome    = "GNOME",
-    plasma   = "KDE Plasma",
-    xfce     = "XFCE",
-    mate     = "MATE",
-    cinnamon = "Cinnamon",
-    pantheon = "Pantheon",
-    lxde     = "LXDE",
-    lxqt     = "LXQT"
+    "GNOME",
+    "KDE Plasma",
+    "XFCE",
+    "MATE",
+    "Cinnamon",
+    "Pantheon",
+    "LXDE",
+    "LXQT"
   }
 
-  for ID, Value in pairs(Items) do
-    Combo:append(ID, Value)
+  for id, value in pairs(Items) do
+    -- For GtkComboBoxText, the ID can be either a number or text
+    combo:append(id, value)
   end
 
-  Combo.active_id = "gnome"
+  combo.active_id = 1
 
   -- Changes the 'Label' text when user change the combo box value
-  function Combo:on_changed()
-    Label.label = "Option id: " .. self:get_active_id()
+  function combo:on_changed()
+    label.label = "Option id: " .. self:get_active_id()
   end
 
-  local Box = Gtk.Box({
+  local box = Gtk.Box({
     visible = true,
     orientation = Gtk.Orientation.VERTICAL,
     spacing = 10,
@@ -62,12 +55,15 @@ function App:on_activate()
     valign = Gtk.Align.CENTER,
 
     Gtk.Label({ visible = true, label = "Select an option" }),
-    Combo,
-    Label
+    combo,
+    label
   })
 
-  self.active_window:add(Box)
+  window:add(box)
+end
+
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)

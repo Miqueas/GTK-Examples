@@ -19,7 +19,16 @@ function app:on_startup()
 
   -- Model for the combo box
   local model = Gtk.ListStore.new({ GObject.Type.STRING })
-  local items = { "GNOME", "KDE Plasma", "XFCE", "MATE", "Cinnamon", "Pantheon", "LXDE", "LXQT" }
+  local items = {
+    "GNOME",
+    "KDE Plasma",
+    "XFCE",
+    "MATE",
+    "Cinnamon",
+    "Pantheon",
+    "LXDE",
+    "LXQT"
+  }
 
   -- Add the items to the model
   for _, name in ipairs(items) do
