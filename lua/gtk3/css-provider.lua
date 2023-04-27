@@ -1,46 +1,69 @@
 --[[
- @author    Díaz Urbaneja Víctor Eduardo Diex <victor.vector008@gmail.com>
- @date      28.02.2021 02:26:39 -04
+  @author  Díaz Urbaneja Víctor Eduardo Diex (https://github.com/diazvictor)
+  @date    28.02.2021 02:26:39 -04
 ]]
 
 local lgi = require('lgi')
 local Gtk = lgi.require('Gtk', '3.0')
-local Gdk = lgi.require('Gdk', '3.0')
-assert = lgi.assert -- With this function I will confirm if a file (in this case custom.css) exists.
 
---- I load my css
-local Provider = Gtk.CssProvider()
+-- GtkCssProvider: CSS-like styling class for widgets
 
--- Show a message if custom.css does not exist
-assert(Provider:load_from_path('styles/GtkCssProvider1.css'), 'ERROR: file.css not found')
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.CssProvider"
+local appTitle = "GtkCssProvider"
+local app = Gtk.Application({ application_id = appID })
 
---- I add my CSS to the current window
-local Screen = Gdk.Display.get_default_screen(Gdk.Display:get_default())
-local GTK_STYLE_PROVIDER_PRIORITY_APPLICATION = 600
-  Gtk.StyleContext.add_provider_for_screen(
-  Screen, Provider,
-  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
-)
+function app:on_startup()
+  local win = Gtk.ApplicationWindow({
+    title = appTitle,
+    application = self,
+    default_width = 400,
+    default_height = 400,
+    border_width = 10
+  })
 
-local Window = Gtk.Window {
-  title = 'Linking CSS Styles',
-  width = 200,
-  height = 200,
-  window_position = Gtk.WindowPosition.CENTER,
-  {
-    Gtk.Button {
-      halign = Gtk.Align.CENTER,
-      valign = Gtk.Align.CENTER,
-      label = 'Example of the button with css',
-      on_clicked = function (self)
-        self:get_style_context():add_class('red')
-      end
-    }
-  },
-  on_destroy = function()
-    Gtk.main_quit()
-	end
-}
+  local provider = Gtk.CssProvider()
+  provider:load_from_path("css-provider.css")
 
-Window:show_all()
-Gtk.main()
+  local screen = win:get_screen()
+  local styleContext = win:get_style_context()
+  styleContext.add_provider_for_screen(screen, provider, 600)
+
+  local label = Gtk.Label({
+    visible = true,
+    label = "Hi there!"
+  })
+
+  local button = Gtk.Button({
+    visible = true,
+    label = "Toggle label style"
+  })
+
+  function button:on_clicked()
+    local labelStyleContext = label:get_style_context()
+
+    if labelStyleContext:has_class("color-green") then
+      labelStyleContext:remove_class("color-green")
+    else
+      labelStyleContext:add_class("color-green")
+    end
+  end
+
+  local box = Gtk.Box({
+    visible = true,
+    halign = Gtk.Align.CENTER,
+    valign = Gtk.Align.CENTER,
+    orientation = Gtk.Orientation.VERTICAL,
+    spacing = 10
+  })
+
+  box:pack_start(label, false, false, 0)
+  box:pack_start(button, false, false, 0)
+
+  win:add(box)
+end
+
+function app:on_activate()
+  self.active_window:present()
+end
+
+return app:run(arg)
