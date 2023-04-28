@@ -1,34 +1,20 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Grid2"
-})
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Grid2"
+local appTitle = "GtkGrid"
+local app = Gtk.Application({ application_id = appID })
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+function app:on_startup()
+  local win = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400,
     border_width = 10
   })
-end
 
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkGrid",
-    subtitle = "Example 2"
-  }))
-
-  --[[
-
-    In the example GtkGrid1.lua you see a basic grid. Here, you can see a little complex
-    grid with two items that fills more than 1 cell in the grid.
-
-  ]]
-  local Grid = Gtk.Grid({
+  local grid = Gtk.Grid({
     visible = true,
     column_homogeneous = true,
     row_homogeneous = true,
@@ -46,8 +32,11 @@ function App:on_activate()
     { Gtk.Label({ visible = true, label = "Top: 2. Left: 2" }), top_attach = 2, left_attach = 2 }
   })
 
-  self.active_window:add(Grid)
+  win:add(grid)
+end
+
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)
