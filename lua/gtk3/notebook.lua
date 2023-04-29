@@ -1,51 +1,34 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
-local GObject = lgi.require("GObject", "2.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Notebook"
-})
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Notebook"
+local appTitle = "GtkNotebook"
+local app = Gtk.Application({ application_id = appID })
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+function app:on_startup()
+  local win = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400
   })
-end
 
-function App:on_activate()
-  -- Append button
-  local Btn = Gtk.Button({
+  local newTabButton = Gtk.Button({
     visible = true,
+    halign = Gtk.Align.CENTER,
+    margin = 10,
 
     Gtk.Box({
       visible = true,
+      spacing = 6,
+      orientation = Gtk.Orientation.HORIZONTAL,
 
+      Gtk.Label({ visible = true, label = "New tab" }),
       Gtk.Image({ visible = true, icon_name = "list-add-symbolic" })
     })
   })
 
-  -- Header bar
-  local Header = Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkNotebook",
-    subtitle = "Click in the + button!",
-
-    Btn
-  })
-
-  self.active_window:set_titlebar(Header)
-
-  --[[ GtkNotebook:
-
-    Similar to a GtkStack, it shows only 1 child at a time,
-    but with the difference that it uses "tabs" to switch
-    between the visible children.
-
-  ]]
-  local Notebook = Gtk.Notebook({
+  local notebook = Gtk.Notebook({
     visible = true,
     -- Removes a default border around the widget
     show_border = false,
@@ -55,8 +38,8 @@ function App:on_activate()
 
   local count = 1
 
-  function Btn:on_clicked()
-    Notebook:append_page(
+  function newTabButton:on_clicked()
+    notebook:append_page(
       -- Page content
       Gtk.Label({ visible = true, label = "Page " .. count }),
       -- Page tab widget
@@ -66,8 +49,19 @@ function App:on_activate()
     count = count + 1
   end
 
-  self.active_window:add(Notebook)
+  local box = Gtk.Box({
+    visible = true,
+    orientation = Gtk.Orientation.VERTICAL
+  })
+
+  box:pack_start(notebook, true, true, 0)
+  box:pack_start(newTabButton, false, false, 0)
+
+  win:add(box)
+end
+
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)
