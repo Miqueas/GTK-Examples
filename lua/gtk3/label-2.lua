@@ -1,27 +1,19 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Label2"
-})
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Label2"
+local appTitle = "GtkLabel"
+local app = Gtk.Application({ application_id = appID })
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+function app:on_startup()
+  local win = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400
   })
-end
 
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkLabel",
-    subtitle = "Example 2"
-  }))
-
-  local Label = Gtk.Label({
+  local label = Gtk.Label({
     visible = true,
     valign = Gtk.Align.CENTER,
     halign = Gtk.Align.CENTER,
@@ -31,8 +23,11 @@ function App:on_activate()
     label = "<span size='xx-large' font_weight='bold'>Hello, world!</span>"
   })
 
-  self.active_window:add(Label)
+  win:add(label)
+end
+
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)
