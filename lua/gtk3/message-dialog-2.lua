@@ -1,20 +1,40 @@
-lgi = require "lgi"
-Gtk = lgi.require "Gtk"
+local lgi = require("lgi")
+local Gtk = lgi.require("Gtk", "3.0")
 
-dialog = Gtk.MessageDialog { text = "This is a text message.", buttons = "YES_NO" }
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.MessageDialog2"
+local appTitle = "GtkMessageDialog"
+local app = Gtk.Application({ application_id = appID })
 
--- https://docs.gtk.org/gtk3/method.Dialog.response.html
-function dialog:on_response(response_id)
-  --print("response_id:",response_id)
+function app:on_startup()
+  local titleMarkup = [[<span size="x-large" font-weight="bold">Universe destruction</span>]]
+  local messageText = "Our universe has a lot of problems and the only way to fix it is destroying the entire universe and this important decision is now in your hands."
 
-  -- https://valadoc.org/gtk+-3.0/Gtk.ResponseType.html
-  if response_id==Gtk.ResponseType.YES then print("yes")
-  elseif response_id==Gtk.ResponseType.NO then print("no")
-  elseif response_id==Gtk.ResponseType.DELETE_EVENT then print("delete-event")
+  local messageDialog = Gtk.MessageDialog({
+    title = appTitle,
+    application = self,
+    buttons = Gtk.ButtonsType.YES_NO,
+    message_type = Gtk.MessageType.QUESTION,
+    text = titleMarkup,
+    secondary_text = messageText,
+    use_markup = true
+  })
+
+  function messageDialog:on_response(responseID)
+    if responseID == Gtk.ResponseType.YES then
+      print("Universe destroyed! 💥")
+    elseif responseID == Gtk.ResponseType.NO then
+      print("Universe is in peace now! 🙏")
+    else
+      print("Something else...")
+      print("Response ID: " .. tostring(responseID))
+    end
+
+    self:destroy()
   end
-
-  Gtk.main_quit()
 end
 
-dialog:show_all()
-Gtk.main()
+function app:on_activate()
+  self.active_window:run()
+end
+
+return app:run(arg)
