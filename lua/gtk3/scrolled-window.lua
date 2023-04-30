@@ -1,26 +1,21 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.ScrolledWindow"
-})
+-- GtkScrolledWindow: A container for scrollable content
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.ScrolledWindow"
+local appTitle = "GtkScrolledWindow"
+local app = Gtk.Application({ application_id = appID })
+
+function app:on_startup()
+  local window = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 400,
     default_height = 400
   })
-end
 
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkScrolledWindow"
-  }))
-
-  local Grid = Gtk.Grid({
+  local grid = Gtk.Grid({
     visible = true,
     column_homogeneous = true,
     row_homogeneous = true,
@@ -30,12 +25,7 @@ function App:on_activate()
     valign = Gtk.Align.START
   })
 
-  --[[ GtkScrolledWindow:
-
-    A container for scrollable content
-
-  ]]
-  local Scroll = Gtk.ScrolledWindow({
+  local scroll = Gtk.ScrolledWindow({
     visible = true,
     -- Removes a shadow that is added by default
     shadow_type = Gtk.ShadowType.NONE,
@@ -44,12 +34,12 @@ function App:on_activate()
     -- Same, but for height
     propagate_natural_height = true,
 
-    Grid
+    grid
   })
 
   for top = 1, 100 do
     for left = 1, 100 do
-      Grid:attach(
+      grid:attach(
         Gtk.Label({ visible = true, label = "Top: "..top..". Left: "..left }),
         left - 1,
         top - 1,
@@ -58,8 +48,11 @@ function App:on_activate()
     end
   end
 
-  self.active_window:add(Scroll)
+  window:add(scroll)
+end
+
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)
