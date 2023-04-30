@@ -1,33 +1,21 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Statusbar"
-})
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Statusbar"
+local appTitle = "GtkStatusbar"
+local app = Gtk.Application({ application_id = appID })
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+function app:on_startup()
+  local window = Gtk.ApplicationWindow({
+    title = appTitle, 
     application = self,
     default_width = 400,
     default_height = 200
   })
-end
 
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkStatusbar"
-  }))
+  local statusbar = Gtk.Statusbar({ visible = true })
 
-  --[[ GtkStatusbar:
-
-    A widget like GtkActionBar for report some info to the user.
-
-  ]]
-  local Status = Gtk.Statusbar({ visible = true })
-
-  local Btn = Gtk.Button({
+  local button = Gtk.Button({
     visible = true,
     label = "Click me",
     halign = Gtk.Align.CENTER,
@@ -36,17 +24,24 @@ function App:on_activate()
 
 
   local c = 0
-  function Btn:on_clicked()
+
+  function button:on_clicked()
     c = c + 1
-    Status:push(c, "You clicked " .. c .. " times")
+    statusbar:push(c, "You clicked " .. c .. " times")
   end
 
-  local Box = Gtk.Box({ visible = true, orientation = Gtk.Orientation.VERTICAL })
-  Box:pack_start(Btn, true, true, 0)
-  Box:pack_end(Status, false, true, 0)
+  local box = Gtk.Box({ visible = true, orientation = Gtk.Orientation.VERTICAL })
+  box:pack_start(button, true, true, 0)
+  box:pack_end(statusbar, false, true, 0)
 
-  self.active_window:add(Box)
+  window:add(box)
+end
+
+function app:on_activate()
+  --[[ GtkStatusbar: A widget like GtkActionBar for report some info to the user.
+
+  ]]
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)
