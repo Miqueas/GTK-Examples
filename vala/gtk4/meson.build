@@ -5,6 +5,7 @@ src = [
   'box',
   'header-bar',
   'label',
+  'list-box',
   'fixed'
 ]
 

@@ -6,6 +6,7 @@ src = [
   'button',
   'header-bar',
   'label',
+  'list-box',
   'fixed'
 ]
 
