@@ -1,33 +1,22 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Stack1"
-})
+-- GtkStack: a container that shows only one child at a time
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Stack1"
+local appTitle = "GtkStack"
+local app = Gtk.Application({ application_id = appID })
+
+function app:on_startup()
+  local window = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 600,
     default_height = 400,
     border_width = 10
   })
-end
 
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkStack",
-    subtitle = "Example 1"
-  }))
-
-  --[[ GtkStack:
-
-    A container that shows only one (1) child at a time
-
-  ]]
-  local Stack = Gtk.Stack({
+  local stack = Gtk.Stack({
     visible = true,
     transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT,
     -- Increment this value to see the animation more slow
@@ -40,7 +29,7 @@ function App:on_activate()
         use_markup = true
       }),
       title = "Page 0",
-      name = "Page0"
+      name = "page0"
     },
     {
       Gtk.Label({
@@ -49,7 +38,7 @@ function App:on_activate()
         use_markup = true
       }),
       title = "Page 1",
-      name = "Page1"
+      name = "page1"
     },
     {
       Gtk.Label({
@@ -58,7 +47,7 @@ function App:on_activate()
         use_markup = true
       }),
       title = "Page 2",
-      name = "Page2"
+      name = "page2"
     },
     {
       Gtk.Label({
@@ -67,28 +56,31 @@ function App:on_activate()
         use_markup = true
       }),
       title = "Page 3",
-      name = "Page3"
+      name = "page3"
     }
   })
 
-  local Box = Gtk.Box({
+  local box = Gtk.Box({
     visible = true,
     orientation = Gtk.Orientation.VERTICAL,
 
     {
-      Stack,
+      stack,
       expand = true
     },
 
     Gtk.StackSwitcher({
       visible = true,
-      stack = Stack,
+      stack = stack,
       halign = Gtk.Align.CENTER
     })
   })
 
-  self.active_window:add(Box)
+  window:add(box)
+end
+
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)

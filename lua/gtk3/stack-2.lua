@@ -1,32 +1,19 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
-local App = Gtk.Application({
-  application_id = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Stack2"
-})
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Stack2"
+local appTitle = ""
+local app = Gtk.Application({ application_id = appID })
 
-function App:on_startup()
-  Gtk.ApplicationWindow({
+function app:on_startup()
+  local window = Gtk.ApplicationWindow({
+    title = appTitle,
     application = self,
     default_width = 600,
     default_height = 400
   })
-end
 
-function App:on_activate()
-  self.active_window:set_titlebar(Gtk.HeaderBar({
-    visible = true,
-    show_close_button = true,
-    title = "GtkStack",
-    subtitle = "Example 2"
-  }))
-
-  --[[ GtkStack:
-
-    A container that shows only one (1) child at a time
-
-  ]]
-  local Stack = Gtk.Stack({
+  local stack = Gtk.Stack({
     visible = true,
     transition_type = Gtk.StackTransitionType.SLIDE_UP_DOWN,
     -- Increment this value to see the animation more slow
@@ -70,23 +57,26 @@ function App:on_activate()
     }
   })
 
-  local Box = Gtk.Box({
+  local box = Gtk.Box({
     visible = true,
     orientation = Gtk.Orientation.HORIZONTAL,
 
     Gtk.StackSidebar({
       visible = true,
-      stack = Stack,
+      stack = stack,
       halign = Gtk.Align.CENTER
     }),
     {
-      Stack,
+      stack,
       expand = true
     }
   })
 
-  self.active_window:add(Box)
+  window:add(box)
+end
+
+function app:on_activate()
   self.active_window:present()
 end
 
-return App:run(arg)
+return app:run(arg)
