@@ -15,7 +15,7 @@ function app:on_startup()
     default_height = 400
   })
 
-  local image = Gtk.Image({ visible = true, file = "Sus.jpg", pixel_size = 256 })
+  local image = Gtk.Image({ visible = true, file = "sus.jpg", pixel_size = 256 })
 
   win:add(image)
 end
