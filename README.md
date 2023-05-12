@@ -2,6 +2,8 @@
 
 A set of various GTK code examples in different programming languages.
 
+![GTK Examples Banner](banner.png)
+
 ## Building and running
 
 The main requirement to build and run the (C and Vala) examples is to have:
