@@ -1,29 +1,30 @@
 #include <gtk/gtk.h>
 
-void app_startup(GApplication *self, gpointer data);
-void app_activate(GApplication *self, gpointer data);
+void onAppStartup(GApplication *self, gpointer data);
+void onAppActivate(GApplication *self, gpointer data);
+
+const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Builder";
+const gchar *appTitle = "GtkBuilder";
 
 int main(int argc, char **argv) {
-  const gchar *app_id = "io.github.Miqueas.GTK-Examples.C.Gtk3.Builder";
-  GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_DEFAULT_FLAGS);
+  GtkApplication *app = gtk_application_new(appID, G_APPLICATION_DEFAULT_FLAGS);
 
-  g_signal_connect(app, "startup", G_CALLBACK(app_startup), NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
+  g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
-  int res = g_application_run(G_APPLICATION(app), argc, argv);
+  int result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
-  return res;
+  return result;
 }
 
-void app_startup(GApplication *self, gpointer data) {
-  GtkBuilder *builder = gtk_builder_new_from_file("Builder.ui");
-  GObject *win = gtk_builder_get_object(builder, "Window");
-
-  gtk_application_add_window(GTK_APPLICATION(self), GTK_WINDOW(win));
+void onAppActivate(GApplication *self, gpointer data) {
+  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  gtk_window_present(window);
 }
 
-void app_activate(GApplication *self, gpointer data) {
-  GtkWindow *win = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(win);
+void onAppStartup(GApplication *self, gpointer data) {
+  GtkBuilder *builder = gtk_builder_new_from_file("builder.ui");
+  GObject *window = gtk_builder_get_object(builder, "window");
+  gtk_application_add_window(GTK_APPLICATION(self), GTK_WINDOW(window));
 }

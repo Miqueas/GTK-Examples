@@ -3,22 +3,11 @@
 <interface>
 
 <!-- The window -->
-<object class="GtkWindow" id="Window">
+<object class="GtkWindow" id="window">
   <property name="window-position">center</property>
   <property name="default-width">400</property>
   <property name="default-height">400</property>
   <property name="gravity">center</property>
-
-  <!-- Header bar -->
-  <child type="titlebar">
-    <object class="GtkHeaderBar">
-      <property name="visible">True</property>
-      <property name="show-close-button">True</property>
-      <property name="title">Here is the title</property>
-      <property name="subtitle">And here is the subtitle</property>
-    </object>
-  </child>
-  <!-- End -->
 
   <!-- Just a text label -->
   <child>
