@@ -1,15 +1,17 @@
 #include <gtk/gtk.h>
 
-void app_activate(GApplication *self, gpointer data);
-void app_startup(GApplication *self, gpointer data);
+void onAppActivate(GApplication *self, gpointer data);
+void onAppStartup(GApplication *self, gpointer data);
 void on_entry_changed(GtkWidget *self, GdkEvent *ev, gpointer data);
 
-int main(int argc, char **argv) {
-  const gchar *app_id = "io.github.Miqueas.GTK-Examples.C.Gtk3.Entry";
-  GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_DEFAULT_FLAGS);
+const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Entry";
+const gchar *appTitle = "GtkEntry";
 
-  g_signal_connect(app, "startup",  G_CALLBACK(app_startup),  NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
+int main(int argc, char **argv) {
+  GtkApplication *app = gtk_application_new(appID, G_APPLICATION_DEFAULT_FLAGS);
+
+  g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
   int res = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
@@ -17,44 +19,36 @@ int main(int argc, char **argv) {
   return res;
 }
 
-void app_activate(GApplication *self, gpointer data) {
-  GtkWindow *win = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(win);
+void onAppActivate(GApplication *self, gpointer data) {
+  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  gtk_window_present(window);
 }
 
-void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win, *label, *entry, *box;
+void onAppStartup(GApplication *self, gpointer data) {
+  GtkWidget *window, *box, *hintLabel, *entry, *outputLabel;
   
-  win = gtk_application_window_new(GTK_APPLICATION(self));
-  label = gtk_label_new("");
-  entry = gtk_entry_new();
+  window = gtk_application_window_new(GTK_APPLICATION(self));
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+  hintLabel = gtk_label_new("Enter some text");
+  entry = gtk_entry_new();
+  outputLabel = gtk_label_new("");
 
-  GtkWidget *widgets[] = { label, entry, box };
-
-  for (int i = 0; i < 3; i++)
-    gtk_widget_set_visible(widgets[i], TRUE);
-
-  gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
-  gtk_label_set_line_wrap_mode(GTK_LABEL(label), PANGO_WRAP_CHAR);
-  gtk_label_set_max_width_chars(GTK_LABEL(label), 18);
+  gtk_container_add(GTK_CONTAINER(window), box);
+  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
   gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
   gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
 
-  gtk_box_pack_start(
-    GTK_BOX(box),
-    g_object_new(GTK_TYPE_LABEL, "visible", TRUE, "label", "Enter some text", NULL),
-    FALSE, TRUE, 0
-  );
+  g_signal_connect(entry, "key-release-event", G_CALLBACK(on_entry_changed), outputLabel);
 
+  gtk_box_pack_start(GTK_BOX(box), hintLabel, FALSE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box), entry, FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box), label, FALSE, TRUE, 0);
-  
-  g_signal_connect(entry, "key-release-event", G_CALLBACK(on_entry_changed), label);
+  gtk_box_pack_start(GTK_BOX(box), outputLabel, FALSE, TRUE, 0);
 
-  gtk_container_add(GTK_CONTAINER(win), box);
-  gtk_window_set_default_size(GTK_WINDOW(win), 400, 400);
+  gtk_label_set_line_wrap(GTK_LABEL(outputLabel), TRUE);
+  gtk_label_set_line_wrap_mode(GTK_LABEL(outputLabel), PANGO_WRAP_CHAR);
+  gtk_label_set_max_width_chars(GTK_LABEL(outputLabel), 18);
 }
 
 void on_entry_changed(GtkWidget *self, GdkEvent *ev, gpointer data) {
