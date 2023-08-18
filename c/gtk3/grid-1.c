@@ -24,7 +24,7 @@ void onAppActivate(GApplication *self, gpointer data) {
 }
 
 void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window, *header, *grid;
+  GtkWidget *window, *grid;
 
   window = gtk_application_window_new(GTK_APPLICATION(self));
   grid = gtk_grid_new();
