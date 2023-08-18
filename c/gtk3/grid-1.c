@@ -47,4 +47,5 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_grid_set_column_spacing(GTK_GRID(grid), 10);
   gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
   gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+  gtk_widget_show_all(grid);
 }
