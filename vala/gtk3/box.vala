@@ -4,36 +4,38 @@ static int count = 0;
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
-  app.startup.connect(onStartup);
-  app.activate.connect(onActivate);
+  app.startup.connect(onAppStartup);
+  app.activate.connect(onAppActivate);
 
   return app.run(args);
 }
 
-void onActivate(Application self) {
-  var win = (self as Gtk.Application)?.get_active_window();
-  win?.present();
+void onAppActivate(Application self) {
+  var window = (self as Gtk.Application)?.get_active_window();
+  window?.present();
 }
 
-void onStartup(Application self) {
-  var win = new Gtk.ApplicationWindow(self as Gtk.Application) { title = appTitle };
-  var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 10) { visible = true };
-  var lbl = new Gtk.Label("Click the button") { visible = true };
-  var btn = new Gtk.Button.with_label("🤔") { visible = true };
+void onAppStartup(Application self) {
+  var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 10);
+  var label = new Gtk.Label("Click the button");
+  var button = new Gtk.Button.with_label("🤔");
 
-  btn.halign = Gtk.Align.CENTER;
-  btn.valign = Gtk.Align.CENTER;
-  btn.clicked.connect(onClicked);
+  window.add(box);
+  window.title = appTitle;
+  window.set_default_size(400, 400);
 
   box.halign = Gtk.Align.CENTER;
   box.valign = Gtk.Align.CENTER;
-  box.pack_start(lbl, false, false, 0);
-  box.pack_start(btn, false, false, 0);
+  box.pack_start(label, false, false, 0);
+  box.pack_start(button, false, false, 0);
+  box.show_all();
 
-  win.add(box);
-  win.set_default_size(400, 400);
+  button.halign = Gtk.Align.CENTER;
+  button.valign = Gtk.Align.CENTER;
+  button.clicked.connect(onButtonClicked);
 }
 
-void onClicked(Gtk.Button self) {
+void onButtonClicked(Gtk.Button self) {
   print("You clicked %d times!\n", ++count);
 }
