@@ -26,9 +26,9 @@ void onAppStartup(Application self) {
   button.visible = true;
   button.valign = Gtk.Align.CENTER;
   button.halign = Gtk.Align.CENTER;
-  button.clicked.connect(onClicked);
+  button.clicked.connect(onButtonClicked);
 }
 
-void onClicked(Gtk.Button self) {
+void onButtonClicked(Gtk.Button self) {
   print("You clicked %d times!\n", ++count);
 }
