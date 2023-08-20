@@ -1,25 +1,26 @@
 #include <gtk/gtk.h>
 
-void app_activate(GApplication *self, gpointer data);
-void app_startup(GApplication *self, gpointer data);
+void onAppActivate(GApplication *self, gpointer data);
+void onAppStartup(GApplication *self, gpointer data);
+
+const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Application";
 
 int main(int argc, char **argv) {
-  const gchar *app_id = "io.github.Miqueas.GTK-Examples.C.Gtk4.Application";
-  GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_DEFAULT_FLAGS);
+  GtkApplication *app = gtk_application_new(appID, G_APPLICATION_DEFAULT_FLAGS);
 
-  g_signal_connect(app, "startup", G_CALLBACK(app_startup), NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
+  g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
-  int res = g_application_run(G_APPLICATION(app), argc, argv);
+  int result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
-  return res;
+  return result;
 }
 
-void app_activate(GApplication *self, gpointer data) {
+void onAppActivate(GApplication *self, gpointer data) {
   g_print("Hello there!\n");
 }
 
-void app_startup(GApplication *self, gpointer data) {
+void onAppStartup(GApplication *self, gpointer data) {
   g_print("Initializing the app... Done!\n");
 }
