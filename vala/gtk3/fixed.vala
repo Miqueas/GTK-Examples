@@ -3,25 +3,27 @@ const string appTitle = "GtkFixed";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
-  app.startup.connect(onStartup);
-  app.activate.connect(onActivate);
+  app.startup.connect(onAppStartup);
+  app.activate.connect(onAppActivate);
 
   return app.run(args);
 }
 
-void onActivate(Application self) {
-  var win = (self as Gtk.Application)?.get_active_window();
-  win?.present();
+void onAppActivate(Application self) {
+  var window = (self as Gtk.Application)?.get_active_window();
+  window?.present();
 }
 
-void onStartup(Application self) {
-  var win = new Gtk.ApplicationWindow(self as Gtk.Application) { title = appTitle};
-  var fxd = new Gtk.Fixed() { visible = true };
+void onAppStartup(Application self) {
+  var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var fixed = new Gtk.Fixed();
 
-  fxd.put(new Gtk.Label("A") { visible = true }, 10, 20);
-  fxd.put(new Gtk.Label("B") { visible = true }, 100, 200);
-  fxd.put(new Gtk.Label("C") { visible = true }, 120, 326);
+  window.title = appTitle;
+  window.add(fixed);
+  window.set_default_size(400, 400);
 
-  win.add(fxd);
-  win.set_default_size(400, 400);
+  fixed.visible = true;
+  fixed.put(new Gtk.Label("A") { visible = true }, 10, 20);
+  fixed.put(new Gtk.Label("B") { visible = true }, 100, 200);
+  fixed.put(new Gtk.Label("C") { visible = true }, 120, 326);
 }
