@@ -34,6 +34,16 @@ src = [
   'window'
 ]
 
+image1 = configure_file(
+  input: 'image-1.c.in',
+  output: 'image-1.c',
+  configuration: { 'imagePath': meson.current_source_dir() / 'logo.png' }
+)
+
 foreach name : src
-  executable(name, name + '.c', dependencies: gtk3)
+  if name == 'image-1'
+    executable(name, image1, dependencies: gtk3)
+  else
+    executable(name, name + '.c', dependencies: gtk3)
+  endif
 endforeach
