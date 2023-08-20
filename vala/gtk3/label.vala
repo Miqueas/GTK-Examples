@@ -3,21 +3,24 @@ const string appTitle = "GtkLabel";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
-  app.startup.connect(onStartup);
-  app.activate.connect(onActivate);
+  app.startup.connect(onAppStartup);
+  app.activate.connect(onAppActivate);
 
   return app.run(args);
 }
 
-void onActivate(Application self) {
-  var win = (self as Gtk.Application)?.get_active_window();
-  win?.present();
+void onAppActivate(Application self) {
+  var window = (self as Gtk.Application)?.get_active_window();
+  window?.present();
 }
 
-void onStartup(Application self) {
-  var win = new Gtk.ApplicationWindow(self as Gtk.Application) { title = appTitle };
-  var lbl = new Gtk.Label("Hi there!") { visible = true };
+void onAppStartup(Application self) {
+  var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var label = new Gtk.Label("Hi there!");
 
-  win.add(lbl);
-  win.set_default_size(400, 400);
+  window.title = appTitle;
+  window.add(label);
+  window.set_default_size(400, 400);
+
+  label.visible = true;
 }
