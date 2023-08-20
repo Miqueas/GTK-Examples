@@ -3,18 +3,19 @@ const string appTitle = "GtkApplicationWindow";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
-  app.startup.connect(onStartup);
-  app.activate.connect(onActivate);
+  app.startup.connect(onAppStartup);
+  app.activate.connect(onAppActivate);
 
   return app.run(args);
 }
 
-void onActivate(Application self) {
-  var win = (self as Gtk.Application)?.get_active_window();
-  win?.present();
+void onAppActivate(Application self) {
+  var window = (self as Gtk.Application)?.get_active_window();
+  window?.present();
 }
 
-void onStartup(Application self) {
-  var win = new Gtk.ApplicationWindow(self as Gtk.Application) { title = appTitle };
-  win.set_default_size(400, 400);
+void onAppStartup(Application self) {
+  var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  window.title = appTitle;
+  window.set_default_size(400, 400);
 }
