@@ -1,5 +1,4 @@
 {
-  "mesonbuild.buildFolder": "_build",
   "mesonbuild.configureOnOpen": true,
-  "C_Cpp.default.compileCommands": "_build/vscode_compile_commands.json"
+  "C_Cpp.default.compileCommands": "_BUILD/compile_commands.json"
 }
