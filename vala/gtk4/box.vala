@@ -4,37 +4,37 @@ static int count = 0;
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
-  app.startup.connect(onStartup);
-  app.activate.connect(onActivate);
+  app.startup.connect(onAppStartup);
+  app.activate.connect(onAppActivate);
 
   return app.run(args);
 }
 
-void onActivate(Application self) {
+void onAppActivate(Application self) {
   var window = (self as Gtk.Application)?.get_active_window();
   window?.present();
 }
 
-void onStartup(Application self) {
-  var window = new Gtk.ApplicationWindow(self as Gtk.Application) { title = appTitle };
+void onAppStartup(Application self) {
+  var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 10);
   var label = new Gtk.Label("Click the button");
   var button = new Gtk.Button.with_label("🤔");
 
+  window.child = box;
+  window.title = appTitle;
+  window.set_default_size(400, 400);
+
   box.halign = Gtk.Align.CENTER;
   box.valign = Gtk.Align.CENTER;
-
-  button.halign = Gtk.Align.CENTER;
-  button.valign = Gtk.Align.CENTER;
-  button.clicked.connect(onClicked);
-  
   box.append(label);
   box.append(button);
 
-  window.child = box;
-  window.set_default_size(400, 400);
+  button.halign = Gtk.Align.CENTER;
+  button.valign = Gtk.Align.CENTER;
+  button.clicked.connect(onButtonClicked);
 }
 
-void onClicked(Gtk.Button self) {
+void onButtonClicked(Gtk.Button self) {
   print("You clicked %d times!\n", ++count);
 }
