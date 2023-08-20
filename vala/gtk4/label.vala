@@ -1,22 +1,24 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.Label";
+const string appTitle = "GtkLabel";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
-  app.startup.connect(onStartup);
-  app.activate.connect(onActivate);
+  app.startup.connect(onAppStartup);
+  app.activate.connect(onAppActivate);
 
   return app.run(args);
 }
 
-void onActivate(Application self) {
+void onAppActivate(Application self) {
   var window = (self as Gtk.Application)?.get_active_window();
   window?.present();
 }
 
-void onStartup(Application self) {
+void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var label = new Gtk.Label("Hi there!");
 
   window.child = label;
+  window.title = appTitle;
   window.set_default_size(400, 400);
 }
