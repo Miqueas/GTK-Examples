@@ -1,28 +1,32 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.HeaderBar";
 const string appTitle = "<span weight='bold'>GtkHeaderBar</span>";
-const string appSubtitle = "A (client-side) window decoration widget";
+const string appSubtitle = "<span weight='light'>App subtitle</span>";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
-  app.startup.connect(onStartup);
-  app.activate.connect(onActivate);
+  app.startup.connect(onAppStartup);
+  app.activate.connect(onAppActivate);
 
   return app.run(args);
 }
 
-void onActivate(Application self) {
+void onAppActivate(Application self) {
   var window = (self as Gtk.Application)?.get_active_window();
   window?.present();
 }
 
-void onStartup(Application self) {
+void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var titleLabel = new Gtk.Label(appTitle);
   var subtitleLabel = new Gtk.Label(appSubtitle);
-  var titleBox = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+  var titleBox = new Gtk.Box(Gtk.Orientation.VERTICAL, 4);
   var header = new Gtk.HeaderBar();
 
+  window.titlebar = header;
+  window.set_default_size(400, 400);
+
   titleLabel.use_markup = true;
+  subtitleLabel.use_markup = true;
 
   titleBox.margin_top = 4;
   titleBox.margin_bottom = 4;
@@ -32,7 +36,4 @@ void onStartup(Application self) {
 
   header.title_widget = titleBox;
   header.show_title_buttons = true;
-
-  window.titlebar = header;
-  window.set_default_size(400, 400);
 }
