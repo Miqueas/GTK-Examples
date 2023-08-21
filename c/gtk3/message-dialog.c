@@ -1,62 +1,58 @@
 #include <gtk/gtk.h>
 
-void app_activate(GApplication *self, gpointer data);
-void app_startup(GApplication *self, gpointer data);
+void onAppActivate(GApplication *self, gpointer data);
+void onAppStartup(GApplication *self, gpointer data);
+
+const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.MessageDialog";
+const gchar *appTitle = "GtkMessageDialog";
+const gchar *titleText = "<span size=\"x-large\" font-weight=\"bold\">Universe destruction</span>";
+const gchar *summaryText = "Our universe has a lot of problems and the only way to fix\n"
+"it is destroying the entire universe and this important decision\nis now in your hands.";
 
 int main(int argc, char **argv) {
-  const gchar *app_id = "io.github.Miqueas.GTK-Examples.C.Gtk3.MessageDialog";
-  GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_DEFAULT_FLAGS);
+  GtkApplication *app = gtk_application_new(appID, G_APPLICATION_DEFAULT_FLAGS);
 
-  g_signal_connect(app, "startup",  G_CALLBACK(app_startup),  NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
+  g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
-  int res = g_application_run(G_APPLICATION(app), argc, argv);
+  int result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
-  return res;
+  return result;
 }
 
-void app_activate(GApplication *self, gpointer data) {
-  GtkWindow *win = gtk_application_get_active_window(GTK_APPLICATION(self));
-  int res = gtk_dialog_run(GTK_DIALOG(win));
+void onAppActivate(GApplication *self, gpointer data) {
+  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  gint result = gtk_dialog_run(GTK_DIALOG(window));
+  gtk_widget_destroy(GTK_WIDGET(window));
 
-  switch (res) {
+  switch (result) {
     case GTK_RESPONSE_OK: {
-      gtk_widget_destroy(GTK_WIDGET(win));
       g_print("Universe destroyed! 💥\n");
       break;
     }
 
     case GTK_RESPONSE_CANCEL: {
-      gtk_widget_destroy(GTK_WIDGET(win));
       g_print("Universe is in peace now! 🙏\n");
       break;
     }
 
     default: {
-      gtk_widget_destroy(GTK_WIDGET(win));
       g_print("Nothing happens! 🤔\n");
       break;
     }
   }
 }
 
-void app_startup(GApplication *self, gpointer data) {
-  char *title = "<span size=\"x-large\" font-weight=\"bold\">Universe destruction</span>";
-  char *summary = "Our universe has a lot of problems and the only way to fix it is destroying the entire universe and this important decision is now in your hands.\0";
+void onAppStartup(GApplication *self, gpointer data) {
+  GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, NULL);
 
-  GtkWidget *dialog = g_object_new(
-    GTK_TYPE_MESSAGE_DIALOG,
-    "application", GTK_APPLICATION(self),
-    "buttons", GTK_BUTTONS_NONE,
-    "message-type", GTK_MESSAGE_QUESTION,
-    "title", "GtkMessageDialog",
-    "text", title,
-    "use-markup", TRUE,
-    "secondary-text", summary,
-    NULL
-  );
+  gtk_application_add_window(GTK_APPLICATION(self), GTK_WINDOW(dialog));
 
+  g_object_set(dialog, "text", titleText, NULL);
+  g_object_set(dialog, "use-markup", TRUE, NULL);
+  g_object_set(dialog, "secondary-text", summaryText, NULL);
+  gtk_window_set_title(GTK_WINDOW(dialog), appTitle);
   gtk_dialog_add_button(GTK_DIALOG(dialog), "Yes 👍", GTK_RESPONSE_OK);
   gtk_dialog_add_button(GTK_DIALOG(dialog), "No 🛑", GTK_RESPONSE_CANCEL);
 }
