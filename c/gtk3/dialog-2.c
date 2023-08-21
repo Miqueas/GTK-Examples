@@ -24,23 +24,21 @@ int main(int argc, char **argv) {
 
 void onAppActivate(GApplication *self, gpointer data) {
   GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  int result = gtk_dialog_run(GTK_DIALOG(window));
+  gint result = gtk_dialog_run(GTK_DIALOG(window));
+  gtk_widget_destroy(GTK_WIDGET(window));
 
   switch (result) {
     case GTK_RESPONSE_OK: {
-      gtk_widget_destroy(GTK_WIDGET(window));
       g_print("Universe destroyed! 💥\n");
       break;
     }
 
     case GTK_RESPONSE_CANCEL: {
-      gtk_widget_destroy(GTK_WIDGET(window));
       g_print("Universe is in peace now! 🙏\n");
       break;
     }
 
     default: {
-      gtk_widget_destroy(GTK_WIDGET(window));
       g_print("Nothing happens! 🤔\n");
       break;
     }
