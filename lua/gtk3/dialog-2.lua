@@ -45,15 +45,13 @@ end
 function app:on_activate()
   -- When you work with dialogs, use this instead of 'present()'
   local response = self.active_window:run()
+  self.active_window:destroy()
 
   if response == Gtk.ResponseType.OK then
-    self.active_window:destroy()
     print("Universe destroyed! 💥")
   elseif response == Gtk.ResponseType.CANCEL then
-    self.active_window:destroy()
     print("Universe is in peace now! 🙏")
   else
-    self.active_window:destroy()
     print("Nothing happens! 🤔")
   end
 end
