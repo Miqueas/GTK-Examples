@@ -5,9 +5,9 @@ void onAppStartup(GApplication *self, gpointer data);
 
 const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Dialog2";
 const gchar *appTitle = "GtkDialog";
-const char *title_text = "<span size=\"x-large\" font-weight=\"bold\">Universe destruction</span>";
-const char *epilog_text = "<span size=\"large\" font-weight=\"bold\">Do you accept?</span>";
-const char *summary_text = "Our universe has a lot of problems and the only way to fix\n"
+const gchar *title_text = "<span size=\"x-large\" font-weight=\"bold\">Universe destruction</span>";
+const gchar *epilog_text = "<span size=\"large\" font-weight=\"bold\">Do you accept?</span>";
+const gchar *summary_text = "Our universe has a lot of problems and the only way to fix\n"
 "it is destroying the entire universe and this important decision\nis now in your hands.";
 
 int main(int argc, char **argv) {
