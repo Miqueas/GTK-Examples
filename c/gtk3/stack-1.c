@@ -40,7 +40,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_widget_set_halign(switcher, GTK_ALIGN_CENTER);
   gtk_stack_switcher_set_stack(GTK_STACK_SWITCHER(switcher), GTK_STACK(stack));
 
-  gtk_box_set_homogeneous(GTK_BOX(box), TRUE);
+  gtk_box_set_homogeneous(GTK_BOX(box), FALSE);
   gtk_box_pack_start(GTK_BOX(box), stack, TRUE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box), switcher, FALSE, TRUE, 0);
   gtk_widget_show_all(box);
@@ -58,7 +58,7 @@ GtkWidget* doStack() {
     sprintf(name, "page%d", i + 1);
 
     GtkWidget *widget = gtk_label_new(label);
-    gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
+    gtk_label_set_use_markup(GTK_LABEL(widget), TRUE);
 
     gtk_stack_add_titled(GTK_STACK(stack), widget, name, title);
   }
