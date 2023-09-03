@@ -1,14 +1,33 @@
 #include <gtk/gtk.h>
 
-void app_activate(GApplication *self, gpointer data);
-void app_startup(GApplication *self, gpointer data);
+void onAppActivate(GApplication *self, gpointer data);
+void onAppStartup(GApplication *self, gpointer data);
+
+const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.TextView";
+const gchar *appTitle = "GtkTextView";
+const gchar *loremIpsum =
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+"incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad"
+"sapientiam perveniri potest, non paranda nobis solum ea, sed fruenda etiam"
+"sapientia est; sive hoc difficile est, tamen nec modus est ullus investigandi"
+"veri, nisi inveneris, et quaerendi defatigatio turpis est, cum id, quod maxime"
+"placeat, facere possimus, omnis voluptas assumenda est, omnis."
+"\n\n"
+"Ut omittam pericula, labores, dolorem etiam, quem optimus quisque pro patria et"
+"pro suis suscipit, ut non plus voluptatum habeat quam dolorum. Nam et ipsa"
+"declinatio ad libidinem fingitur -- ait enim declinare atomum sine causa; quo."
+"\n\n"
+"Credo quibusdam usu venire; ut abhorreant a Latinis, quod inciderint in inculta"
+"quaedam et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam"
+"voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia maiores"
+"consequatur. Eadem fortitudinis ratio reperietur. Nam neque laborum perfunctio"
+"neque.\0";
 
 int main(int argc, char **argv) {
-  const gchar *app_id = "io.github.Miqueas.GTK-Examples.C.Gtk3.TextView";
-  GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_DEFAULT_FLAGS);
+  GtkApplication *app = gtk_application_new(appID, G_APPLICATION_DEFAULT_FLAGS);
 
-  g_signal_connect(app, "startup",  G_CALLBACK(app_startup),  NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
+  g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
   int res = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
@@ -16,47 +35,26 @@ int main(int argc, char **argv) {
   return res;
 }
 
-void app_activate(GApplication *self, gpointer data) {
+void onAppActivate(GApplication *self, gpointer data) {
   GtkWindow *win = gtk_application_get_active_window(GTK_APPLICATION(self));
   gtk_window_present(win);
 }
 
-void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win = g_object_new(
-    GTK_TYPE_APPLICATION_WINDOW,
-    "application", GTK_APPLICATION(self),
-    "default-width", 400,
-    "default-height", 400,
-    NULL
-  );
+void onAppStartup(GApplication *self, gpointer data) {
+  GtkWidget *window, *textView;
 
-  GtkWidget *header = g_object_new(
-    GTK_TYPE_HEADER_BAR,
-    "visible", TRUE,
-    "show-close-button", TRUE,
-    "title", "GtkTextView",
-    NULL
-  );
+  window = gtk_application_window_new(GTK_APPLICATION(self));
+  textView = gtk_text_view_new();
 
-  const gchar *lorem_ipsum = "Duis in metus eros. Duis faucibus rutrum eros eu vestibulum."
-  "Proin et arcu nulla. Etiam at lacinia nibh. Vivamus pellentesque nunc nibh,"
-  "ac dignissim massa lobortis ut. Integer eu felis in elit semper ullamcorper"
-  "at in ipsum. Suspendisse tempus massa vel nibh tristique vestibulum."
-  "Vestibulum varius eu nunc eu interdum. Curabitur pulvinar velit in purus"
-  "facilisis, et auctor augue consequat. Donec finibus felis ligula, a convallis"
-  "justo tristique a.\0";
+  gtk_container_add(GTK_CONTAINER(window), textView);
+  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
-  GtkWidget *tv = g_object_new(
-    GTK_TYPE_TEXT_VIEW,
-    "visible", TRUE,
-    "editable", FALSE,
-    "wrap-mode", GTK_WRAP_WORD,
-    NULL
-  );
+  gtk_text_view_set_editable(GTK_TEXT_VIEW(textView), FALSE);
+  gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(textView), GTK_WRAP_WORD);
 
-  GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
-  gtk_text_buffer_set_text(GTK_TEXT_BUFFER(tb), lorem_ipsum, -1);
+  GtkTextBuffer *textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
+  gtk_text_buffer_set_text(GTK_TEXT_BUFFER(textBuffer), loremIpsum, -1);
 
-  gtk_container_add(GTK_CONTAINER(win), tv);
-  gtk_window_set_titlebar(GTK_WINDOW(win), header);
+  gtk_widget_show(textView);
 }
