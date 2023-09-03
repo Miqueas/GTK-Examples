@@ -1,15 +1,17 @@
 #include <gtk/gtk.h>
 
-void app_activate(GApplication *self, gpointer data);
-void app_startup(GApplication *self, gpointer data);
-GtkWidget* build_stack();
+void onAppActivate(GApplication *self, gpointer data);
+void onAppStartup(GApplication *self, gpointer data);
+GtkWidget* doStack();
+
+const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Stack1";
+const gchar *appTitle = "GtkStack";
 
 int main(int argc, char **argv) {
-  const gchar *app_id = "io.github.Miqueas.GTK-Examples.C.Gtk3.Stack1";
-  GtkApplication *app = gtk_application_new(app_id, G_APPLICATION_DEFAULT_FLAGS);
+  GtkApplication *app = gtk_application_new(appID, G_APPLICATION_DEFAULT_FLAGS);
 
-  g_signal_connect(app, "startup",  G_CALLBACK(app_startup),  NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
+  g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
   int res = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
@@ -17,65 +19,36 @@ int main(int argc, char **argv) {
   return res;
 }
 
-void app_activate(GApplication *self, gpointer data) {
+void onAppActivate(GApplication *self, gpointer data) {
   GtkWindow *win = gtk_application_get_active_window(GTK_APPLICATION(self));
   gtk_window_present(win);
 }
 
-void app_startup(GApplication *self, gpointer data) {
-  GtkWidget *win, *header, *stack, *switcher, *box;
+void onAppStartup(GApplication *self, gpointer data) {
+  GtkWidget *win, *stack, *switcher, *box;
 
-  win = g_object_new(
-    GTK_TYPE_APPLICATION_WINDOW,
-    "application", self,
-    "default-width", 400,
-    "default-height", 400,
-    "border-width", 10,
-    NULL
-  );
-
-  header = g_object_new(
-    GTK_TYPE_HEADER_BAR,
-    "visible", TRUE,
-    "show-close-button", TRUE,
-    "title", "GtkStack",
-    "subtitle", "GtkStack with GtkStackSwitcher example",
-    NULL
-  );
-
-  stack = build_stack();
-
-  switcher = g_object_new(
-    GTK_TYPE_STACK_SWITCHER,
-    "visible", TRUE,
-    "stack", stack,
-    "halign", GTK_ALIGN_CENTER,
-    NULL
-  );
-  
-  box = g_object_new(
-    GTK_TYPE_BOX,
-    "visible", TRUE,
-    "orientation", GTK_ORIENTATION_VERTICAL,
-    "spacing", 10,
-    "homogeneous", FALSE,
-    NULL
-  );
-
-  gtk_box_pack_start(GTK_BOX(box), stack, TRUE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box), switcher, FALSE, TRUE, 0);
+  win = gtk_application_window_new(GTK_APPLICATION(self));
+  stack = doStack();
+  switcher = gtk_stack_switcher_new();
+  box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
   gtk_container_add(GTK_CONTAINER(win), box);
-  gtk_window_set_titlebar(GTK_WINDOW(win), header);
+  gtk_window_set_title(GTK_WINDOW(win), appTitle);
+  gtk_window_set_default_size(GTK_WINDOW(win), 400, 400);
+  gtk_container_set_border_width(GTK_CONTAINER(win), 10);
+
+  gtk_widget_set_halign(switcher, GTK_ALIGN_CENTER);
+  gtk_stack_switcher_set_stack(GTK_STACK_SWITCHER(switcher), GTK_STACK(stack));
+
+  gtk_box_set_homogeneous(GTK_BOX(box), TRUE);
+  gtk_box_pack_start(GTK_BOX(box), stack, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(box), switcher, FALSE, TRUE, 0);
+  gtk_widget_show_all(box);
 }
 
-GtkWidget* build_stack() {
-  GtkWidget *stack = g_object_new(
-    GTK_TYPE_STACK,
-    "visible", TRUE,
-    "transition-type", GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT,
-    NULL
-  );
+GtkWidget* doStack() {
+  GtkWidget *stack = gtk_stack_new();
+  gtk_stack_set_transition_type(GTK_STACK(stack), GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
 
   for (int i = 0; i < 3; i++) {
     char label[56], title[7], name[6];
@@ -84,18 +57,10 @@ GtkWidget* build_stack() {
     sprintf(title, "Page %d", i + 1);
     sprintf(name, "page%d", i + 1);
 
-    gtk_stack_add_titled(
-      GTK_STACK(stack),
-      g_object_new(
-        GTK_TYPE_LABEL,
-        "visible", TRUE,
-        "label", label,
-        "use-markup", TRUE,
-        NULL
-      ),
-      name,
-      title
-    );
+    GtkWidget *widget = gtk_label_new(label);
+    gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
+
+    gtk_stack_add_titled(GTK_STACK(stack), widget, name, title);
   }
 
   return stack;
