@@ -7,7 +7,7 @@ const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ApplicationWindow";
 const gchar *appTitle = "GtkApplicationWindow";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, G_APPLICATION_DEFAULT_FLAGS);
+  GtkApplication *app = gtk_application_new(appID, G_APPLICATION_FLAGS_NONE);
 
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);

@@ -2,7 +2,7 @@ const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.ListBox";
 const string appTitle = "GtkListBox";
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, ApplicationFlags.DEFAULT_FLAGS);
+  var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
   app.startup.connect(onAppStartup);
   app.activate.connect(onAppActivate);
 
