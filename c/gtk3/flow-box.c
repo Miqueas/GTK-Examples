@@ -52,6 +52,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   flowBox = gtk_flow_box_new();
   scrolledWindow = gtk_scrolled_window_new(NULL, NULL);
 
+  gtk_window_set_title(GTK_WINDOW(window), appTitle);
   gtk_container_add(GTK_CONTAINER(window), scrolledWindow);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
@@ -60,14 +61,12 @@ void onAppStartup(GApplication *self, gpointer data) {
 
   srand(time(NULL));
 
-  for (int i = 0; i < 1000; i++) {
+  for (int i = 0; i < 1000; i++)
     gtk_flow_box_insert(
       GTK_FLOW_BOX(flowBox),
       gtk_image_new_from_icon_name(icons[(rand() % 20)], GTK_ICON_SIZE_DIALOG),
       i
     );
-  }
-
 
   gtk_container_add(GTK_CONTAINER(scrolledWindow), flowBox);
   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledWindow), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
