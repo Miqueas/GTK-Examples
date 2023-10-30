@@ -4,6 +4,7 @@ src = [
   'application-window',
   'box',
   'button',
+  'combo-box-text',
   'header-bar',
   'label',
   'list-box',
