@@ -5,7 +5,8 @@ void onAppStartup(GApplication *self, gpointer data);
 
 const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FlowBox";
 const gchar *appTitle = "GtkFlowBox";
-const gchar *icons[10] = {
+const gchar *icons[20] = {
+  "face-angel",
   "face-angry",
   "face-surprise",
   "face-laugh",
@@ -15,7 +16,16 @@ const gchar *icons[10] = {
   "face-smirk",
   "face-sick",
   "face-kiss",
-  "face-smile"
+  "face-heart-broken",
+  "face-smile",
+  "face-crying",
+  "face-devilish",
+  "face-heart",
+  "face-sad",
+  "face-smile-big",
+  "face-tired",
+  "face-wink",
+  "face-worried"
 };
 
 int main(int argc, char **argv) {
@@ -50,10 +60,10 @@ void onAppStartup(GApplication *self, gpointer data) {
 
   srand(time(NULL));
 
-  for (int i = 0; i < 400; i++) {
+  for (int i = 0; i < 1000; i++) {
     gtk_flow_box_insert(
       GTK_FLOW_BOX(flowBox),
-      gtk_image_new_from_icon_name(icons[(rand() % 10)], GTK_ICON_SIZE_DIALOG),
+      gtk_image_new_from_icon_name(icons[(rand() % 20)], GTK_ICON_SIZE_DIALOG),
       i
     );
   }
