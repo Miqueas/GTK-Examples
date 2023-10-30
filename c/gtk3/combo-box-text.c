@@ -35,11 +35,10 @@ void onAppActivate(GApplication *self, gpointer data) {
 }
 
 void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window, *hintLabel, *messageLabel, *comboBox, *box;
+  GtkWidget *window, *hintLabel, *comboBox, *box;
 
   window = gtk_application_window_new(GTK_APPLICATION(self));
-  messageLabel = gtk_label_new("Select an option");
-  comboBox = g_object_new(GTK_TYPE_COMBO_BOX_TEXT, "visible", TRUE, NULL);
+  comboBox = gtk_combo_box_text_new();
   hintLabel = gtk_label_new("Default id: gnome");
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
@@ -56,7 +55,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_combo_box_set_active_id(GTK_COMBO_BOX(comboBox), "gnome");
 
   g_object_set(box, "halign", GTK_ALIGN_CENTER, "valign", GTK_ALIGN_CENTER, NULL);
-  gtk_box_pack_start(GTK_BOX(box), messageLabel, FALSE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(box), gtk_label_new("Select an option"), FALSE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box), comboBox, FALSE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box), hintLabel, FALSE, TRUE, 0);
   gtk_widget_show_all(box);
