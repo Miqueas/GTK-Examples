@@ -10,6 +10,7 @@ src = [
   'label',
   'list-box',
   'fixed',
+  'flow-box',
   'window',
 ]
 
