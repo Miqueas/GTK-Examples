@@ -2,6 +2,7 @@ src = [
   'action-bar',
   'application',
   'application-window',
+  'assistant',
   'box',
   'button',
   'combo-box-text',
