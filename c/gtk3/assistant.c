@@ -166,7 +166,7 @@ void onDoneButtonClicked(GtkButton *self, GPtrArray *data) {
 }
 
 void onAssistantApply(GtkAssistant *self, GPtrArray *data) {
-  g_timeout_add(1000, progressBarUpdateFunction, data);
+  g_timeout_add(200, progressBarUpdateFunction, data);
 }
 
 gboolean progressBarUpdateFunction(gpointer data) {
