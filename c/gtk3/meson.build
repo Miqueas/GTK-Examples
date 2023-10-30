@@ -40,9 +40,17 @@ image1 = configure_file(
   configuration: { 'imagePath': meson.current_source_dir() / 'logo.png' }
 )
 
+builder = configure_file(
+  input: 'builder.c.in',
+  output: 'builder.c',
+  configuration: { 'builderPath': meson.current_source_dir() / 'builder.ui' }
+)
+
 foreach name : src
   if name == 'image-1'
     executable(name, image1, dependencies: gtk3)
+  elif name == 'builder'
+    executable(name, builder, dependencies: gtk3)
   else
     executable(name, name + '.c', dependencies: gtk3)
   endif

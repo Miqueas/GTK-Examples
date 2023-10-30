@@ -4,6 +4,7 @@
 
 <!-- The window -->
 <object class="GtkWindow" id="window">
+  <property name="title">GtkBuilder</property>
   <property name="window-position">center</property>
   <property name="default-width">400</property>
   <property name="default-height">400</property>
