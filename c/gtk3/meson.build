@@ -37,13 +37,13 @@ src = [
 image1 = configure_file(
   input: 'image-1.c.in',
   output: 'image-1.c',
-  configuration: { 'imagePath': meson.current_source_dir() / 'logo.png' }
+  configuration: { 'imagePath': meson.project_source_root() / 'data' / 'logo.png' }
 )
 
 builder = configure_file(
   input: 'builder.c.in',
   output: 'builder.c',
-  configuration: { 'builderPath': meson.current_source_dir() / 'builder.ui' }
+  configuration: { 'builderPath': meson.project_source_root() / 'data' / 'builder.ui' }
 )
 
 foreach name : src

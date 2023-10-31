@@ -4,7 +4,6 @@ void onAppStartup(GApplication *self, gpointer data);
 void onAppActivate(GApplication *self, gpointer data);
 
 const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Builder";
-const gchar *appTitle = "GtkBuilder";
 
 int main(int argc, char **argv) {
   GtkApplication *app = gtk_application_new(appID, G_APPLICATION_FLAGS_NONE);
@@ -26,5 +25,5 @@ void onAppActivate(GApplication *self, gpointer data) {
 void onAppStartup(GApplication *self, gpointer data) {
   GtkBuilder *builder = gtk_builder_new_from_file("@builderPath@");
   GObject *window = gtk_builder_get_object(builder, "window");
-  gtk_application_add_window(GTK_APPLICATION(self), GTK_WINDOW(window));
+  gtk_application_add_window(GTK_APPLICATION(self), GTK_APPLICATION_WINDOW(window));
 }
