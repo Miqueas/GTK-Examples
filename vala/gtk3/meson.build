@@ -18,7 +18,7 @@ src = [
 builder = configure_file(
   input: 'builder.vala.in',
   output: 'builder.vala',
-  configuration: { 'builderPath': meson.project_source_root() / 'data' / 'builder.ui' }
+  configuration: builderConf
 )
 
 foreach name : src

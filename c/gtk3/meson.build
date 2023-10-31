@@ -34,23 +34,23 @@ src = [
   'window'
 ]
 
-image1 = configure_file(
-  input: 'image-1.c.in',
-  output: 'image-1.c',
-  configuration: { 'imagePath': meson.project_source_root() / 'data' / 'logo.png' }
-)
-
 builder = configure_file(
   input: 'builder.c.in',
   output: 'builder.c',
-  configuration: { 'builderPath': meson.project_source_root() / 'data' / 'builder.ui' }
+  configuration: builderConf
+)
+
+image1 = configure_file(
+  input: 'image-1.c.in',
+  output: 'image-1.c',
+  configuration: imageConf
 )
 
 foreach name : src
-  if name == 'image-1'
-    executable(name, image1, dependencies: gtk3)
-  elif name == 'builder'
+  if name == 'builder'
     executable(name, builder, dependencies: gtk3)
+  elif name == 'image-1'
+    executable(name, image1, dependencies: gtk3)
   else
     executable(name, name + '.c', dependencies: gtk3)
   endif

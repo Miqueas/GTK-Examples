@@ -10,7 +10,12 @@ add_project_arguments('--enable-experimental', language: 'vala')
 gtk3 = dependency('gtk+-3.0', required: true)
 gtk4 = dependency('gtk4', required: true)
 
+builderConf = { 'builderPath': meson.project_source_root() / 'data' / 'builder.ui' }
+cssConf = { 'cssPath': meson.project_source_root() / 'data' / 'css-provider.css' }
+imageConf = { 'imagePath': meson.project_source_root() / 'data' / 'grid-explained.png' }
+
 subdir('c/gtk3')
 subdir('c/gtk4')
+subdir('lua/gtk3')
 subdir('vala/gtk3')
 subdir('vala/gtk4')
