@@ -5,7 +5,6 @@ int main(string[] args) {
   var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
   app.startup.connect(onAppStartup);
   app.activate.connect(onAppActivate);
-
   return app.run(args);
 }
 
@@ -23,18 +22,26 @@ void onAppStartup(Application self) {
   var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
   var boxLabel = new Gtk.Label("App content");
 
-  window.set_titlebar(headerBar);
-  window.set_default_size(400, 400);
-  window.add(box);
+  with (window) {
+    set_titlebar(headerBar);
+    set_default_size(400, 400);
+    add(box);
+  }
 
-  headerBar.visible = true;
-  headerBar.title = appTitle;
-  headerBar.show_close_button = true;
+  with (headerBar) {
+    visible = true;
+    title = appTitle;
+    show_close_button = true;
+  }
 
-  actionBar.pack_start(actionBarLabel);
-  actionBar.pack_end(actionBarButton);
+  with (actionBar) {
+    pack_start(actionBarLabel);
+    pack_end(actionBarButton);
+  }
 
-  box.pack_start(boxLabel, true, true, 0);
-  box.pack_end(actionBar, false, true, 0);
-  box.show_all();
+  with (box) {
+    pack_start(boxLabel, true, true, 0);
+    pack_end(actionBar, false, true, 0);
+    show_all();
+  }
 }
