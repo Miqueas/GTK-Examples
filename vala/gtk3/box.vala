@@ -17,23 +17,36 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var headerBar = new Gtk.HeaderBar();
   var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 10);
   var label = new Gtk.Label("Click the button");
   var button = new Gtk.Button.with_label("🤔");
 
-  window.add(box);
-  window.title = appTitle;
-  window.set_default_size(400, 400);
+  with (window) {
+    add(box);
+    set_titlebar(headerBar);
+    set_default_size(400, 400);
+  }
 
-  box.halign = Gtk.Align.CENTER;
-  box.valign = Gtk.Align.CENTER;
-  box.pack_start(label, false, false, 0);
-  box.pack_start(button, false, false, 0);
-  box.show_all();
+  with (headerBar) {
+    visible = true;
+    title = appTitle;
+    show_close_button = true;
+  }
 
-  button.halign = Gtk.Align.CENTER;
-  button.valign = Gtk.Align.CENTER;
-  button.clicked.connect(onButtonClicked);
+  with (box) {
+    halign = Gtk.Align.CENTER;
+    valign = Gtk.Align.CENTER;
+    pack_start(label, false, false, 0);
+    pack_start(button, false, false, 0);
+    show_all();
+  }
+
+  with (button) {
+    halign = Gtk.Align.CENTER;
+    valign = Gtk.Align.CENTER;
+    clicked.connect(onButtonClicked);
+  }
 }
 
 void onButtonClicked(Gtk.Button self) {

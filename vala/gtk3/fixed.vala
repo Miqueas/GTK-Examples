@@ -16,14 +16,25 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var headerBar = new Gtk.HeaderBar();
   var fixed = new Gtk.Fixed();
 
-  window.title = appTitle;
-  window.add(fixed);
-  window.set_default_size(400, 400);
+  with (window) {
+    add(fixed);
+    set_titlebar(headerBar);
+    set_default_size(400, 400);
+  }
 
-  fixed.visible = true;
-  fixed.put(new Gtk.Label("A") { visible = true }, 10, 20);
-  fixed.put(new Gtk.Label("B") { visible = true }, 100, 200);
-  fixed.put(new Gtk.Label("C") { visible = true }, 120, 326);
+  with (headerBar) {
+    visible = true;
+    title = appTitle;
+    show_close_button = true;
+  }
+
+  with (fixed) {
+    visible = true;
+    put(new Gtk.Label("A") { visible = true }, 10, 20);
+    put(new Gtk.Label("B") { visible = true }, 100, 200);
+    put(new Gtk.Label("C") { visible = true }, 120, 326);
+  }
 }

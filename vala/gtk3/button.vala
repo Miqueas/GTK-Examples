@@ -17,16 +17,27 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var headerBar = new Gtk.HeaderBar();
   var button = new Gtk.Button.with_label("Click me!");
 
-  window.title = appTitle;
-  window.add(button);
-  window.set_default_size(400, 400);
+  with (window) {
+    add(button);
+    set_titlebar(headerBar);
+    set_default_size(400, 400);
+  }
 
-  button.visible = true;
-  button.valign = Gtk.Align.CENTER;
-  button.halign = Gtk.Align.CENTER;
-  button.clicked.connect(onButtonClicked);
+  with (headerBar) {
+    visible = true;
+    title = appTitle;
+    show_close_button = true;
+  }
+
+  with (button) {
+    visible = true;
+    valign = Gtk.Align.CENTER;
+    halign = Gtk.Align.CENTER;
+    clicked.connect(onButtonClicked);
+  }
 }
 
 void onButtonClicked(Gtk.Button self) {

@@ -16,14 +16,15 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.Assistant();
+  var headerBar = new Gtk.HeaderBar();
   var page1 = doPage1();
   var page2 = doPage2(window);
   var page3 = doPage3(window);
   var page4 = doPage4();
 
   with (window) {
-    title = appTitle;
     application = self as Gtk.Application;
+    set_titlebar(headerBar);
     set_default_size(800, 400);
     cancel.connect(destroy);
     close.connect(destroy);
@@ -44,6 +45,12 @@ void onAppStartup(Application self) {
     set_page_type(page4, Gtk.AssistantPageType.SUMMARY);
 
     set_page_complete(page1, true);
+  }
+
+  with (headerBar) {
+    visible = true;
+    subtitle = appTitle;
+    show_close_button = true;
   }
 
   (self as Gtk.Application)?.add_window(window);

@@ -16,11 +16,18 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
-  var label = new Gtk.Label("Hi there!");
+  var headerBar = new Gtk.HeaderBar();
+  var label = new Gtk.Label("Hi there!") { visible = true };
 
-  window.title = appTitle;
-  window.add(label);
-  window.set_default_size(400, 400);
+  with (window) {
+    add(label);
+    set_titlebar(headerBar);
+    set_default_size(400, 400);
+  }
 
-  label.visible = true;
+  with (headerBar) {
+    visible = true;
+    title = appTitle;
+    show_close_button = true;
+  }
 }

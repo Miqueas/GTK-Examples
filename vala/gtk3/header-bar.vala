@@ -17,13 +17,17 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
-  var header = new Gtk.HeaderBar();
+  var headerBar = new Gtk.HeaderBar();
 
-  window.set_titlebar(header);
-  window.set_default_size(400, 400);
+  with (window) {
+    set_titlebar(headerBar);
+    set_default_size(400, 400);
+  }
 
-  header.visible = true;
-  header.title = appTitle;
-  header.subtitle = appSubtitle;
-  header.show_close_button = true;
+  with (headerBar) {
+    visible = true;
+    title = appTitle;
+    subtitle = appSubtitle;
+    show_close_button = true;
+  }
 }

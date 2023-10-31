@@ -37,20 +37,33 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var headerBar = new Gtk.HeaderBar();
   var flowBox = new Gtk.FlowBox();
   var scrolledWindow = new Gtk.ScrolledWindow(null, null);
 
-  window.title = appTitle;
-  window.add(scrolledWindow);
-  window.set_default_size(400, 400);
+  with (window) {
+    add(scrolledWindow);
+    set_titlebar(headerBar);
+    set_default_size(400, 400);
+  }
 
-  flowBox.set_selection_mode(Gtk.SelectionMode.NONE);
-  flowBox.set_max_children_per_line(30);
+  with (headerBar) {
+    visible = true;
+    title = appTitle;
+    show_close_button = true;
+  }
 
-  for (var i = 0; i < 1000; i++)
-    flowBox.insert(new Gtk.Image.from_icon_name(icons[Random.int_range(0, 20)], Gtk.IconSize.DIALOG), i);
+  with (flowBox) {
+    set_selection_mode(Gtk.SelectionMode.NONE);
+    set_max_children_per_line(30);
 
-  scrolledWindow.add(flowBox);
-  scrolledWindow.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
-  scrolledWindow.show_all();
+    for (var i = 0; i < 1000; i++)
+      insert(new Gtk.Image.from_icon_name(icons[Random.int_range(0, 20)], Gtk.IconSize.DIALOG), i);
+  }
+
+  with (scrolledWindow) {
+    add(flowBox);
+    set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
+    show_all();
+  }
 }

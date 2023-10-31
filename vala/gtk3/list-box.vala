@@ -16,29 +16,44 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var headerBar = new Gtk.HeaderBar();
   var listBox = new Gtk.ListBox();
   var scrolledWindow = new Gtk.ScrolledWindow(null, null);
   var button = new Gtk.Button.with_label("Load");
   var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 10);
 
-  window.title = appTitle;
-  window.border_width = 10;
-  window.add(box);
-  window.set_default_size(400, 400);
+  with (window) {
+    border_width = 10;
+    add(box);
+    set_titlebar(headerBar);
+    set_default_size(400, 400);
+  }
 
-  scrolledWindow.shadow_type = Gtk.ShadowType.NONE;
-  scrolledWindow.propagate_natural_width = true;
-  scrolledWindow.propagate_natural_height = true;
-  scrolledWindow.add(listBox);
+  with (headerBar) {
+    visible = true;
+    title = appTitle;
+    show_close_button = true;
+  }
 
-  button.halign = Gtk.Align.CENTER;
-  button.valign = Gtk.Align.CENTER;
-  button.clicked.connect(self => {
-    for (int i = 0; i < 100; i++)
-      listBox.insert(new Gtk.Label(@"Text $(i + 1)") { visible = true }, i);
-  });
+  with (scrolledWindow) {
+    shadow_type = Gtk.ShadowType.NONE;
+    propagate_natural_width = true;
+    propagate_natural_height = true;
+    add(listBox);
+  }
 
-  box.pack_start(scrolledWindow, true, true, 0);
-  box.pack_start(button, false, false, 0);
-  box.show_all();
+  with (button) {
+    halign = Gtk.Align.CENTER;
+    valign = Gtk.Align.CENTER;
+    clicked.connect(self => {
+      for (int i = 0; i < 100; i++)
+        listBox.insert(new Gtk.Label(@"Text $(i + 1)") { visible = true }, i);
+    });
+  }
+
+  with (box) {
+    pack_start(scrolledWindow, true, true, 0);
+    pack_start(button, false, false, 0);
+    show_all();
+  }
 }

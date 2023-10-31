@@ -21,14 +21,21 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var headerBar = new Gtk.HeaderBar();
   var comboBox = new Gtk.ComboBoxText();
   var hintLabel = new Gtk.Label("Default id: gnome");
   var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 10);
 
   with (window) {
-    title = appTitle;
-    set_default_size(400, 400);
     add(box);
+    set_titlebar(headerBar);
+    set_default_size(400, 400);
+  }
+
+  with (headerBar) {
+    visible = true;
+    title = appTitle;
+    show_close_button = true;
   }
 
   with (comboBox) {
