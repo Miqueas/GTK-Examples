@@ -22,7 +22,7 @@ function app:on_startup()
   })
 
   local provider = Gtk.CssProvider()
-  provider:load_from_path("css-provider.css")
+  provider:load_from_path("@cssPath@")
 
   local screen = win:get_screen()
   local styleContext = win:get_style_context()
