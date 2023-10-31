@@ -35,7 +35,7 @@ void onAppStartup(Application self) {
   button.valign = Gtk.Align.CENTER;
   button.clicked.connect(self => {
     for (int i = 0; i < 100; i++)
-      listBox.insert(new Gtk.Label(@"Text $(i + 1)"), i);
+      listBox.insert(new Gtk.Label(@"Text $(i + 1)") { visible = true }, i);
   });
 
   box.pack_start(scrolledWindow, true, true, 0);
