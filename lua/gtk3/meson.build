@@ -1,3 +1,6 @@
+message('Run the Lua examples by just using the Lua command from the project root directory')
+message('Except for the following Lua examples that needs to be configured:')
+
 configure_file(
   input: 'builder-1.lua.in',
   output: 'builder-1.lua',
