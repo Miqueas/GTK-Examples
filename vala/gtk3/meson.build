@@ -7,6 +7,7 @@ src = [
   'builder',
   'button',
   'combo-box-text',
+  'dialog',
   'entry-completion',
   'entry',
   'header-bar',
@@ -14,6 +15,7 @@ src = [
   'list-box',
   'fixed',
   'flow-box',
+  'message-dialog',
   'window',
 ]
 
