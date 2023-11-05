@@ -17,7 +17,7 @@ function app:on_startup()
   })
 
   dialog:add_button("Yes 😈👍", Gtk.ResponseType.OK)
-  dialog:add_button("No 💀🛑", Gtk.ResponseType.CANCEL)
+  dialog:add_button("No 💀🤚", Gtk.ResponseType.CANCEL)
 
   local titleText = [[<span size="x-large" font-weight="bold">Universe destruction</span>]]
   local titleLabel = Gtk.Label({ visible = true, label = titleText, use_markup = true })
