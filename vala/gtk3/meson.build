@@ -7,6 +7,8 @@ src = [
   'builder',
   'button',
   'combo-box-text',
+  'entry-completion',
+  'entry',
   'header-bar',
   'label',
   'list-box',
