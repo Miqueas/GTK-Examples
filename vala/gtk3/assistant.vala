@@ -17,13 +17,14 @@ void onAppActivate(Application self) {
 void onAppStartup(Application self) {
   var window = new Gtk.Assistant();
   var headerBar = new Gtk.HeaderBar();
-  var page1 = doPage1();
+  var page1 = new Gtk.Label(appWelcomeText) { visible = true, use_markup = true };
   var page2 = doPage2(window);
   var page3 = doPage3(window);
-  var page4 = doPage4();
+  var page4 = new Gtk.Label("System installed successfully!") { visible = true };
+
+  (self as Gtk.Application)?.add_window(window);
 
   with (window) {
-    application = self as Gtk.Application;
     set_titlebar(headerBar);
     set_default_size(800, 400);
     cancel.connect(destroy);
@@ -52,12 +53,6 @@ void onAppStartup(Application self) {
     subtitle = appTitle;
     show_close_button = true;
   }
-
-  (self as Gtk.Application)?.add_window(window);
-}
-
-Gtk.Label doPage1() {
-  return new Gtk.Label(appWelcomeText) { visible = true, use_markup = true };
 }
 
 Gtk.Grid doPage2(Gtk.Assistant assistant) {
@@ -87,13 +82,6 @@ Gtk.Grid doPage2(Gtk.Assistant assistant) {
     show_all();
   }
 
-  nameLabel.set_size_request(110, -1);
-  usernameLabel.set_size_request(110, -1);
-  passwordLabel.set_size_request(110, -1);
-
-  nameEntry.set_size_request(120, -1);
-  usernameEntry.set_size_request(120, -1);
-  passwordEntry.set_size_request(120, -1);
   passwordEntry.visibility = false;
   passwordEntry.input_purpose = Gtk.InputPurpose.PASSWORD;
 
@@ -104,20 +92,19 @@ Gtk.Grid doPage2(Gtk.Assistant assistant) {
 
 Gtk.Box doPage3(Gtk.Assistant assistant) {
   var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 10);
-  var infoLabel = new Gtk.Label("Installing the system...");
   var progressBar = new Gtk.ProgressBar();
 
   with (box) {
     halign = Gtk.Align.CENTER;
     valign = Gtk.Align.CENTER;
-    pack_start(infoLabel, false, false, 0);
+    pack_start(new Gtk.Label("Installing the system..."), false, false, 0);
     pack_start(progressBar, false, false, 0);
     show_all();
   }
 
   with (progressBar) {
-    set_size_request(240, -1);
-    set_pulse_step(0.2);
+    width_request = 240;
+    pulse_step = 0.2;
   }
 
   assistant.apply.connect(self => Timeout.add(200, () => {
@@ -137,8 +124,4 @@ Gtk.Box doPage3(Gtk.Assistant assistant) {
   }));
 
   return box;
-}
-
-Gtk.Label doPage4() {
-  return new Gtk.Label("System installed successfully!") { visible = true };
 }
