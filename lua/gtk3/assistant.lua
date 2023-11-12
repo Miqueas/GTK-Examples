@@ -6,37 +6,24 @@ local Glib = lgi.require("GLib")
 
 local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Assistant"
 local appTitle = "GtkAssistant"
-local app = Gtk.Application({ application_id = appID })
-
-local function doPage1()
-  return Gtk.Label({
-    visible = true,
-    label = "<span font='Bold 16'>Welcome to the GtkAssistant example</span>",
-    use_markup = true
-  })
-end
+local appWelcomeText = "<span font='Bold 16'>Welcome to the GtkAssistant example</span>"
+local app = Gtk.Application { application_id = appID }
 
 local function doPage2(assistantWindow)
-  local grid = Gtk.Grid({
-    column_spacing = 10,
-    row_spacing = 10,
-    halign = Gtk.Align.CENTER,
-    valign = Gtk.Align.CENTER
-  })
-
-  local infoLabel = Gtk.Label({ label = "Fill this form" })
-  local nameLabel = Gtk.Label({ label = "Full name", xalign = 0.0, width_request = 110 })
-  local usernameLabel = Gtk.Label({ label = "Username", xalign = 0.0, width_request = 110 })
-  local passwordLabel = Gtk.Label({ label = "Password", xalign = 0.0, width_request = 110 })
+  local grid = Gtk.Grid()
+  local infoLabel = Gtk.Label.new("Fill this form")
+  local nameLabel = Gtk.Label.new("Full name")
+  local usernameLabel = Gtk.Label.new("Username")
+  local passwordLabel = Gtk.Label.new("Password")
   local nameEntry = Gtk.Entry()
   local usernameEntry = Gtk.Entry()
-  local passwordEntry = Gtk.Entry({ visibility = false, input_purpose = Gtk.InputPurpose.PASSWORD })
-  local doneButton = Gtk.Button({ label = "Done" })
+  local passwordEntry = Gtk.Entry { visibility = false, input_purpose = Gtk.InputPurpose.PASSWORD }
+  local doneButton = Gtk.Button.new_with_label("Done")
 
-  function doneButton:on_clicked()
-    assistantWindow:set_page_complete(grid, true)
-  end
-
+  grid.column_spacing = 10
+  grid.row_spacing = 10
+  grid.halign = Gtk.Align.CENTER
+  grid.valign = Gtk.Align.CENTER
   grid:attach(infoLabel, 0, 0, 2, 1)
   grid:attach(nameLabel, 0, 1, 1, 1)
   grid:attach(nameEntry, 1, 1, 1, 1)
@@ -47,24 +34,28 @@ local function doPage2(assistantWindow)
   grid:attach(doneButton, 1, 4, 1, 1)
   grid:show_all()
 
+  function doneButton:on_clicked()
+    assistantWindow:set_page_complete(grid, true)
+  end
+
   return grid
 end
 
 local function doPage3(assistantWindow)
-  local progressBar = Gtk.ProgressBar({ visible = true, width_request = 240, pulse_step = 0.1 })
-  local box = Gtk.Box({
-    visible = true,
-    orientation = Gtk.Orientation.VERTICAL,
-    spacing = 10,
-    halign = Gtk.Align.CENTER,
-    valign = Gtk.Align.CENTER,
+  local progressBar = Gtk.ProgressBar()
+  local box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 10)
 
-    Gtk.Label({ visible = true, label = "Installing the system..." }),
-    progressBar
-  })
+  box.halign = Gtk.Align.CENTER
+  box.valign = Gtk.Align.CENTER
+  box:pack_start(Gtk.Label.new("Installing the system..."), false, false, 0)
+  box:pack_start(progressBar, false, false, 0)
+  box:show_all()
+
+  progressBar.width_request = 240
+  progressBar.pulse_step = 0.2
 
   function assistantWindow:on_apply()
-    Glib.timeout_add(500, 500, function ()
+    Glib.timeout_add(200, 200, function ()
       local fraction = progressBar:get_fraction()
 
       if fraction == 1 or fraction == 1.0 then
@@ -84,45 +75,45 @@ local function doPage3(assistantWindow)
   return box
 end
 
-local function doPage4()
-  return Gtk.Label({ visible = true, label = "System installed successfully!" })
-end
-
 function app:on_activate()
   self.active_window:present()
 end
 
 function app:on_startup()
-  local assistantWindow = Gtk.Assistant({
-    title = appTitle,
-    application = self,
-    default_width = 800,
-    default_height = 400,
-    on_cancel = function (self) self:destroy() end,
-    on_close = function (self) self:destroy() end
-  })
+  local window = Gtk.Assistant()
+  local headerBar = Gtk.HeaderBar()
+  local page1 = Gtk.Label { visible = true, label = appWelcomeText, use_markup = true }
+  local page2 = doPage2(window)
+  local page3 = doPage3(window)
+  local page4 = Gtk.Label { visible = true, label = "System installed successfully!" }
 
-  local page1 = doPage1()
-  local page2 = doPage2(assistantWindow)
-  local page3 = doPage3(assistantWindow)
-  local page4 = doPage4()
+  self:add_window(window)
 
-  assistantWindow:append_page(page1)
-  assistantWindow:append_page(page2)
-  assistantWindow:append_page(page3)
-  assistantWindow:append_page(page4)
+  window:set_titlebar(headerBar)
+  window:set_default_size(800, 400)
+  window.on_cancel = Gtk.Widget.destroy
+  window.on_close = Gtk.Widget.destroy
 
-  assistantWindow:set_page_title(page1, "Welcome")
-  assistantWindow:set_page_title(page2, "Create account")
-  assistantWindow:set_page_title(page3, "Installing system")
-  assistantWindow:set_page_title(page4, "Summary")
+  window:append_page(page1)
+  window:append_page(page2)
+  window:append_page(page3)
+  window:append_page(page4)
 
-  assistantWindow:set_page_type(page1, 1)
-  assistantWindow:set_page_type(page2, 2)
-  assistantWindow:set_page_type(page3, 4)
-  assistantWindow:set_page_type(page4, 3)
+  window:set_page_title(page1, "Welcome")
+  window:set_page_title(page2, "Create account")
+  window:set_page_title(page3, "Installing system")
+  window:set_page_title(page4, "Summary")
 
-  assistantWindow:set_page_complete(page1, true)
+  window:set_page_type(page1, 1)
+  window:set_page_type(page2, 2)
+  window:set_page_type(page3, 4)
+  window:set_page_type(page4, 3)
+
+  window:set_page_complete(page1, true)
+
+  headerBar.visible = true
+  headerBar.subtitle = appTitle
+  headerBar.show_close_button = true
 end
 
 return app:run(arg)
