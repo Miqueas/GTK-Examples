@@ -8,23 +8,28 @@ local appTitle = "GtkActionBar"
 local app = Gtk.Application { application_id = appID }
 
 function app:on_startup()
-  local win = Gtk.ApplicationWindow {
-    title = appTitle,
-    application = self,
-    default_width = 400,
-    default_height = 400
-  }
+  local window = Gtk.ApplicationWindow()
+  local headerBar = Gtk.HeaderBar()
+  local actionBar = Gtk.ActionBar()
+  local mainBox = Gtk.Box()
 
-  local bar = Gtk.ActionBar({ visible = true })
-  local box = Gtk.Box({ visible = true, orientation = Gtk.Orientation.VERTICAL })
+  self:add_window(window)
 
-  bar:pack_start(Gtk.Label({ visible = true, label = "Something" }))
-  bar:pack_end(Gtk.Button({ visible = true, label = "A button" }))
+  window:set_titlebar(headerBar)
+  window:set_default_size(400, 400)
+  window:add(mainBox)
 
-  box:pack_start(Gtk.Label({ visible = true, label = "Here is the content of your app" }), true, true, 0)
-  box:pack_end(bar, false, true, 0)
+  headerBar.visible = true
+  headerBar.title = appTitle
+  headerBar.show_close_button = true
 
-  win:add(box)
+  actionBar:pack_start(Gtk.Label.new("Something" ))
+  actionBar:pack_end(Gtk.Button.new_with_label("A button"))
+
+  mainBox.orientation = Gtk.Orientation.VERTICAL
+  mainBox:pack_start(Gtk.Label.new("Here is the content of your app"), true, true, 0)
+  mainBox:pack_end(actionBar, false, true, 0)
+  mainBox:show_all()
 end
 
 function app:on_activate()
