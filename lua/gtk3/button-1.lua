@@ -1,36 +1,32 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
 
--- GtkButton: A button widget
-
 local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Button1"
 local appTitle = "GtkButton 1"
-local app = Gtk.Application({ application_id = appID })
+local app = Gtk.Application { application_id = appID }
 
 function app:on_startup()
-  local win = Gtk.ApplicationWindow({
-    title = appTitle,
-    application = self,
-    default_width = 400,
-    default_height = 400
-  })
-
-  local button = Gtk.Button({
-    visible = true,
-    label = "Click me!",
-    valign = Gtk.Align.CENTER,
-    halign = Gtk.Align.CENTER
-  })
-
+  local window = Gtk.ApplicationWindow.new(self)
+  local headerBar = Gtk.HeaderBar()
+  local button = Gtk.Button.new_with_label("Click me!")
   local counter = 1
 
-  -- The "clicked" signal is emited when the user press the button
+  window:add(button)
+  window:set_titlebar(headerBar)
+  window:set_default_size(400, 400)
+
+  headerBar.visible = true
+  headerBar.title = appTitle
+  headerBar.show_close_button = true
+
+  button.visible = true
+  button.valign = Gtk.Align.CENTER
+  button.halign = Gtk.Align.CENTER
+
   function button:on_clicked()
     print(("Clicked %d times!"):format(counter))
     counter = counter + 1
   end
-
-  win:add(button)
 end
 
 function app:on_activate()
