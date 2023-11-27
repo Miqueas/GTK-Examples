@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Gtk3.Template";
-const string[] greetings = { "Hello!", "¡Hola!", "Bonjour!", "Ciao!" };
+const string[] greetings = { "Hello!", "¡Hola!", "Bonjour!", "Ciao!", "こんにちは！" };
 
 int main(string[] args) {
   return new App().run(args);
@@ -7,8 +7,11 @@ int main(string[] args) {
 
 class App : Gtk.Application {
   public App() {
-    this.application_id = appID;
-    this.flags = ApplicationFlags.FLAGS_NONE;
+    Object(
+      application_id: appID,
+      flags: ApplicationFlags.FLAGS_NONE,
+      resource_base_path: "/io/github/Miqueas/GTK-Examples"
+    );
   }
 
   public override void activate() {
@@ -27,12 +30,12 @@ class Window : Gtk.ApplicationWindow {
   public unowned Gtk.Label label;
 
   public Window(App app) {
-    this.application = app;
+    Object(application: app);
   }
 
   public override void constructed() {
     Timeout.add(1000, () => {
-      this.label.label = greetings[Random.int_range(0, 4)];
+      this.label.label = greetings[Random.int_range(0, 5)];
       return Source.CONTINUE;
     });
   }
