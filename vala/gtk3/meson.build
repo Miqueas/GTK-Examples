@@ -29,6 +29,8 @@ builder = configure_file(
 foreach name : src
   if name == 'builder'
     executable(name, builder, dependencies: gtk3)
+  elif name == 'template'
+    executable(name, [name + '.vala', resources], dependencies: gtk3)
   else
     executable(name, name + '.vala', dependencies: gtk3)
   endif

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<interface>
+
+<!-- The window -->
+<template class="Window" parent="GtkApplicationWindow">
+  <property name="window-position">center</property>
+  <property name="default-width">200</property>
+  <property name="default-height">200</property>
+  <property name="gravity">center</property>
+
+  <!-- Header bar -->
+  <child type="titlebar">
+    <object class="GtkHeaderBar">
+      <property name="visible">True</property>
+      <property name="title">Template</property>
+      <property name="show-close-button">True</property>
+    </object>
+  </child>
+  <!-- End -->
+
+  <!-- Just a text label -->
+  <child>
+    <object class="GtkLabel" id="label">
+      <property name="visible">True</property>
+    </object>
+  </child>
+  <!-- End -->
+
+</template>
+<!-- End -->
+
+</interface>
