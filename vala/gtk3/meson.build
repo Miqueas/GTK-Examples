@@ -16,6 +16,7 @@ src = [
   'fixed',
   'flow-box',
   'message-dialog',
+  'template',
   'window',
 ]
 
