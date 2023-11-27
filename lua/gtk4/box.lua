@@ -5,26 +5,19 @@ local Gtk = lgi.require("Gtk", "4.0")
 
 local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk4.Box"
 local app_tile = "GtkBox"
-local app = Gtk.Application({ application_id = appID })
+local app = Gtk.Application { application_id = appID }
 
 function app:on_startup()
-  local win = Gtk.ApplicationWindow({
-    title = app_tile,
-    application = self,
-    default_width = 400,
-    default_height = 400
-  })
+  local window = Gtk.ApplicationWindow.new(self)
+  local box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 10)
 
-  local box = Gtk.Box({
-    orientation = Gtk.Orientation.VERTICAL,
-    spacing = 10,
-    valign = Gtk.Align.CENTER
-  })
+  window.child = box
+  window.title = app_tile
+  window:set_default_size(400, 400)
 
-  box:append(Gtk.Label({ label = "Label 1" }), false, true, 0)
-  box:append(Gtk.Label({ label = "Label 2" }), false, true, 0)
-
-  win.child = box
+  box.valign = Gtk.Align.CENTER
+  box:append(Gtk.Label.new("Label 1"))
+  box:append(Gtk.Label.new("Label 2"))
 end
 
 function app:on_activate()
