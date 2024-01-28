@@ -46,6 +46,8 @@ image1 = configure_file(
   configuration: imageConf
 )
 
+executable('glarea', 'glarea.c', dependencies: [ gtk3, glew ])
+
 foreach name : src
   if name == 'builder'
     executable(name, builder, dependencies: gtk3)
