@@ -11,7 +11,7 @@ const gchar *summary_text = "Our universe has a lot of problems and the only way
 "it is destroying the entire universe and this important decision\nis now in your hands.";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, G_APPLICATION_FLAGS_NONE);
+  GtkApplication *app = gtk_application_new(appID, 0);
 
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
