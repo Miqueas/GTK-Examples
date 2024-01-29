@@ -46,7 +46,9 @@ image1 = configure_file(
   configuration: imageConf
 )
 
-executable('glarea', 'glarea.c', dependencies: [ gtk3, glew ])
+if build_machine.system() == 'linux'
+  executable('glarea', 'glarea.c', dependencies: [ gtk3, glew ])
+endif
 
 foreach name : src
   if name == 'builder'

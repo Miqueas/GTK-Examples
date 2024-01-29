@@ -7,7 +7,9 @@ src = [
   'box',
 ]
 
-executable('glarea', 'glarea.c', dependencies: [ gtk4, glew ])
+if build_machine.system() == 'linux'
+  executable('glarea', 'glarea.c', dependencies: [ gtk4, glew ])
+endif
 
 foreach name : src
   executable(name, name + '.c', dependencies: gtk4)
