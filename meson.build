@@ -20,9 +20,10 @@ endif
 gnome = import('gnome')
 resources = gnome.compile_resources('resources', 'data/resources.xml', source_dir: 'data')
 
-builderConf = { 'builderPath': meson.project_source_root() / 'data' / 'builder.ui' }
-cssConf = { 'cssPath': meson.project_source_root() / 'data' / 'css-provider.css' }
-imageConf = { 'imagePath': meson.project_source_root() / 'data' / 'grid-explained.png' }
+builder_gtk3_ui = { 'builderPath': meson.project_source_root() / 'data' / 'builder-gtk3.ui' }
+builder_gtk4_ui = { 'builderPath': meson.project_source_root() / 'data' / 'builder-gtk4.ui' }
+css_conf = { 'cssPath': meson.project_source_root() / 'data' / 'css-provider.css' }
+image_conf = { 'imagePath': meson.project_source_root() / 'data' / 'grid-explained.png' }
 
 subdir('c/gtk3')
 subdir('c/gtk4')

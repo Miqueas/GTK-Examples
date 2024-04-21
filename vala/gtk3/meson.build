@@ -23,7 +23,7 @@ src = [
 builder = configure_file(
   input: 'builder.vala.in',
   output: 'builder.vala',
-  configuration: builderConf
+  configuration: builder_gtk3_ui
 )
 
 foreach name : src

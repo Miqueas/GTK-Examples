@@ -37,13 +37,13 @@ src = [
 builder = configure_file(
   input: 'builder.c.in',
   output: 'builder.c',
-  configuration: builderConf
+  configuration: builder_gtk3_ui
 )
 
 image1 = configure_file(
   input: 'image-1.c.in',
   output: 'image-1.c',
-  configuration: imageConf
+  configuration: image_conf
 )
 
 if build_machine.system() == 'linux'
