@@ -1,4 +1,4 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Builder";
+const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.Builder";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
