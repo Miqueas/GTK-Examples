@@ -1,10 +1,11 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
+local Gio = lgi.Gio
 
 -- GtkApplication: Provides an application interface
 
 local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk4.Application"
-local app = Gtk.Application { application_id = appID }
+local app = Gtk.Application.new(appID, Gio.ApplicationFlags.FLAGS_NONE)
 
 -- I recommend to check out this links for more information:
 -- https://wiki.gnome.org/HowDoI/GtkApplication

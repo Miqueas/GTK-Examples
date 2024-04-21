@@ -1,10 +1,11 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "4.0")
+local Gio = lgi.Gio
 
 local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk4.HeaderBar"
 local appTitle = "GtkHeaderBar"
 local appSubtitle = "App subtitle"
-local app = Gtk.Application { application_id = appID }
+local app = Gtk.Application.new(appID, Gio.ApplicationFlags.FLAGS_NONE)
 
 function app:on_startup()
   local window = Gtk.ApplicationWindow.new(self)

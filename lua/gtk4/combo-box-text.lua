@@ -1,18 +1,19 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "4.0")
+local Gio = lgi.Gio
 
 -- GtkComboBoxText: Just a text-only GtkComboBox
 
 local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk4.ComboBoxText"
 local appTitle = "GtkComboBoxText"
-local app = Gtk.Application({ application_id = appID })
+local app = Gtk.Application.new(appID, Gio.ApplicationFlags.FLAGS_NONE)
 local items = { "GNOME", "KDE Plasma", "XFCE", "MATE", "Cinnamon", "Pantheon", "LXDE", "LXQT" }
 
 function app:on_startup()
   local window = Gtk.ApplicationWindow.new(self)
   local box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 10)
   local label = Gtk.Label.new("Default id: 1")
-  local combo = Gtk.ComboBoxText()
+  local combo = Gtk.ComboBoxText.new()
 
   window.child = box
   window.title = appTitle

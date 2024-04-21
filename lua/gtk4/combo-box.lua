@@ -1,18 +1,19 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "4.0")
-local GObject = lgi.require("GObject", "2.0")
+local Gio = lgi.Gio
+local GObject = lgi.GObject
 
 -- GtkComboBox: A dropdown menu widget
 
 local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk4.ComboBox"
 local appTitle = "GtkComboBox"
-local app = Gtk.Application { application_id = appID }
+local app = Gtk.Application.new(appID, Gio.ApplicationFlags.FLAGS_NONE)
 local items = { "GNOME", "KDE Plasma", "XFCE", "MATE", "Cinnamon", "Pantheon", "LXDE", "LXQT" }
 
 function app:on_startup()
   local window = Gtk.ApplicationWindow.new(self)
-  local box = Gtk.Box(Gtk.Orientation.VERTICAL, 10)
-  local model = Gtk.ListStore.new { GObject.Type.STRING }
+  local box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 10)
+  local model = Gtk.ListStore.new({ GObject.Type.STRING })
   local label = Gtk.Label.new("Default option: 0")
   local comboBox = Gtk.ComboBox.new_with_model(model)
 
