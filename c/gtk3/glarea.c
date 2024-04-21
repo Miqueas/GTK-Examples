@@ -12,7 +12,7 @@ void onAppActivate(GApplication *self, gpointer data);
 void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data);
 gboolean onGLAreaRender(GtkGLArea *self, GdkGLContext *context, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk4.GLArea";
+const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.GLArea";
 const gchar *appTitle = "GtkApplicationWindow";
 
 GLuint program, vao, vboTriangle;
