@@ -28,5 +28,6 @@ image_conf = { 'imagePath': meson.project_source_root() / 'data' / 'grid-explain
 subdir('c/gtk3')
 subdir('c/gtk4')
 subdir('lua/gtk3')
+subdir('lua/gtk4')
 subdir('vala/gtk3')
 subdir('vala/gtk4')
