@@ -1,5 +1,9 @@
 # GTK Examples
 
+> [!NOTE]
+> _"It's been X days/weeks/months since last commit, is this project still maintained?"_
+> __Yes__. I just have things to do (work)
+
 A set of various GTK code examples in different programming languages.
 
 ![GTK Examples Banner](banner.png)
