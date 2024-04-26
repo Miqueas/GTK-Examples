@@ -1,16 +1,27 @@
 src = [
   'application',
-  'window',
   'application-window',
+  'box',
+  'builder',
   'header-bar',
   'label',
-  'box',
+  'window',
 ]
+
+builder = configure_file(
+  input: 'builder.c.in',
+  output: 'builder.c',
+  configuration: builder_gtk4_ui
+)
 
 if build_machine.system() == 'linux'
   executable('glarea', 'glarea.c', dependencies: [ gtk4, glew ])
 endif
 
 foreach name : src
-  executable(name, name + '.c', dependencies: gtk4)
+  if name == 'builder'
+    executable(name, builder, dependencies: gtk4)
+  else
+    executable(name, name + '.c', dependencies: gtk4)
+  endif
 endforeach
