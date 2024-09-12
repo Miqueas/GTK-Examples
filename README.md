@@ -2,7 +2,7 @@
 
 > [!NOTE]
 > _"It's been X days/weeks/months since last commit, is this project still maintained?"_
-> __Yes__. I just have things to do (work)
+> __Yes__. I'm just busy working :)
 
 A set of various GTK code examples in different programming languages.
 
