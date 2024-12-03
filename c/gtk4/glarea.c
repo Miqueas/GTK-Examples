@@ -1,8 +1,11 @@
-/*****************************************************************************
- * DashGL.com GTK GL-Area                                                    *
- * This file is in the public domain                                         *
- * Contributors: Benjamin Collins                                            *
- *****************************************************************************/
+/*
+  Original by:   Benjamin Collins (https://github.com/kion-dgl)
+  Sources:       https://github.com/kion-dgl/DashGL-GTK-Brickout-Tutorial/blob/master/02_Draw_a_Triangle/main.c
+    -            https://dashgl.org/tutorials/gtk-invaders/step-02/
+    -            https://gtk.dashgl.com/Brickout/Draw_a_Triangle/
+  Modified by:   Miqueas Martínez (https://github.com/Miqueas)
+  Maintained by: Miqueas Martínez (https://github.com/Miqueas)
+*/
 
 #include <gtk/gtk.h>
 #include <GL/glew.h>
