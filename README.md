@@ -12,9 +12,12 @@ A set of various GTK code examples in different programming languages.
 
 The main requirement to build and run the (C and Vala) examples is to have:
 
-  * Development files for GTK (3 and 4)
-  * Meson
-  * C and Vala compiler
+  - Development files for GTK (3 and 4)
+  - Meson
+  - C and Vala compilers
+
+> [!NOTE]
+> You might also need the GLEW development files (needed by the glarea example), try building and running first to see if everything it's ok
 
 Then just run:
 
@@ -23,7 +26,10 @@ meson setup _BUILD .
 ninja -C _BUILD
 ```
 
-And that's it!
+And that's it! You'll found compiled binaries under the following folders:
+
+  - _BUILD/c/ for the C examples
+  - _BUILD/vala/ for the Vala examples
 
 ### Lua
 
@@ -35,3 +41,10 @@ In the case of the Lua examples, they're supposed to run on any version of Lua, 
 ## About this repository
 
 I decided to merge all my repos with GTK examples here because I feel that having different repos for the same purpose and with (basically) the same code is a mess, so I prefer to have all these examples in one place.
+
+## About some examples
+
+Note that GTK 3 and 4 are considerably different, which means that I'll try to have the same examples for both versions, but not all of them will be present in both versions. That said, here's a list of notes about some of the examples:
+
+  - GtkDialog: GTK 3 only, this class was deprecated in GTK 4.10
+  - GtkAssistant: in GTK 3 you can set a subtitle in the header bar, but not in GTK 4 because there's no subtitle property in GtkHeaderBar.
