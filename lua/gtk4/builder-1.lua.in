@@ -4,8 +4,8 @@ local Gio = lgi.Gio
 
 -- GtkBuilder: Create graphical user interfaces with XML
 
-local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.Builder1"
-local app = Gtk.Application.new(appID, Gio.ApplicationFlags.FLAGS_NONE)
+local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk4.Builder1"
+local app = Gtk.Application.new(appID, Gio.ApplicationFlags.DEFAULT_FLAGS)
 local builder = Gtk.Builder.new_from_file("@builderPath@")
 
 function app:on_startup()
