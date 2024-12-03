@@ -1,3 +1,5 @@
+[![License][LicenseBadge]][LicenseURL]
+
 # GTK Examples
 
 > [!NOTE]
@@ -48,3 +50,6 @@ Note that GTK 3 and 4 are considerably different, which means that I'll try to h
 
   - GtkDialog: GTK 3 only, this class was deprecated in GTK 4.10
   - GtkAssistant: in GTK 3 you can set a subtitle in the header bar, but not in GTK 4 because there's no subtitle property in GtkHeaderBar.
+
+[LicenseBadge]: https://img.shields.io/badge/License-Zlib-brightgreen?style=for-the-badge
+[LicenseURL]: https://opensource.org/licenses/Zlib
