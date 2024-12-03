@@ -1,65 +1,54 @@
 --[[
-  @author  Díaz Urbaneja Víctor Eduardo Diex (https://github.com/diazvictor)
-  @date    28.02.2021 02:26:39 -04
+  Original by: Díaz Víctor (https://github.com/diazvictor)
+  Date:        28.02.2021 02:26:39 -04
+  Mantainer:   Miqueas Martínez (https://github.com/Miqueas)
 ]]
 
 local lgi = require('lgi')
 local Gtk = lgi.require('Gtk', '3.0')
+local Gio = lgi.Gio
 
 -- GtkCssProvider: CSS-like styling class for widgets
 
 local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk3.CssProvider"
 local appTitle = "GtkCssProvider"
-local app = Gtk.Application({ application_id = appID })
+local app = Gtk.Application.new(appID, Gio.ApplicationFlags.DEFAULT_FLAGS)
 
 function app:on_startup()
-  local win = Gtk.ApplicationWindow({
-    title = appTitle,
-    application = self,
-    default_width = 400,
-    default_height = 400,
-    border_width = 10
-  })
+  local window = Gtk.ApplicationWindow.new(self)
+  window.title = appTitle
+  window.default_width = 400
+  window.default_height = 400
+  window.border_width = 10
 
   local provider = Gtk.CssProvider()
   provider:load_from_path("@cssPath@")
 
-  local screen = win:get_screen()
-  local styleContext = win:get_style_context()
+  local screen = window:get_screen()
+  local styleContext = window:get_style_context()
   styleContext.add_provider_for_screen(screen, provider, 600)
 
-  local label = Gtk.Label({
-    visible = true,
-    label = "Hi there!"
-  })
-
-  local button = Gtk.Button({
-    visible = true,
-    label = "Toggle label style"
-  })
+  local label = Gtk.Label.new("Hi there!")
+  local button = Gtk.Button.new_with_label("Toggle label style")
 
   function button:on_clicked()
     local labelStyleContext = label:get_style_context()
 
-    if labelStyleContext:has_class("color-green") then
-      labelStyleContext:remove_class("color-green")
+    if labelStyleContext:has_class("color-red") then
+      labelStyleContext:remove_class("color-red")
     else
-      labelStyleContext:add_class("color-green")
+      labelStyleContext:add_class("color-red")
     end
   end
 
-  local box = Gtk.Box({
-    visible = true,
-    halign = Gtk.Align.CENTER,
-    valign = Gtk.Align.CENTER,
-    orientation = Gtk.Orientation.VERTICAL,
-    spacing = 10
-  })
-
+  local box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 10)
+  box.halign = Gtk.Align.CENTER
+  box.valign = Gtk.Align.CENTER
   box:pack_start(label, false, false, 0)
   box:pack_start(button, false, false, 0)
+  box:show_all()
 
-  win:add(box)
+  window.child = box
 end
 
 function app:on_activate()
