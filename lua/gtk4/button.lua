@@ -6,32 +6,32 @@ local Gio = lgi.Gio
 
 local appID = "io.github.Miqueas.GTK-Examples.Lua.Gtk4.Button"
 local appTitle = "GtkButton"
-local app = Gtk.Application.new(appID, Gio.ApplicationFlags.FLAGS_NONE)
+local app = Gtk.Application.new(appID, Gio.ApplicationFlags.DEFAULT_FLAGS)
 
 function app:on_startup()
   local window = Gtk.ApplicationWindow.new(self)
-  local button = Gtk.Button.new_with_label("Click me!")
-  local titelLabel = Gtk.Label.new(([[<span font="bold">%s</span>]]):format(appTitle))
   local headerBar = Gtk.HeaderBar.new()
-  local counter = 1
+  local titleLabel = Gtk.Label.new(appTitle)
+  local button = Gtk.Button.new_with_label("Click me!")
+  local count = 1
 
   window.child = button
   window.title = appTitle
   window:set_titlebar(headerBar)
   window:set_default_size(400, 400)
 
+  headerBar.title_widget = titleLabel
+  headerBar.show_title_buttons = true
+
+  titleLabel:add_css_class("title")
+
   button.valign = Gtk.Align.CENTER
   button.halign = Gtk.Align.CENTER
 
-  titelLabel.use_markup = true
-
-  headerBar.title_widget = titelLabel
-  headerBar.show_title_buttons = true
-
   -- The "clicked" signal is emited when the user press the button
   function button:on_clicked()
-    print(("Clicked %d times!"):format(counter))
-    counter = counter + 1
+    self.label = ("Clicked %d times!"):format(count)
+    count = count + 1
   end
 end
 
