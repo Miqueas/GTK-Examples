@@ -9,3 +9,9 @@ configure_file(
   output: 'builder-2.lua',
   configuration: builder_gtk4_ui
 )
+
+configure_file(
+  input: 'css-provider.lua.in',
+  output: 'css-provider.lua',
+  configuration: css_conf
+)
