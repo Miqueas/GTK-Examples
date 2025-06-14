@@ -1,4 +1,5 @@
 src = [
+  'action-bar',
   'application',
   'application-window',
   'box',
