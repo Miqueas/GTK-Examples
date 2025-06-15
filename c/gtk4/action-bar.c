@@ -36,9 +36,9 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_widget_set_vexpand(boxLabel, TRUE);
   gtk_widget_set_hexpand(boxLabel, TRUE);
 
-  gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
   gtk_window_set_child(GTK_WINDOW(window), box);
+  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
   gtk_action_bar_pack_start(GTK_ACTION_BAR(actionBar), actionBarLabel);
   gtk_action_bar_pack_end(GTK_ACTION_BAR(actionBar), actionBarButton);
