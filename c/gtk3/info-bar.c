@@ -100,8 +100,7 @@ GtkMessageType stringToGtkMessageType(const gchar *label) {
     result = GTK_MESSAGE_QUESTION;
   else if (g_str_equal("ERROR", string))
     result = GTK_MESSAGE_ERROR;
-  else if (g_str_equal("OTHER", string))
-    result = GTK_MESSAGE_OTHER;
+  else result = GTK_MESSAGE_OTHER;
 
   return result;
 }

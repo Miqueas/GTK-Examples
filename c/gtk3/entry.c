@@ -2,7 +2,7 @@
 
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
-void on_entry_changed(GtkWidget *self, GdkEvent *ev, gpointer data);
+void onEntryChanged(GtkEditable *self, gpointer data);
 
 const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Entry";
 const gchar *appTitle = "GtkEntry";
@@ -40,7 +40,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
   gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
 
-  g_signal_connect(entry, "key-release-event", G_CALLBACK(on_entry_changed), outputLabel);
+  g_signal_connect(entry, "changed", G_CALLBACK(onEntryChanged), outputLabel);
 
   gtk_box_pack_start(GTK_BOX(box), hintLabel, FALSE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box), entry, FALSE, TRUE, 0);
@@ -49,10 +49,11 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_label_set_line_wrap(GTK_LABEL(outputLabel), TRUE);
   gtk_label_set_line_wrap_mode(GTK_LABEL(outputLabel), PANGO_WRAP_CHAR);
   gtk_label_set_max_width_chars(GTK_LABEL(outputLabel), 18);
+
+  gtk_widget_show_all(box);
 }
 
-void on_entry_changed(GtkWidget *self, GdkEvent *ev, gpointer data) {
-  char *text;
-  g_object_get(self, "text", &text, NULL);
-  g_object_set(data, "label", text, NULL);
+void onEntryChanged(GtkEditable *self, gpointer data) {
+  const char *text = gtk_entry_get_text(GTK_ENTRY(self));
+  gtk_label_set_label(GTK_LABEL(data), text);
 }

@@ -6,7 +6,7 @@ void onComboBoxChanged(GtkComboBox *self, gpointer data);
 
 const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ComboBoxText";
 const gchar *appTitle = "GtkComboBoxText";
-const gchar *comboBoxTextValues[8][2] = {
+const gchar *values[8][2] = {
   { "gnome", "GNOME" },
   { "plasma", "KDE Plasma" },
   { "xfce", "XFCE" },
@@ -47,14 +47,15 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_container_add(GTK_CONTAINER(window), box);
 
   for (int i = 0; i < 8; i++) {
-    const gchar *id = comboBoxTextValues[i][0];
-    const gchar *text = comboBoxTextValues[i][1];
+    const gchar *id = values[i][0];
+    const gchar *text = values[i][1];
     gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboBox), id, text);
   }
 
   gtk_combo_box_set_active_id(GTK_COMBO_BOX(comboBox), "gnome");
 
-  g_object_set(box, "halign", GTK_ALIGN_CENTER, "valign", GTK_ALIGN_CENTER, NULL);
+  gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
   gtk_box_pack_start(GTK_BOX(box), gtk_label_new("Select an option"), FALSE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box), comboBox, FALSE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box), hintLabel, FALSE, TRUE, 0);
