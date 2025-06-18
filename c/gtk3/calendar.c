@@ -32,9 +32,10 @@ void onAppStartup(GApplication *self, gpointer data) {
   calendar = gtk_calendar_new();
   dateLabel = gtk_label_new("Selected date: None");
 
+  gtk_container_add(GTK_CONTAINER(window), box);
   gtk_window_set_title(GTK_WINDOW(window), appTitle);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
-  gtk_container_add(GTK_CONTAINER(window), box);
+  gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
   gtk_box_pack_start(GTK_BOX(box), calendar, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box), dateLabel, FALSE, FALSE, 0);
