@@ -19,20 +19,20 @@ GLuint program, vao, vboTriangle;
 GLint attributeCoord2D;
 
 int main(int argc, char **argv) {
-	GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(appID, 0);
 
-	g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
+  g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
   int result = g_application_run(G_APPLICATION(app), argc, argv);
-	g_object_unref(app);
+  g_object_unref(app);
 
-	return result;
+  return result;
 
 }
 
 void onAppActivate(GApplication *self, gpointer data) {
-	GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
   gtk_window_present(window);
 }
 
@@ -48,9 +48,9 @@ void onAppStartup(GApplication *self, gpointer data) {
 
   gtk_widget_show(glArea);
   gtk_widget_set_vexpand(glArea, TRUE);
-	gtk_widget_set_hexpand(glArea, TRUE);
-	g_signal_connect(glArea, "realize", G_CALLBACK(onGLAreaRealize), NULL);
-	g_signal_connect(glArea, "render", G_CALLBACK(onGLAreaRender), NULL);
+  gtk_widget_set_hexpand(glArea, TRUE);
+  g_signal_connect(glArea, "realize", G_CALLBACK(onGLAreaRealize), NULL);
+  g_signal_connect(glArea, "render", G_CALLBACK(onGLAreaRender), NULL);
 }
 
 void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data) {
@@ -77,36 +77,36 @@ void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data) {
 
   g_print("[GtkGLArea::realize] Called\n");
 
-	gtk_gl_area_make_current(self);
-	
-	if (gtk_gl_area_get_error (self) != NULL) {
-		g_printerr("[GtkGLArea::realize] Unknown error\n");
-		return;
-	}
+  gtk_gl_area_make_current(self);
+  
+  if (gtk_gl_area_get_error (self) != NULL) {
+    g_printerr("[GtkGLArea::realize] Unknown error\n");
+    return;
+  }
 
-	glewExperimental = GL_TRUE;
-	glewInit();
+  glewExperimental = GL_TRUE;
+  glewInit();
 
-	const GLubyte* renderer = glGetString(GL_RENDERER);
-	const GLubyte* version = glGetString(GL_VERSION);
+  const GLubyte* renderer = glGetString(GL_RENDERER);
+  const GLubyte* version = glGetString(GL_VERSION);
 
-	g_print("[GtkGLArea::realize] Renderer: %s\n", renderer);
-	g_print("[GtkGLArea::realize] OpenGL version supported %s\n", version);
+  g_print("[GtkGLArea::realize] Renderer: %s\n", renderer);
+  g_print("[GtkGLArea::realize] OpenGL version supported %s\n", version);
 
-	gtk_gl_area_set_has_depth_buffer(self, TRUE);
-	
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+  gtk_gl_area_set_has_depth_buffer(self, TRUE);
+  
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
 
   glGenBuffers(1, &vboTriangle);
   glBindBuffer(GL_ARRAY_BUFFER, vboTriangle);
   glBufferData(GL_ARRAY_BUFFER, sizeof(triangleVertices), triangleVertices, GL_STATIC_DRAW);
-	
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(0);
-	glDisableVertexAttribArray(0);
+  
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+  glEnableVertexAttribArray(0);
+  glDisableVertexAttribArray(0);
 
   GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
   GLuint vs = glCreateShader(GL_VERTEX_SHADER);
@@ -149,9 +149,9 @@ void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data) {
 }
 
 gboolean onGLAreaRender(GtkGLArea *self, GdkGLContext *context, gpointer data) {
-	g_print("[GtkGLArea::render] Called\n");
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  g_print("[GtkGLArea::render] Called\n");
+  
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glUseProgram(program);
 
@@ -164,5 +164,5 @@ gboolean onGLAreaRender(GtkGLArea *self, GdkGLContext *context, gpointer data) {
   glDrawArrays(GL_TRIANGLES, 0, 3);
   glDisableVertexAttribArray(attributeCoord2D);
 
-	return TRUE;
+  return TRUE;
 }

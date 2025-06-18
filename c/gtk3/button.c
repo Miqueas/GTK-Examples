@@ -30,9 +30,9 @@ void onAppStartup(GApplication *self, gpointer data) {
   window = gtk_application_window_new(GTK_APPLICATION(self));
   button = gtk_button_new_with_label("Click me");
 
+  gtk_container_add(GTK_CONTAINER(window), button);
   gtk_window_set_title(GTK_WINDOW(window), appTitle);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
-  gtk_container_add(GTK_CONTAINER(window), button);
 
   gtk_widget_set_visible(button, TRUE);
   gtk_widget_set_halign(button, GTK_ALIGN_CENTER);
