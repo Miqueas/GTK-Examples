@@ -5,6 +5,7 @@ src = [
   'assistant',
   'box',
   'builder',
+  'button-box',
   'button',
   'calendar',
   'combo-box',
