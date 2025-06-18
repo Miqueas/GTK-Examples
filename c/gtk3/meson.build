@@ -6,6 +6,7 @@ src = [
   'box',
   'builder',
   'button',
+  'calendar',
   'combo-box',
   'combo-box-text',
   'dialog-1',
