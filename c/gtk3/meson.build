@@ -1,5 +1,6 @@
 src = [
-  # 'about-dialog',
+  'about-dialog-1',
+  'about-dialog-2',
   'action-bar',
   'app-chooser-button',
   'app-chooser-dialog',
