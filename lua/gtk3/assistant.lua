@@ -1,6 +1,6 @@
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
-local Glib = lgi.require("GLib")
+local GLib = lgi.require("GLib")
 
 -- GtkAssistant: a widget for guiding the user through step to achieve something
 
@@ -55,7 +55,7 @@ local function doPage3(assistantWindow)
   progressBar.pulse_step = 0.2
 
   function assistantWindow:on_apply()
-    Glib.timeout_add(200, 200, function ()
+    GLib.timeout_add(200, 200, function ()
       local fraction = progressBar:get_fraction()
 
       if fraction == 1 or fraction == 1.0 then
