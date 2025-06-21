@@ -1,7 +1,12 @@
 src = [
+  'about-dialog-1',
+  'about-dialog-2',
   'action-bar',
-  'application',
+  'app-chooser-button',
+  'app-chooser-dialog',
+  'app-chooser-widget',
   'application-window',
+  'application',
   'assistant',
   'box',
   'builder',
