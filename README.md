@@ -38,9 +38,13 @@ In the case of the Lua examples, they're supposed to run on any version of Lua, 
 > [!NOTE]
 > To build [LGI](https://github.com/lgi-devs/lgi) you'll need `gobject-introspection`, check out the [LGI repo](https://github.com/lgi-devs/lgi) for more details if you're having trouble.
 
+### Python
+
+You need to have Python installed of course, but also [PyGobject](https://gnome.pages.gitlab.gnome.org/pygobject/index.html) and... That's it 👍.
+
 ## GTK 3 and GTK 4
 
-GTK 4 is a huge jump from GTK 3 that came with many changes in the API, deprecating some classes and adding new ones. For that reason, not all GTK 3 examples are available in GTK 4 (and the other way around). Of course, I'll try to have the same examples in both GTK versions, but I can't guarantee all of them will be available. For more details on this, check out [DEPRECATED.md](DEPRECATED.md).
+GTK 4 is a huge jump from GTK 3 that came with many changes in the API, deprecating some classes and adding new ones. For that reason, not all GTK 3 examples are available in GTK 4 (and the other way around). Of course, I'll try to have the same examples in both GTK versions, but I can't guarantee all of them will be available. For more details on this, check out [this list](https://docs.gtk.org/gtk4/#classes), which contains all the GTK 4 classes and indicates which ones are deprecated in GTK 4.
 
 ## About this repository
 
