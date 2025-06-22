@@ -16,6 +16,7 @@ src = [
   'calendar',
   'check-button',
   'clipboard',
+  'color-button',
   'combo-box',
   'combo-box-text',
   'dialog-1',
