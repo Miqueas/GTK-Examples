@@ -14,6 +14,7 @@ src = [
   'button-box',
   'button',
   'calendar',
+  'check-button',
   'combo-box',
   'combo-box-text',
   'dialog-1',
