@@ -2,7 +2,6 @@ src = [
   'action-bar',
   'application-window',
   'application',
-  'assistant',
   'box',
   'builder',
   'css-provider',
