@@ -5,7 +5,7 @@ void onAppStartup(GApplication *self, gpointer data);
 void onButtonToggled(GtkToggleButton *self, gpointer data);
 
 const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.CheckButton";
-const gchar *appTitle = "GtkButton";
+const gchar *appTitle = "GtkCheckButton";
 
 int main(int argc, char **argv) {
   GtkApplication *app = gtk_application_new(appID, 0);
