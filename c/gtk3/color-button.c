@@ -26,10 +26,9 @@ void onAppActivate(GApplication *self, gpointer data) {
 
 void onAppStartup(GApplication *self, gpointer data) {
   GtkWidget *window, *colorButton;
-  GdkRGBA color = { .red = 0.0, .green = 0.0, .blue = 0.0, .alpha = 0.0 };
 
   window = gtk_application_window_new(GTK_APPLICATION(self));
-  colorButton = gtk_color_button_new_with_rgba(&color);
+  colorButton = gtk_color_button_new();
 
   gtk_container_add(GTK_CONTAINER(window), colorButton);
   gtk_window_set_title(GTK_WINDOW(window), appTitle);
@@ -45,7 +44,5 @@ void onAppStartup(GApplication *self, gpointer data) {
 void onColorSet(GtkColorButton *self, gpointer data) {
   GdkRGBA color;
   gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &color);
-  g_print(
-    "Color: %f, %f, %f, %f\n", color.red, color.green, color.blue, color.alpha
-  );
+  g_print("Color: %s\n", gdk_rgba_to_string(&color));
 }
