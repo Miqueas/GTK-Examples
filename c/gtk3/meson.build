@@ -17,6 +17,8 @@ src = [
   'check-button',
   'clipboard',
   'color-button',
+  'color-chooser-dialog',
+  'color-chooser-widget',
   'combo-box',
   'combo-box-text',
   'dialog-1',
