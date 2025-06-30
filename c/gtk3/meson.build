@@ -34,6 +34,7 @@ src = [
   'file-chooser-widget',
   'fixed',
   'flow-box',
+  'font-button',
   'grid-1',
   'grid-2',
   'grid-3',
