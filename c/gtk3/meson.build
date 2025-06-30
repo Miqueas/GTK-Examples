@@ -31,7 +31,7 @@ src = [
   'file-chooser-button',
   'file-chooser-dialog',
   'file-chooser-native',
-  # 'file-chooser-widget',
+  'file-chooser-widget',
   'fixed',
   'flow-box',
   'grid-1',
