@@ -24,6 +24,7 @@ src = [
   'css-provider',
   'dialog-1',
   'dialog-2',
+  'drawing-area',
   'entry',
   'entry-completion',
   'expander',
