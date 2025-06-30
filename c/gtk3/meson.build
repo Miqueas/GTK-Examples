@@ -19,8 +19,9 @@ src = [
   'color-button',
   'color-chooser-dialog',
   'color-chooser-widget',
-  'combo-box',
   'combo-box-text',
+  'combo-box',
+  'css-provider',
   'dialog-1',
   'dialog-2',
   'entry',
@@ -53,6 +54,12 @@ builder = configure_file(
   configuration: builder_gtk3_ui
 )
 
+css_provider = configure_file(
+  input: 'css-provider.c.in',
+  output: 'css-provider.c',
+  configuration: css_conf
+)
+
 image1 = configure_file(
   input: 'image-1.c.in',
   output: 'image-1.c',
@@ -66,6 +73,8 @@ endif
 foreach name : src
   if name == 'builder'
     executable(name, builder, dependencies: gtk3)
+  elif name == 'css-provider'
+    executable(name, css_provider, dependencies: gtk3)
   elif name == 'image-1'
     executable(name, image1, dependencies: gtk3)
   else
