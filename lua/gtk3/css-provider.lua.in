@@ -25,8 +25,7 @@ function app:on_startup()
   provider:load_from_path("@cssPath@")
 
   local screen = window:get_screen()
-  local styleContext = window:get_style_context()
-  styleContext.add_provider_for_screen(screen, provider, 600)
+  Gtk.StyleContext.add_provider_for_screen(screen, provider, 600)
 
   local label = Gtk.Label.new("Hi there!")
   local button = Gtk.Button.new_with_label("Toggle label style")
