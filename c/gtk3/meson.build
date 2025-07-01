@@ -35,6 +35,8 @@ src = [
   'fixed',
   'flow-box',
   'font-button',
+  'font-chooser-dialog',
+  'font-chooser-widget',
   'grid-1',
   'grid-2',
   'grid-3',
