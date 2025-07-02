@@ -37,6 +37,7 @@ src = [
   'font-button',
   'font-chooser-dialog',
   'font-chooser-widget',
+  'frame',
   'grid-1',
   'grid-2',
   'grid-3',
