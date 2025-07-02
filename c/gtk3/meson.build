@@ -15,6 +15,7 @@ src = [
   'button',
   'calendar',
   'check-button',
+  'check-menu-item',
   'clipboard',
   'color-button',
   'color-chooser-dialog',
