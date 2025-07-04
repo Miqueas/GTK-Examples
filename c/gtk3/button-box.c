@@ -25,13 +25,11 @@ void onAppActivate(GApplication *self, gpointer data) {
 }
 
 void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window, *buttonBox, *button1, *button2, *button3;
-
-  window = gtk_application_window_new(GTK_APPLICATION(self));
-  buttonBox = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-  button1 = gtk_button_new_with_label("Button 1");
-  button2 = gtk_button_new_with_label("Button 2");
-  button3 = gtk_button_new_with_label("Button 3");
+  GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
+  GtkWidget* buttonBox = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+  GtkWidget* button1 = gtk_button_new_with_label("Button 1");
+  GtkWidget* button2 = gtk_button_new_with_label("Button 2");
+  GtkWidget* button3 = gtk_button_new_with_label("Button 3");
 
   gtk_container_add(GTK_CONTAINER(window), buttonBox);
   gtk_window_set_title(GTK_WINDOW(window), appTitle);
@@ -40,9 +38,10 @@ void onAppStartup(GApplication *self, gpointer data) {
 
   gtk_widget_set_halign(buttonBox, GTK_ALIGN_CENTER);
   gtk_widget_set_valign(buttonBox, GTK_ALIGN_CENTER);
-  gtk_container_add(GTK_CONTAINER(buttonBox), button1);
-  gtk_container_add(GTK_CONTAINER(buttonBox), button2);
-  gtk_container_add(GTK_CONTAINER(buttonBox), button3);
+  gtk_box_pack_start(GTK_BOX(buttonBox), button1, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(buttonBox), button2, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(buttonBox), button3, TRUE, TRUE, 0);
+  gtk_button_box_set_layout(GTK_BUTTON_BOX(buttonBox), GTK_BUTTONBOX_EXPAND);
   gtk_widget_show_all(buttonBox);
 
   g_signal_connect(button1, "clicked", G_CALLBACK(onButtonClicked), NULL);
