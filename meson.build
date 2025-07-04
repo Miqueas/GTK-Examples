@@ -1,7 +1,7 @@
 project('GTK-Examples', [ 'c', 'vala' ],
   version: '0.1.0',
   license: 'Zlib',
-  meson_version: '>= 0.56.0'
+  meson_version: '>= 0.56.0',
 )
 
 # Allows using the 'with' keyword in Vala without warnings
