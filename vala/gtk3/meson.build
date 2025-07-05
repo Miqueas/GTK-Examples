@@ -21,7 +21,10 @@ src = [
   'color-chooser-dialog',
   'color-chooser-widget',
   'combo-box-text',
+  'combo-box',
+  'css-provider',
   'dialog',
+  'drawing-area',
   'entry-completion',
   'entry',
   'header-bar',
@@ -40,9 +43,17 @@ builder = configure_file(
   configuration: builder_gtk3_ui
 )
 
+css_provider = configure_file(
+  input: 'css-provider.vala.in',
+  output: 'css-provider.vala',
+  configuration: css_conf
+)
+
 foreach name : src
   if name == 'builder'
     executable(name, builder, dependencies: gtk3)
+  elif name == 'css-provider'
+    executable(name, css_provider, dependencies: gtk3)
   elif name == 'template'
     executable(name, [name + '.vala', resources], dependencies: gtk3)
   else

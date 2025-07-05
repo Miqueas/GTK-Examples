@@ -1,0 +1,56 @@
+const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.CssProvider";
+const string appTitle = "Gtk.CssProvider";
+
+int main(string[] args) {
+  var app = new Gtk.Application(appID, 0);
+  app.startup.connect(onAppStartup);
+  app.activate.connect(onAppActivate);
+  return app.run(args);
+}
+
+void onAppActivate(Application self) {
+  var window = (self as Gtk.Application)?.get_active_window();
+  window?.present();
+}
+
+void onAppStartup(Application self) {
+  var cssProvider = new Gtk.CssProvider();
+  var window = new Gtk.ApplicationWindow(self as Gtk.Application);
+  var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 10);
+  var label = new Gtk.Label("Hi there!");
+  var button = new Gtk.Button.with_label("Toggle label style");
+
+  try {
+    cssProvider.load_from_path("@cssPath@");
+  } catch (Error e) {
+    stderr.printf("Failed to load CSS file: %s\n", e.message);
+  }
+
+  with (window) {
+    add(box);
+    title = appTitle;
+    border_width = 10;
+    set_default_size(400, 400);
+  }
+
+  with (box) {
+    halign = Gtk.Align.CENTER;
+    valign = Gtk.Align.CENTER;
+    pack_start(label, false, false, 0);
+    pack_start(button, false, false, 0);
+    show_all();
+  }
+
+  Gtk.StyleContext.add_provider_for_screen(
+    window.get_screen(),
+    cssProvider,
+    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+  );
+
+  button.clicked.connect(() => {
+    var context = label.get_style_context();
+
+    if (context.has_class("color-red")) { context.remove_class("color-red"); }
+    else { context.add_class("color-red"); }
+  });
+}
