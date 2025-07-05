@@ -27,14 +27,12 @@ void onAppActivate(GApplication *self, gpointer data) {
 void onAppStartup(GApplication *self, gpointer data) {
   GtkCssProvider *cssProvider;
   GtkWidget *window, *box, *label, *button;
-  GdkScreen *screen;
 
   cssProvider = gtk_css_provider_new();
   window = gtk_application_window_new(GTK_APPLICATION(self));
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
   label = gtk_label_new("Hi there!");
   button = gtk_button_new_with_label("Toggle label style");
-  screen = gtk_window_get_screen(GTK_WINDOW(window));
 
   gtk_css_provider_load_from_path(cssProvider, "@cssPath@", NULL);
 
@@ -49,7 +47,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_widget_show_all(box);
 
   gtk_style_context_add_provider_for_screen(
-    screen,
+    gtk_window_get_screen(GTK_WINDOW(window)),
     GTK_STYLE_PROVIDER(cssProvider),
     GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
   );
