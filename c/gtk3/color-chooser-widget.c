@@ -27,10 +27,7 @@ void onAppActivate(GApplication *self, gpointer data) {
 
 void onAppStartup(GApplication *self, gpointer data) {
   gboolean showEditor;
-  GtkWidget *window,
-    *box,
-    *colorChooserWidget,
-    *showEditorCheckButton,
+  GtkWidget *window, *box, *colorChooserWidget, *showEditorCheckButton,
     *printButton;
 
   window = gtk_application_window_new(GTK_APPLICATION(self));

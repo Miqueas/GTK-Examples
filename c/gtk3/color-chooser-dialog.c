@@ -39,9 +39,7 @@ void onAppActivate(GApplication *self, gpointer data) {
 }
 
 void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *dialog;
-
-  dialog = gtk_color_chooser_dialog_new("Pick a color", NULL);
+  GtkWidget *dialog = gtk_color_chooser_dialog_new(NULL, NULL);
 
   gtk_window_set_title(GTK_WINDOW(dialog), appTitle);
   gtk_window_set_application(GTK_WINDOW(dialog), GTK_APPLICATION(self));
