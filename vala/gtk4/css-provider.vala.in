@@ -25,7 +25,7 @@ void onAppStartup(Application self) {
 
   var display = window.get_display();
   Gtk.StyleContext.add_provider_for_display(
-    // Gdk.Display.get_default() also works
+    // `Gdk.Display.get_default()` also works
     display,
     provider,
     Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
