@@ -1,8 +1,8 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Dialog";
-const string appTitle = "GtkDialog";
+const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Dialog2";
+const string appTitle = "Gtk.Dialog";
 const string titleText = "<span size='x-large' font-weight='bold'>Universe destruction</span>";
-const string summaryText = "Our universe has a lot of problems and the only way to fix it is destroying the entire universe and this important decision is now in your hands.";
 const string epilogText = "<span size='large' font-weight='bold'>Do you accept?</span>";
+const string summaryText = "Our universe has a lot of problems and the only way to fix it is by destroying it entirely and this important decision is now in your hands.";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
@@ -17,24 +17,21 @@ void onAppActivate(Application self) {
   window?.destroy();
 
   switch (response) {
+    case Gtk.ResponseType.ACCEPT:
+    case Gtk.ResponseType.APPLY:
+    case Gtk.ResponseType.YES:
     case Gtk.ResponseType.OK:
       print("Universe destroyed! 💥\n");
       break;
-    case Gtk.ResponseType.CANCEL:
-      print("Universe is in peace now! 🙏\n");
-      break;
     default:
-      print("Nothing happens! 🤔\n");
+      print("Universe is in peace now! 🙏\n");
       break;
   }
 }
 
 void onAppStartup(Application self) {
-  var dialog = new Gtk.Dialog.with_buttons(appTitle, null, Gtk.DialogFlags.MODAL,
-    "Yes 😈👍", Gtk.ResponseType.OK,
-    "No 💀🤚", Gtk.ResponseType.CANCEL
-  );
-
+  var dialog = new Gtk.Dialog();
+  var headerBar = new Gtk.HeaderBar();
   var titleLabel = new Gtk.Label(titleText);
   var summaryLabel = new Gtk.Label(summaryText);
   var epilogLabel = new Gtk.Label(epilogText);
@@ -43,8 +40,16 @@ void onAppStartup(Application self) {
   with (dialog) {
     title = appTitle;
     application = self as Gtk.Application;
-    default_width = 400;
     border_width = 10;
+    default_width = 400;
+    add_button("Yes 👍", Gtk.ResponseType.OK);
+    add_button("No 🤚", Gtk.ResponseType.CANCEL);
+    set_titlebar(headerBar);
+  }
+
+  with (headerBar) {
+    title = appTitle;
+    subtitle = "Example 2";
   }
 
   titleLabel.use_markup = true;
