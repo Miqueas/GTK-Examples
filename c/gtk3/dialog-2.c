@@ -5,10 +5,13 @@ void onAppStartup(GApplication *self, gpointer data);
 
 const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Dialog2";
 const gchar *appTitle = "GtkDialog";
-const gchar *title_text = "<span size=\"x-large\" font-weight=\"bold\">Universe destruction</span>";
-const gchar *epilog_text = "<span size=\"large\" font-weight=\"bold\">Do you accept?</span>";
-const gchar *summary_text = "Our universe has a lot of problems and the only way to fix\n"
-"it is destroying the entire universe and this important decision\nis now in your hands.";
+const gchar *titleText = "<span size='x-large' font-weight='bold'>"
+"Universe destruction</span>";
+const gchar *epilogText = "<span size='large' font-weight='bold'>"
+"Do you accept?</span>";
+const gchar *summaryText = "Our universe has a lot of problems and the only "
+"way to fix\nit is destroying the entire universe and this important decision"
+"\nis now in your hands.";
 
 int main(int argc, char **argv) {
   GtkApplication *app = gtk_application_new(appID, 0);
@@ -28,20 +31,15 @@ void onAppActivate(GApplication *self, gpointer data) {
   gtk_widget_destroy(GTK_WIDGET(window));
 
   switch (result) {
-    case GTK_RESPONSE_OK: {
+    case GTK_RESPONSE_ACCEPT:
+    case GTK_RESPONSE_APPLY:
+    case GTK_RESPONSE_YES:
+    case GTK_RESPONSE_OK:
       g_print("Universe destroyed! 💥\n");
       break;
-    }
-
-    case GTK_RESPONSE_CANCEL: {
+    default:
       g_print("Universe is in peace now! 🙏\n");
       break;
-    }
-
-    default: {
-      g_print("Nothing happens! 🤔\n");
-      break;
-    }
   }
 }
 
@@ -51,9 +49,9 @@ void onAppStartup(GApplication *self, gpointer data) {
   // "use-header-bar" is a Construct Only property
   dialog = g_object_new(GTK_TYPE_DIALOG, "use-header-bar", TRUE, NULL);
   headerBar = gtk_dialog_get_header_bar(GTK_DIALOG(dialog));
-  titleLabel = gtk_label_new(title_text);
-  summaryLabel = gtk_label_new(summary_text);
-  epilogLabel = gtk_label_new(epilog_text);
+  titleLabel = gtk_label_new(titleText);
+  summaryLabel = gtk_label_new(summaryText);
+  epilogLabel = gtk_label_new(epilogText);
   contentBox = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
 
   gtk_dialog_add_button(GTK_DIALOG(dialog), "Yes 👍", GTK_RESPONSE_OK);
