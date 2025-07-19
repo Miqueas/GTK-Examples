@@ -44,15 +44,13 @@ void onAppActivate(GApplication *self, gpointer data) {
 }
 
 void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *dialog, *headerBar, *titleLabel, *summaryLabel, *epilogLabel, *contentBox;
-
   // "use-header-bar" is a Construct Only property
-  dialog = g_object_new(GTK_TYPE_DIALOG, "use-header-bar", TRUE, NULL);
-  headerBar = gtk_dialog_get_header_bar(GTK_DIALOG(dialog));
-  titleLabel = gtk_label_new(titleText);
-  summaryLabel = gtk_label_new(summaryText);
-  epilogLabel = gtk_label_new(epilogText);
-  contentBox = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
+  GtkWidget* dialog = g_object_new(GTK_TYPE_DIALOG, "use-header-bar", TRUE, NULL);
+  GtkWidget* headerBar = gtk_dialog_get_header_bar(GTK_DIALOG(dialog));
+  GtkWidget* titleLabel = gtk_label_new(titleText);
+  GtkWidget* summaryLabel = gtk_label_new(summaryText);
+  GtkWidget* epilogLabel = gtk_label_new(epilogText);
+  GtkWidget* contentBox = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
 
   gtk_dialog_add_button(GTK_DIALOG(dialog), "Yes 👍", GTK_RESPONSE_OK);
   gtk_dialog_add_button(GTK_DIALOG(dialog), "No 🛑", GTK_RESPONSE_CANCEL);

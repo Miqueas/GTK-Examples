@@ -43,13 +43,11 @@ void onAppActivate(GApplication *self, gpointer data) {
 }
 
 void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *dialog, *titleLabel, *summaryLabel, *epilogLabel, *contentBox;
-
-  dialog = gtk_dialog_new();
-  titleLabel = gtk_label_new(titleText);
-  summaryLabel = gtk_label_new(summaryText);
-  epilogLabel = gtk_label_new(epilogText);
-  contentBox = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
+  GtkWidget* dialog = gtk_dialog_new();
+  GtkWidget* titleLabel = gtk_label_new(titleText);
+  GtkWidget* summaryLabel = gtk_label_new(summaryText);
+  GtkWidget* epilogLabel = gtk_label_new(epilogText);
+  GtkWidget* contentBox = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
 
   gtk_window_set_title(GTK_WINDOW(dialog), appTitle);
   gtk_window_set_application(GTK_WINDOW(dialog), GTK_APPLICATION(self));
