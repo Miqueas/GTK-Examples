@@ -28,6 +28,7 @@ src = [
   'drawing-area',
   'entry-completion',
   'entry',
+  'expander',
   'header-bar',
   'label',
   'list-box',
