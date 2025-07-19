@@ -5,13 +5,25 @@ from OpenGL.GL import *
 
 appID = "io.github.Miqueas.GTK-Examples.Python.Gtk3.GLArea"
 appTitle = "Gtk.GLArea"
+
+vsSource = """#version 100
+attribute vec2 coord2d;
+void main(void) {
+  gl_Position = vec4(coord2d, 0.0, 1.0);
+}"""
+
+fsSource = """#version 100
+void main(void) {
+  gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+}"""
+
 program = None
 vao = None
 vbo = None
 attributeCoord2D = None
 
 def onGLAreaRealize(self):
-  global program, vao, vbo, attributeCoord2D
+  global vsSource, fsSource, program, vao, vbo, attributeCoord2D
 
   triangleVertices = numpy.array(
     [ 0.0, 0.8, -0.8, -0.8, 0.8, -0.8 ],
@@ -20,18 +32,6 @@ def onGLAreaRealize(self):
   attributeName = "coord2d"
   compileOk = GL_FALSE
   linkOk = GL_FALSE
-  vsSource = """#version 130
-  attribute vec2 coord2d;
-  void main(void) {
-    gl_Position = vec4(coord2d, 0.0, 1.0);
-  }"""
-
-  fsSource = """#version 130
-  void main(void) {
-    gl_FragColor[0] = 0.0;
-    gl_FragColor[1] = 0.0;
-    gl_FragColor[2] = 0.0;
-  }"""
 
   print("[Gtk.GLArea::realize] Called")
   self.make_current()
@@ -48,7 +48,7 @@ def onGLAreaRealize(self):
 
   self.set_has_depth_buffer(True)
 
-  glClearColor(1.0, 1.0, 1.0, 0.0)
+  glClearColor(1.0, 1.0, 1.0, 1.0)
 
   vao = glGenVertexArrays(1)
   glBindVertexArray(vao)
@@ -74,7 +74,15 @@ def onGLAreaRealize(self):
   compileOk = glGetShaderiv(fs, GL_COMPILE_STATUS)
 
   if not compileOk:
-    print("[Gtk.GLArea::realize] Error in fragment shader", file = sys.stderr)
+    logLength = glGetShaderiv(fs, GL_INFO_LOG_LENGTH)
+
+    if logLength > 0:
+      log = glGetShaderInfoLog(fs, logLength)
+      print(
+        f"[Gtk.GLArea::realize] Fragment Shader error: {log.decode('utf-8')}",
+        file = sys.stderr
+      )
+
     return
   
   glShaderSource(vs, vsSource)
@@ -82,7 +90,15 @@ def onGLAreaRealize(self):
   compileOk = glGetShaderiv(vs, GL_COMPILE_STATUS)
 
   if not compileOk:
-    print("[Gtk.GLArea::realize] Error in vertex shader", file = sys.stderr)
+    logLength = glGetShaderiv(vs, GL_INFO_LOG_LENGTH)
+
+    if logLength > 0:
+      log = glGetShaderInfoLog(vs, logLength)
+      print(
+        f"[Gtk.GLArea::realize] Vertex Shader error: {log.decode('utf-8')}",
+        file = sys.stderr
+      )
+
     return
   
   program = glCreateProgram()
@@ -92,7 +108,15 @@ def onGLAreaRealize(self):
   linkOk = glGetProgramiv(program, GL_LINK_STATUS)
 
   if not linkOk:
-    print("[Gtk.GLArea::realize] Error when linking program", file = sys.stderr)
+    logLength = glGetProgramiv(program, GL_INFO_LOG_LENGTH)
+
+    if logLength > 0:
+      log = glGetProgramInfoLog(program, logLength)
+      print(
+        f"[Gtk.GLArea::realize] Program link error: {log.decode('utf-8')}",
+        file = sys.stderr
+      )
+
     return
   
   attributeCoord2D = glGetAttribLocation(program, attributeName)
