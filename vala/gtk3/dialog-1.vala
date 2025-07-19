@@ -34,7 +34,7 @@ void onAppStartup(Application self) {
   var titleLabel = new Gtk.Label(titleText);
   var summaryLabel = new Gtk.Label(summaryText);
   var epilogLabel = new Gtk.Label(epilogText);
-  var contentBox = dialog.get_content_area();
+  unowned var contentBox = dialog.get_content_area();
 
   with (dialog) {
     title = appTitle;

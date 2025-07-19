@@ -30,21 +30,20 @@ void onAppActivate(Application self) {
 }
 
 void onAppStartup(Application self) {
-  var dialog = new Gtk.Dialog();
-  var headerBar = new Gtk.HeaderBar();
+  var dialog = Object.new(typeof (Gtk.Dialog), "use-header-bar", true);
+  unowned var headerBar = (dialog as Gtk.Dialog)?.get_header_bar();
   var titleLabel = new Gtk.Label(titleText);
   var summaryLabel = new Gtk.Label(summaryText);
   var epilogLabel = new Gtk.Label(epilogText);
-  var contentBox = dialog.get_content_area();
+  unowned var contentBox = (dialog as Gtk.Dialog)?.get_content_area();
 
-  with (dialog) {
+  with (dialog as Gtk.Dialog) {
     title = appTitle;
     application = self as Gtk.Application;
     border_width = 10;
     default_width = 400;
     add_button("Yes 👍", Gtk.ResponseType.OK);
     add_button("No 🤚", Gtk.ResponseType.CANCEL);
-    set_titlebar(headerBar);
   }
 
   with (headerBar) {
