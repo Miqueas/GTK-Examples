@@ -5,7 +5,7 @@
  *****************************************************************************/
 
 #include <gtk/gtk.h>
-#include <GL/glew.h>
+#include <epoxy/gl.h>
 
 void onAppStartup(GApplication *self, gpointer data);
 void onAppActivate(GApplication *self, gpointer data);
@@ -13,9 +13,20 @@ void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data);
 gboolean onGLAreaRender(GtkGLArea *self, GdkGLContext *context, gpointer data);
 
 const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.GLArea";
-const gchar *appTitle = "GtkApplicationWindow";
+const gchar *appTitle = "GtkGLArea";
 
-GLuint program, vao, vboTriangle;
+const char *vsSource = "#version 100\n"
+"attribute vec2 coord2d;\n"
+"void main (void) {\n"
+"  gl_Position = vec4(coord2d, 0.0, 1.0);\n"
+"}";
+
+const char *fsSource = "#version 100\n"
+"void main (void) {\n"
+"  gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);\n"
+"}";
+
+GLuint program, vao, vbo;
 GLint attributeCoord2D;
 
 int main(int argc, char **argv) {
@@ -54,28 +65,11 @@ void onAppStartup(GApplication *self, gpointer data) {
 
 void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data) {
   GLfloat triangleVertices[] = { 0.0, 0.8, -0.8, -0.8, 0.8, -0.8 };
+  const char *attributeName = "coord2d";
   GLint compileOK = GL_FALSE;
   GLint linkOK = GL_FALSE;
 
-  const char *vsSource =
-  "#version 130\n" // OpenGL 3
-  "attribute vec2 coord2d; \n"
-  "void main (void) { \n"
-  "   gl_Position = vec4(coord2d, 0.0, 1.0); \n"
-  "}";
-
-  const char *fsSource =
-  "#version 130\n" // OpenGL 3
-  "void main (void) {\n"
-  "   gl_FragColor[0] = 1.0;\n"
-  "   gl_FragColor[1] = 0.0;\n"
-  "   gl_FragColor[2] = 0.0;\n"
-  "}";
-
-  const char *attributeName = "coord2d";
-
   g_print("[GtkGLArea::realize] Called\n");
-
   gtk_gl_area_make_current(self);
   
   if (gtk_gl_area_get_error (self) != NULL) {
@@ -83,24 +77,21 @@ void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data) {
     return;
   }
 
-  glewExperimental = GL_TRUE;
-  glewInit();
-
   const GLubyte* renderer = glGetString(GL_RENDERER);
   const GLubyte* version = glGetString(GL_VERSION);
 
   g_print("[GtkGLArea::realize] Renderer: %s\n", renderer);
-  g_print("[GtkGLArea::realize] OpenGL version supported %s\n", version);
+  g_print("[GtkGLArea::realize] Version: %s\n", version);
 
   gtk_gl_area_set_has_depth_buffer(self, TRUE);
   
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+  glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);
 
-  glGenBuffers(1, &vboTriangle);
-  glBindBuffer(GL_ARRAY_BUFFER, vboTriangle);
+  glGenBuffers(1, &vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(triangleVertices), triangleVertices, GL_STATIC_DRAW);
   
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
@@ -115,7 +106,16 @@ void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data) {
   glGetShaderiv(fs, GL_COMPILE_STATUS, &compileOK);
 
   if(!compileOK) {
-    g_printerr("[GtkGLArea::realize] Error in fragment shader\n");
+    GLint logLength;
+    glGetShaderiv(fs, GL_INFO_LOG_LENGTH, &logLength);
+
+    if (logLength > 0) {
+      gchar *log = g_malloc(logLength);
+      glGetShaderInfoLog(fs, logLength, NULL, log);
+      g_printerr("[GtkGLArea::realize] Fragment Shader error: %s\n", log);
+      g_free(log);
+    }
+
     return;
   }
 
@@ -124,7 +124,16 @@ void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data) {
   glGetShaderiv(vs, GL_COMPILE_STATUS, &compileOK);
 
   if(!compileOK) {
-    g_printerr("[GtkGLArea::realize] Error in vertex shader\n");
+    GLint logLength;
+    glGetShaderiv(vs, GL_INFO_LOG_LENGTH, &logLength);
+
+    if (logLength > 0) {
+      gchar *log = g_malloc(logLength);
+      glGetShaderInfoLog(vs, logLength, NULL, log);
+      g_printerr("[GtkGLArea::realize] Vertex Shader error: %s\n", log);
+      g_free(log);
+    }
+
     return;
   }
 
@@ -135,7 +144,16 @@ void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data) {
   glGetProgramiv(program, GL_LINK_STATUS, &linkOK);
 
   if(!linkOK) {
-    g_printerr("[GtkGLArea::realize] Error when linking program\n");
+    GLint logLength;
+    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+
+    if (logLength > 0) {
+      gchar *log = g_malloc(logLength);
+      glGetProgramInfoLog(program, logLength, NULL, log);
+      g_printerr("[GtkGLArea::realize] Program link error: %s\n", log);
+      g_free(log);
+    }
+
     return;
   }
 
@@ -151,15 +169,11 @@ gboolean onGLAreaRender(GtkGLArea *self, GdkGLContext *context, gpointer data) {
   g_print("[GtkGLArea::render] Called\n");
   
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
   glUseProgram(program);
-
   glBindVertexArray (vao);
   glEnableVertexAttribArray(attributeCoord2D);
-
-  glBindBuffer(GL_ARRAY_BUFFER, vboTriangle);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glVertexAttribPointer(attributeCoord2D, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
   glDrawArrays(GL_TRIANGLES, 0, 3);
   glDisableVertexAttribArray(attributeCoord2D);
 
