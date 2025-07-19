@@ -9,13 +9,7 @@ add_project_arguments('--enable-experimental', language: 'vala')
 
 gtk3 = dependency('gtk+-3.0', required: true)
 gtk4 = dependency('gtk4', required: true)
-
-if build_machine.system() == 'linux'
-  glew = dependency('glew', required: true)
-else
-  message('Skipping glew dependency on non-linux systems')
-endif
-
+epoxy = dependency('epoxy', required: true)
 
 gnome = import('gnome')
 resources = gnome.compile_resources('resources', 'data/resources.xml', source_dir: 'data')

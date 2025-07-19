@@ -39,6 +39,7 @@ src = [
   'font-chooser-dialog',
   'font-chooser-widget',
   'frame',
+  'glarea',
   'grid-1',
   'grid-2',
   'grid-3',
@@ -74,15 +75,13 @@ image1 = configure_file(
   configuration: image_conf
 )
 
-if build_machine.system() == 'linux'
-  executable('glarea', 'glarea.c', dependencies: [ gtk3, glew ])
-endif
-
 foreach name : src
   if name == 'builder'
     executable(name, builder, dependencies: gtk3)
   elif name == 'css-provider'
     executable(name, css_provider, dependencies: gtk3)
+  elif name == 'glarea'
+    executable(name, name + '.c', dependencies: [ gtk3, epoxy ])
   elif name == 'image-1'
     executable(name, image1, dependencies: gtk3)
   else
