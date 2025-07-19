@@ -30,7 +30,7 @@ void onAppActivate(Application self) {
 }
 
 void onAppStartup(Application self) {
-  var dialog = Object.new(typeof (Gtk.Dialog), "use-header-bar", true);
+  var dialog = Object.new(typeof (Gtk.Dialog), use_header_bar: true);
   unowned var headerBar = (dialog as Gtk.Dialog)?.get_header_bar();
   var titleLabel = new Gtk.Label(titleText);
   var summaryLabel = new Gtk.Label(summaryText);
