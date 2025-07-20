@@ -49,6 +49,8 @@ src = [
   'image-2',
   'info-bar',
   'label',
+  'level-bar',
+  'link-button',
   'list-box',
   'message-dialog',
   'stack-1',
