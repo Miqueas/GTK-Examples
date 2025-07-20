@@ -28,6 +28,7 @@ src = [
   'drawing-area',
   'entry-completion',
   'entry',
+  'event-box',
   'expander',
   'file-chooser-button',
   'file-chooser-dialog',
