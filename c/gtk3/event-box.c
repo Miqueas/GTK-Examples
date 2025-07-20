@@ -9,8 +9,8 @@ void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 gboolean onClicked(GtkWidget* self, GdkEventButton event, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Clipboard";
-const gchar *appTitle = "GtkClipboard";
+const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.EventBox";
+const gchar *appTitle = "GtkEventBox";
 
 int main(int argc, char **argv) {
   GtkApplication *app = gtk_application_new(appID, 0);
