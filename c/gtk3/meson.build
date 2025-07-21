@@ -55,6 +55,7 @@ src = [
   'message-dialog',
   'notebook',
   'overlay',
+  'paned',
   'stack-1',
   'stack-2',
   'text-view',
