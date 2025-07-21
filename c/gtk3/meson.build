@@ -54,6 +54,7 @@ src = [
   'list-box',
   'message-dialog',
   'notebook',
+  'overlay',
   'stack-1',
   'stack-2',
   'text-view',
