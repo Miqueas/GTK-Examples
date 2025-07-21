@@ -59,6 +59,7 @@ src = [
   'popover',
   'progress-bar',
   'radio-button',
+  'revealer',
   'stack-1',
   'stack-2',
   'text-view',
