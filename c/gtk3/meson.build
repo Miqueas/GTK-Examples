@@ -58,6 +58,7 @@ src = [
   'paned',
   'popover',
   'progress-bar',
+  'radio-button',
   'stack-1',
   'stack-2',
   'text-view',
