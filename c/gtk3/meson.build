@@ -57,6 +57,7 @@ src = [
   'overlay',
   'paned',
   'popover',
+  'progress-bar',
   'stack-1',
   'stack-2',
   'text-view',
