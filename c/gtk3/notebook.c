@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 
-// `GtkNotebook` is a widget that allows the user to switch between different pages
+// `GtkNotebook` is a widget that can contain multiple widgets and switch
+// between them using tabs
 
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
