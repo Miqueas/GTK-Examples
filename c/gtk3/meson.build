@@ -56,6 +56,7 @@ src = [
   'notebook',
   'overlay',
   'paned',
+  'popover',
   'stack-1',
   'stack-2',
   'text-view',
