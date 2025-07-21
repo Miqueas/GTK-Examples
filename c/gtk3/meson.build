@@ -53,6 +53,7 @@ src = [
   'link-button',
   'list-box',
   'message-dialog',
+  'notebook',
   'stack-1',
   'stack-2',
   'text-view',
