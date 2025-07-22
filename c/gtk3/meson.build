@@ -60,6 +60,7 @@ src = [
   'progress-bar',
   'radio-button',
   'revealer',
+  'scale',
   'stack-1',
   'stack-2',
   'text-view',
