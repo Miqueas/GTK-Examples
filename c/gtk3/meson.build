@@ -62,6 +62,7 @@ src = [
   'revealer',
   'scale-button',
   'scale',
+  'scrolled-window',
   'stack-1',
   'stack-2',
   'text-view',
