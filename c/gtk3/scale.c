@@ -4,7 +4,6 @@
 
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
-void onValueChanged(GtkRange *self, gpointer data);
 
 const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Scale";
 const gchar *appTitle = "GtkScale";
