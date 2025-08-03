@@ -3,14 +3,16 @@ gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk
 
 appID = "io.github.Miqueas.GTK-Examples.Python.Gtk4.ApplicationWindow"
-appTitle = "GtkApplicationWindow"
+appTitle = "Gtk.ApplicationWindow"
 
 def onAppStartup(self):
-  window = Gtk.ApplicationWindow(application = self)
-  window.set_title(appTitle)
-  window.set_default_size(400, 400)
+    global appTitle
 
-app = Gtk.Application(application_id = appID)
+    window = Gtk.ApplicationWindow(application = self)
+    window.set_title(appTitle)
+    window.set_default_size(400, 400)
+
+app = Gtk.Application(application_id = appID, flags = 0)
 app.connect("activate", lambda self: self.get_active_window().present())
 app.connect("startup", onAppStartup)
 
