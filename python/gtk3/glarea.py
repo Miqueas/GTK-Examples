@@ -1,7 +1,9 @@
-import gi, sys, numpy
+import gi, sys
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from OpenGL.GL import *
+from OpenGL.GL import shaders
+import numpy as np
 
 appID = "io.github.Miqueas.GTK-Examples.Python.Gtk3.GLArea"
 appTitle = "Gtk.GLArea"
@@ -13,6 +15,7 @@ void main(void) {
 }"""
 
 fsSource = """#version 100
+precision mediump float;
 void main(void) {
   gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 }"""
@@ -23,142 +26,83 @@ vbo = None
 attributeCoord2D = None
 
 def onGLAreaRealize(self):
-  global vsSource, fsSource, program, vao, vbo, attributeCoord2D
+    global vsSource, fsSource, program, vao, vbo, attributeCoord2D
 
-  triangleVertices = numpy.array(
-    [ 0.0, 0.8, -0.8, -0.8, 0.8, -0.8 ],
-    dtype = numpy.float32
-  )
-  attributeName = "coord2d"
-  compileOk = GL_FALSE
-  linkOk = GL_FALSE
+    print("[Gtk.GLArea::realize] Called")
+    self.make_current()
 
-  print("[Gtk.GLArea::realize] Called")
-  self.make_current()
+    error = self.get_error()
+    if error is not None:
+        return print(f"[Gtk.GLArea::realize] Error: {error}", file=sys.stderr)
 
-  if self.get_error() is not None:
-    print("[Gtk.GLArea::realize] Unknown error", file = sys.stderr)
-    return
+    renderer = glGetString(GL_RENDERER)
+    version = glGetString(GL_VERSION)
+    print(f"[Gtk.GLArea::realize] Renderer: {renderer.decode('utf-8')}")
+    print(f"[Gtk.GLArea::realize] Version: {version.decode('utf-8')}")
 
-  renderer = glGetString(GL_RENDERER)
-  version = glGetString(GL_VERSION)
+    self.set_has_depth_buffer(True)
+    glClearColor(1.0, 1.0, 1.0, 1.0)
 
-  print(f"[Gtk.GLArea::realize] Renderer: {renderer.decode('utf-8')}")
-  print(f"[Gtk.GLArea::realize] Version: {version.decode('utf-8')}")
+    try:
+        vs = shaders.compileShader(vsSource, GL_VERTEX_SHADER)
+        fs = shaders.compileShader(fsSource, GL_FRAGMENT_SHADER)
+        program = shaders.compileProgram(vs, fs)
+    except Exception as e:
+        return print(f"[Gtk.GLArea::realize] Shader compilation error: {e}", file=sys.stderr)
 
-  self.set_has_depth_buffer(True)
+    attributeCoord2D = glGetAttribLocation(program, b"coord2d")
+    if attributeCoord2D == -1:
+        return print("[Gtk.GLArea::realize] Could not bind attribute coord2d", file=sys.stderr)
 
-  glClearColor(1.0, 1.0, 1.0, 1.0)
+    vao = glGenVertexArrays(1)
+    glBindVertexArray(vao)
 
-  vao = glGenVertexArrays(1)
-  glBindVertexArray(vao)
+    triangleVertices = np.array([0.0,  0.8, -0.8, -0.8, 0.8, -0.8], dtype=np.float32)
 
-  vbo = glGenBuffers(1)
-  glBindBuffer(GL_ARRAY_BUFFER, vbo)
-  glBufferData(
-    GL_ARRAY_BUFFER,
-    triangleVertices.nbytes,
-    triangleVertices,
-    GL_STATIC_DRAW
-  )
+    vbo = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, vbo)
+    glBufferData(GL_ARRAY_BUFFER, triangleVertices.nbytes, triangleVertices, GL_STATIC_DRAW)
 
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, None)
-  glEnableVertexAttribArray(0)
-  glDisableVertexAttribArray(0)
+    glVertexAttribPointer(attributeCoord2D, 2, GL_FLOAT, GL_FALSE, 0, None)
+    glEnableVertexAttribArray(attributeCoord2D)
 
-  fs = glCreateShader(GL_FRAGMENT_SHADER)
-  vs = glCreateShader(GL_VERTEX_SHADER)
+    glBindVertexArray(0)
+    glBindBuffer(GL_ARRAY_BUFFER, 0)
 
-  glShaderSource(fs, fsSource)
-  glCompileShader(fs)
-  compileOk = glGetShaderiv(fs, GL_COMPILE_STATUS)
-
-  if not compileOk:
-    logLength = glGetShaderiv(fs, GL_INFO_LOG_LENGTH)
-
-    if logLength > 0:
-      log = glGetShaderInfoLog(fs, logLength)
-      print(
-        f"[Gtk.GLArea::realize] Fragment Shader error: {log.decode('utf-8')}",
-        file = sys.stderr
-      )
-
-    return
-  
-  glShaderSource(vs, vsSource)
-  glCompileShader(vs)
-  compileOk = glGetShaderiv(vs, GL_COMPILE_STATUS)
-
-  if not compileOk:
-    logLength = glGetShaderiv(vs, GL_INFO_LOG_LENGTH)
-
-    if logLength > 0:
-      log = glGetShaderInfoLog(vs, logLength)
-      print(
-        f"[Gtk.GLArea::realize] Vertex Shader error: {log.decode('utf-8')}",
-        file = sys.stderr
-      )
-
-    return
-  
-  program = glCreateProgram()
-  glAttachShader(program, vs)
-  glAttachShader(program, fs)
-  glLinkProgram(program)
-  linkOk = glGetProgramiv(program, GL_LINK_STATUS)
-
-  if not linkOk:
-    logLength = glGetProgramiv(program, GL_INFO_LOG_LENGTH)
-
-    if logLength > 0:
-      log = glGetProgramInfoLog(program, logLength)
-      print(
-        f"[Gtk.GLArea::realize] Program link error: {log.decode('utf-8')}",
-        file = sys.stderr
-      )
-
-    return
-  
-  attributeCoord2D = glGetAttribLocation(program, attributeName)
-
-  if attributeCoord2D == -1:
-    print(
-      f"[Gtk.GLArea::realize] Could not bind attribute {attributeName}",
-      file = sys.stderr
-    )
-    return
+    print("[Gtk.GLArea::realize] Setup complete")
 
 def onGLAreaRender(self, context):
-  global program, vao, vbo, attributeCoord2D
+    global program, vao
 
-  print("[Gtk.GLArea::render] Called")
+    print("[Gtk.GLArea::render] Called")
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-  glUseProgram(program)
-  glBindVertexArray(vao)
-  glEnableVertexAttribArray(attributeCoord2D)
-  glBindBuffer(GL_ARRAY_BUFFER, vbo)
-  glVertexAttribPointer(attributeCoord2D, 2, GL_FLOAT, GL_FALSE, 0, None)
-  glDrawArrays(GL_TRIANGLES, 0, 3)
-  glDisableVertexAttribArray(attributeCoord2D)
+    if program is None:
+        return True
 
-  return True
+    glUseProgram(program)
+    glBindVertexArray(vao)
+    glDrawArrays(GL_TRIANGLES, 0, 3)
+    glBindVertexArray(0)
+    glUseProgram(0)
+
+    return True
 
 def onAppStartup(self):
-  global appTitle
+    global appTitle
 
-  window = Gtk.ApplicationWindow(application = self)
-  glArea = Gtk.GLArea()
+    window = Gtk.ApplicationWindow(application = self)
+    glArea = Gtk.GLArea()
 
-  window.add(glArea)
-  window.set_title(appTitle)
-  window.set_default_size(400, 400)
+    window.add(glArea)
+    window.set_title(appTitle)
+    window.set_default_size(400, 400)
 
-  glArea.show()
-  glArea.set_vexpand(True)
-  glArea.set_hexpand(True)
-  glArea.connect("realize", onGLAreaRealize)
-  glArea.connect("render", onGLAreaRender)
+    glArea.show()
+    glArea.set_vexpand(True)
+    glArea.set_hexpand(True)
+    glArea.connect("realize", onGLAreaRealize)
+    glArea.connect("render", onGLAreaRender)
 
 app = Gtk.Application(application_id = appID, flags = 0)
 app.connect("activate", lambda self: self.get_active_window().present())
