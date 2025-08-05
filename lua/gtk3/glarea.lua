@@ -12,6 +12,7 @@ void main(void) {
 }]]
 
 local fsSource = [[#version 100
+precision mediump float;
 void main(void) {
   gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 }]]
@@ -19,77 +20,66 @@ void main(void) {
 local program, vao, vbo, attributeCoord2D
 
 local function onGLAreaRealize(self)
-  local triangleVertices = { 0.0, 0.8, -0.8, -0.8, 0.8, -0.8 }
-  local attributeName = 'coord2d'
-  local compileOk = false
-  local linkOk = false
-
   print('[Gtk.GLArea::realize] Called')
   self:make_current()
 
-  if self:get_error() ~= nil then
-    print('[Gtk.GLArea::realize] Unknown error')
-    return
+  local error = self:get_error()
+  if error ~= nil then
+    return print('[Gtk.GLArea::realize] Error:', error)
   end
 
   GL.init()
 
   local renderer = GL.get_string('renderer')
   local version = GL.get_string('version')
-
   print('[Gtk.GLArea::realize] Renderer:', renderer)
   print('[Gtk.GLArea::realize] Version:', version)
 
   self:set_has_depth_buffer(true)
-
   GL.clear_color(1.0, 1.0, 1.0, 1.0)
+
+  program, _, _ = GL.make_program_s('vertex', vsSource, 'fragment', fsSource)
+
+  attributeCoord2D = GL.get_attrib_location(program, 'coord2d')
+  if attributeCoord2D == -1 then
+    return print('[Gtk.GLArea::realize] Could not bind attribute coord2d')
+  end
 
   vao = GL.new_vertex_array()
   GL.bind_vertex_array(vao)
 
+  local triangleVertices = { 0.0, 0.8, -0.8, -0.8, 0.8, -0.8 }
+
   vbo = GL.new_buffer('array')
   GL.bind_buffer('array', vbo)
   GL.buffer_data('array', GL.pack('float', triangleVertices), 'static draw')
-  GL.vertex_attrib_pointer(0, 2, 'float', false, 0, 0)
-  GL.enable_vertex_attrib_array(0)
-  GL.disable_vertex_attrib_array(0)
 
-  local fs = GL.create_shader('fragment')
-  local vs = GL.create_shader('vertex')
+  GL.vertex_attrib_pointer(attributeCoord2D, 2, 'float', false, 0, 0)
+  GL.enable_vertex_attrib_array(attributeCoord2D)
 
-  GL.shader_source(fs, fsSource)
-  GL.compile_shader(fs, true)
+  GL.bind_vertex_array(0)
+  GL.bind_buffer('array', 0)
 
-  GL.shader_source(vs, vsSource)
-  GL.compile_shader(vs, true)
-
-  program = GL.create_program()
-  GL.attach_shader(program, fs)
-  GL.attach_shader(program, vs)
-  GL.link_program(program, true)
-
-  attributeCoord2D = GL.get_attrib_location(program, attributeName)
-  if attributeCoord2D == -1 then
-    print('[Gtk.GLArea::realize] Could not bind attribute:', attributeName)
-    return
-  end
+  print('[Gtk.GLArea::realize] Setup complete')
 end
 
 local function onGLAreaRender(self)
   print('[Gtk.GLArea::render] Called')
-
   GL.clear('color', 'depth')
+
+  if program == nil then return true end
+
   GL.use_program(program)
   GL.bind_vertex_array(vao)
-  GL.enable_vertex_attrib_array(attributeCoord2D)
-  GL.bind_buffer('array', vbo)
-  GL.vertex_attrib_pointer(attributeCoord2D, 2, 'float', false, 0, 0)
   GL.draw_arrays('triangles', 0, 3)
-  GL.disable_vertex_attrib_array(attributeCoord2D)
+  GL.bind_vertex_array(0)
+  GL.use_program(0)
+
+  return true
 end
 
 local function onAppStartup(self)
-  local window = Gtk.ApplicationWindow { application = self, title = appTitle }
+  local window = Gtk.ApplicationWindow { application = self }
   local glArea = Gtk.GLArea {}
 
   window:add(glArea)
@@ -103,7 +93,7 @@ local function onAppStartup(self)
   glArea.on_render = onGLAreaRender
 end
 
-local app = Gtk.Application { application_id = appID }
+local app = Gtk.Application { application_id = appID, flags = 0 }
 app.on_activate = function (self) self.active_window:present() end
 app.on_startup = onAppStartup
 
