@@ -9,7 +9,7 @@ class App : Gtk.Application {
   public App() {
     Object(
       application_id: appID,
-      flags: ApplicationFlags.FLAGS_NONE,
+      flags: 0,
       resource_base_path: "/io/github/Miqueas/GTK-Examples"
     );
   }

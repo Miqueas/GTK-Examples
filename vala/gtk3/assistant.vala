@@ -3,7 +3,7 @@ const string appTitle = "GtkAssistant";
 const string appWelcomeText = "<span font='Bold 16'>Welcome to the GtkAssistant example</span>";
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
+  var app = new Gtk.Application(appID, 0);
   app.startup.connect(onAppStartup);
   app.activate.connect(onAppActivate);
   return app.run(args);

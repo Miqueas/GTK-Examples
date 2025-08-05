@@ -24,7 +24,7 @@ const string[] icons = {
 };
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
+  var app = new Gtk.Application(appID, 0);
   app.startup.connect(onAppStartup);
   app.activate.connect(onAppActivate);
   return app.run(args);

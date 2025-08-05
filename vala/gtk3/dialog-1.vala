@@ -5,7 +5,7 @@ const string epilogText = "<span size='large' font-weight='bold'>Do you accept?<
 const string summaryText = "Our universe has a lot of problems and the only way to fix it is by destroying it entirely and this important decision is now in your hands.";
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
+  var app = new Gtk.Application(appID, 0);
   app.startup.connect(onAppStartup);
   app.activate.connect(onAppActivate);
   return app.run(args);

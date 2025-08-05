@@ -2,7 +2,7 @@ const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.AppChooserDialog"
 const string appTitle = "GtkBox";
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, ApplicationFlags.FLAGS_NONE);
+  var app = new Gtk.Application(appID, 0);
   app.startup.connect(onAppStartup);
   app.activate.connect(onAppActivate);
   return app.run(args);
