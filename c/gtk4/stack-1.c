@@ -57,7 +57,7 @@ GtkWidget* buildStack() {
   );
 
   for (int i = 0; i < 3; i++) {
-    char label[56], title[7], name[6];
+    char label[70], title[20], name[20];
 
     sprintf(
       label,

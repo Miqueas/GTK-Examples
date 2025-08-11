@@ -51,7 +51,7 @@ GtkWidget* doStack() {
   gtk_stack_set_transition_type(GTK_STACK(stack), GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
 
   for (int i = 0; i < 3; i++) {
-    char label[56], title[7], name[6];
+    char label[70], title[20], name[20];
 
     sprintf(label, "<span size='xx-large' font_weight='bold'>Page %d</span>", i + 1);
     sprintf(title, "Page %d", i + 1);
