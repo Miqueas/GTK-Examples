@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.CheckMenuItem";
-const string appTitle = "GtkCheckMenuItem";
+const string appTitle = "Gtk.CheckMenuItem";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -20,34 +20,24 @@ void onAppStartup(Application self) {
   var fileMenu = new Gtk.Menu();
   var checkMenuItem = new Gtk.CheckMenuItem.with_label("My option");
 
-  with (window) {
-    add(menuBar);
-    title = appTitle;
-    set_default_size(400, 400);
-  }
+  window.add(menuBar);
+  window.title = appTitle;
+  window.set_default_size(400, 400);
 
-  with (menuBar) {
-    add(fileMenuItem);
-    show();
-    halign = Gtk.Align.START;
-    valign = Gtk.Align.START;
-  }
+  menuBar.add(fileMenuItem);
+  menuBar.show();
+  menuBar.halign = Gtk.Align.START;
+  menuBar.valign = Gtk.Align.START;
 
-  with (fileMenuItem) {
-    show();
-    submenu = fileMenu;
-  }
+  fileMenuItem.show();
+  fileMenuItem.submenu = fileMenu;
 
-  with (fileMenu) {
-    add(checkMenuItem);
-    show();
-  }
+  fileMenu.add(checkMenuItem);
+  fileMenu.show();
 
-  with (checkMenuItem) {
-    show();
-    active = true;
-    toggled.connect((self) => {
-      print(@"Active: $(self.active ? "Yes" : "No")\n");
-    });
-  }
+  checkMenuItem.show();
+  checkMenuItem.active = true;
+  checkMenuItem.toggled.connect((self) => {
+    print(@"Active: $(self.active ? "Yes" : "No")\n");
+  });
 }

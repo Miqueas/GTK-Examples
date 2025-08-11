@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.AppChooserWidget";
-const string appTitle = "GtkBox";
+const string appTitle = "Gtk.AppChooserWidget";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -22,27 +22,21 @@ void onAppStartup(Application self) {
   var showDefaultToggle = new Gtk.CheckButton.with_label("Show default");
   var showFallbackToggle = new Gtk.CheckButton.with_label("Show fallback");
   var showOtherToggle = new Gtk.CheckButton.with_label("Show other");
-  var showRecommendedToggle = new Gtk.CheckButton.with_label(
-    "Show recommended"
-  );
+  var showRecommendedToggle = new Gtk.CheckButton.with_label("Show recommended");
 
-  with (window) {
-    add(box);
-    title = appTitle;
-    border_width = 10;
-    set_default_size(400, 400);
-  }
+  window.add(box);
+  window.title = appTitle;
+  window.border_width = 10;
+  window.set_default_size(400, 400);
 
-  with (box) {
-    pack_start(appChooserWidget, true, true, 0);
-    pack_start(settingsLabel, false, false, 0);
-    pack_start(showAllToggle, false, false, 0);
-    pack_start(showDefaultToggle, false, false, 0);
-    pack_start(showFallbackToggle, false, false, 0);
-    pack_start(showOtherToggle, false, false, 0);
-    pack_start(showRecommendedToggle, false, false, 0);
-    show_all();
-  }
+  box.pack_start(appChooserWidget, true, true, 0);
+  box.pack_start(settingsLabel, false, false, 0);
+  box.pack_start(showAllToggle, false, false, 0);
+  box.pack_start(showDefaultToggle, false, false, 0);
+  box.pack_start(showFallbackToggle, false, false, 0);
+  box.pack_start(showOtherToggle, false, false, 0);
+  box.pack_start(showRecommendedToggle, false, false, 0);
+  box.show_all();
 
   settingsLabel.halign = Gtk.Align.START;
 

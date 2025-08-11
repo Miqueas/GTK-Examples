@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.CheckButton";
-const string appTitle = "GtkCheckButton";
+const string appTitle = "Gtk.CheckButton";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -17,18 +17,14 @@ void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var button = new Gtk.CheckButton.with_label("OFF");
 
-  with (window) {
-    add(button);
-    title = appTitle;
-    border_width = 10;
-    set_default_size(400, 400);
-  }
+  window.add(button);
+  window.title = appTitle;
+  window.border_width = 10;
+  window.set_default_size(400, 400);
 
-  with (button) {
-    active = false;
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-    visible = true;
-    toggled.connect((self) => { self.label = self.active ? "ON" : "OFF"; });
-  }
+  button.active = false;
+  button.halign = Gtk.Align.CENTER;
+  button.valign = Gtk.Align.CENTER;
+  button.visible = true;
+  button.toggled.connect((self) => { self.label = self.active ? "ON" : "OFF"; });
 }

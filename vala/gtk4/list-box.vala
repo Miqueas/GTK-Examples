@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.ListBox";
-const string appTitle = "GtkListBox";
+const string appTitle = "Gtk.ListBox";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);

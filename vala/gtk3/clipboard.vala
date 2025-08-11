@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Clipboard";
-const string appTitle = "GtkClipboard";
+const string appTitle = "Gtk.Clipboard";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -22,25 +22,19 @@ void onAppStartup(Application self) {
   var setButton = new Gtk.Button.with_label("Set from Clipboard");
   var clipboard = Gtk.Clipboard.get_default(Gdk.Display.get_default());
 
-  with (window) {
-    add(box);
-    title = appTitle;
-    border_width = 10;
-    set_default_size(400, 400);
-  }
+  window.add(box);
+  window.title = appTitle;
+  window.border_width = 10;
+  window.set_default_size(400, 400);
 
-  with (box) {
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-    pack_start(entry, false, false, 0);
-    pack_start(buttonBox, false, false, 0);
-  }
+  box.halign = Gtk.Align.CENTER;
+  box.valign = Gtk.Align.CENTER;
+  box.pack_start(entry, false, false, 0);
+  box.pack_start(buttonBox, false, false, 0);
 
-  with (buttonBox) {
-    layout_style = Gtk.ButtonBoxStyle.EXPAND;
-    pack_start(copyButton, true, true, 0);
-    pack_start(setButton, true, true, 0);
-  }
+  buttonBox.layout_style = Gtk.ButtonBoxStyle.EXPAND;
+  buttonBox.pack_start(copyButton, true, true, 0);
+  buttonBox.pack_start(setButton, true, true, 0);
 
   copyButton.clicked.connect(() => {
     clipboard.set_text(entry.text, -1);

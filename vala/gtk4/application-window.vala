@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.ApplicationWindow";
-const string appTitle = "GtkApplication";
+const string appTitle = "Gtk.Application";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);

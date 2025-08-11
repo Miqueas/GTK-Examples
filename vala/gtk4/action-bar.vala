@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.ActionBar";
-const string appTitle = "GtkActionBar";
+const string appTitle = "Gtk.ActionBar";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -20,34 +20,19 @@ void onAppStartup(Application self) {
   var actionBarButton = new Gtk.Button.with_label("A button");
   var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
   var boxLabel = new Gtk.Label("App content");
-  var headerBar = new Gtk.HeaderBar();
-  var titleLabel = new Gtk.Label(appTitle);
 
-  with (window) {
-    child = box;
-    set_titlebar(headerBar);
-    set_default_size(400, 400);
-  }
+  window.child = box;
+  window.title = appTitle;
+  window.set_default_size(400, 400);
 
-  with (boxLabel) {
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-    hexpand = true;
-    vexpand = true;
-  }
+  boxLabel.halign = Gtk.Align.CENTER;
+  boxLabel.valign = Gtk.Align.CENTER;
+  boxLabel.hexpand = true;
+  boxLabel.vexpand = true;
 
-  with (headerBar) {
-    title_widget = titleLabel;
-    show_title_buttons = true;
-  }
+  actionBar.pack_start(actionBarLabel);
+  actionBar.pack_end(actionBarButton);
 
-  with (actionBar) {
-    pack_start(actionBarLabel);
-    pack_end(actionBarButton);
-  }
-
-  with (box) {
-    append(boxLabel);
-    append(actionBar);
-  }
+  box.append(boxLabel);
+  box.append(actionBar);
 }

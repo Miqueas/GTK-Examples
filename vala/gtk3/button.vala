@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Button";
-const string appTitle = "GtkButton";
+const string appTitle = "Gtk.Button";
 static int count = 0;
 
 int main(string[] args) {
@@ -16,29 +16,14 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
-  var headerBar = new Gtk.HeaderBar();
   var button = new Gtk.Button.with_label("Click me!");
 
-  with (window) {
-    add(button);
-    set_titlebar(headerBar);
-    set_default_size(400, 400);
-  }
+  window.add(button);
+  window.title = appTitle;
+  window.set_default_size(400, 400);
 
-  with (headerBar) {
-    visible = true;
-    title = appTitle;
-    show_close_button = true;
-  }
-
-  with (button) {
-    visible = true;
-    valign = Gtk.Align.CENTER;
-    halign = Gtk.Align.CENTER;
-    clicked.connect(onButtonClicked);
-  }
-}
-
-void onButtonClicked(Gtk.Button self) {
-  print("You clicked %d times!\n", ++count);
+  button.visible = true;
+  button.valign = Gtk.Align.CENTER;
+  button.halign = Gtk.Align.CENTER;
+  button.clicked.connect(self => print("Clicked %d times!\n", ++count));
 }

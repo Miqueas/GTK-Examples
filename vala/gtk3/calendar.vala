@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Calendar";
-const string appTitle = "GtkCalendar";
+const string appTitle = "Gtk.Calendar";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -19,20 +19,16 @@ void onAppStartup(Application self) {
   var calendar = new Gtk.Calendar();
   var dateLabel = new Gtk.Label("Selected date: None");
 
-  with (window) {
-    add(box);
-    title = appTitle;
-    border_width = 10;
-    set_default_size(400, 400);
-  }
+  window.add(box);
+  window.title = appTitle;
+  window.border_width = 10;
+  window.set_default_size(400, 400);
 
-  with (box) {
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-    pack_start(calendar, false, false, 0);
-    pack_start(dateLabel, false, false, 0);
-    show_all();
-  }
+  box.halign = Gtk.Align.CENTER;
+  box.valign = Gtk.Align.CENTER;
+  box.pack_start(calendar, false, false, 0);
+  box.pack_start(dateLabel, false, false, 0);
+  box.show_all();
 
   calendar.day_selected.connect((self) => {
     var date = new DateTime.local(self.year, self.month, self.day, 0, 0, 0);

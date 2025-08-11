@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.AppChooserButton";
-const string appTitle = "GtkBox";
+const string appTitle = "Gtk.AppChooserButton";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -17,16 +17,12 @@ void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var appChooserButton = new Gtk.AppChooserButton("image/png");
 
-  with (window) {
-    title = appTitle;
-    border_width = 10;
-    add(appChooserButton);
-    set_default_size(400, 400);
-  }
+  window.title = appTitle;
+  window.border_width = 10;
+  window.add(appChooserButton);
+  window.set_default_size(400, 400);
 
-  with (appChooserButton) {
-    visible = true;
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-  }
+  appChooserButton.visible = true;
+  appChooserButton.halign = Gtk.Align.CENTER;
+  appChooserButton.valign = Gtk.Align.CENTER;
 }

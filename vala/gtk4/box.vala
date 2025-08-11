@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.Box";
-const string appTitle = "GtkBox";
+const string appTitle = "Gtk.Box";
 static int count = 0;
 
 int main(string[] args) {
@@ -32,9 +32,5 @@ void onAppStartup(Application self) {
 
   button.halign = Gtk.Align.CENTER;
   button.valign = Gtk.Align.CENTER;
-  button.clicked.connect(onButtonClicked);
-}
-
-void onButtonClicked(Gtk.Button self) {
-  print("You clicked %d times!\n", ++count);
+  button.clicked.connect(() => print("Clicked %d times!\n", ++count));
 }

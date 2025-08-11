@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.CssProvider";
-const string appTitle = "GtkCssProvider";
+const string appTitle = "Gtk.CssProvider";
 const string appSubtitle = "App subtitle";
 
 int main(string[] args) {

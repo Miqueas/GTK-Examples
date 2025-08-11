@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Fixed";
-const string appTitle = "GtkFixed";
+const string appTitle = "Gtk.Fixed";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -15,25 +15,14 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
-  var headerBar = new Gtk.HeaderBar();
   var fixed = new Gtk.Fixed();
 
-  with (window) {
-    add(fixed);
-    set_titlebar(headerBar);
-    set_default_size(400, 400);
-  }
+  window.add(fixed);
+  window.title = appTitle;
+  window.set_default_size(400, 400);
 
-  with (headerBar) {
-    visible = true;
-    title = appTitle;
-    show_close_button = true;
-  }
-
-  with (fixed) {
-    visible = true;
-    put(new Gtk.Label("A") { visible = true }, 10, 20);
-    put(new Gtk.Label("B") { visible = true }, 100, 200);
-    put(new Gtk.Label("C") { visible = true }, 120, 326);
-  }
+  fixed.put(new Gtk.Label("A"), 10, 20);
+  fixed.put(new Gtk.Label("B"), 100, 200);
+  fixed.put(new Gtk.Label("C"), 120, 326);
+  fixed.show_all();
 }

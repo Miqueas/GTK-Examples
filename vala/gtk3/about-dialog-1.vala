@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.AboutDialog";
-const string appTitle = "GtkAboutDialog";
+const string appTitle = "Gtk.AboutDialog";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -9,8 +9,8 @@ int main(string[] args) {
 }
 
 void onAppActivate(Application self) {
-  var window = (self as Gtk.Application)?.get_active_window()
-    as Gtk.AboutDialog?;
+  var app = self as Gtk.Application;
+  var window = app?.get_active_window() as Gtk.AboutDialog?;
   window?.run();
   window?.destroy();
 }
@@ -18,17 +18,16 @@ void onAppActivate(Application self) {
 void onAppStartup(Application self) {
   var dialog = new Gtk.AboutDialog();
 
-  with (dialog) {
-    modal = true;
-    artists = { "Josué Martínez" };
-    authors = { "Josué Martínez" };
-    documenters = { "Josué Martínez" };
-    translator_credits = "Josué Martínez";
-    program_name = appTitle;
-    comments = "GTK+ 3.0 AboutDialog Example";
-    copyright = "Copyright © 2021-2025 Josué Martínez";
-    version = "0.1.0";
-    license = "Copyright (C) 2021-2025 Josué Martínez
+  dialog.modal = true;
+  dialog.artists = { "Josué Martínez" };
+  dialog.authors = { "Josué Martínez" };
+  dialog.documenters = { "Josué Martínez" };
+  dialog.translator_credits = "Josué Martínez";
+  dialog.program_name = appTitle;
+  dialog.comments = "GTK+ 3.0 AboutDialog Example";
+  dialog.copyright = "Copyright © 2021-2025 Josué Martínez";
+  dialog.version = "0.1.0";
+  dialog.license = "Copyright (C) 2021-2025 Josué Martínez
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -45,9 +44,8 @@ void onAppStartup(Application self) {
   2. Altered source versions must be plainly marked as such, and must not be
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.";
-    wrap_license = true;
-    website = "https://github.com/Miqueas/GTK-Examples";
-    website_label = "GitHub Repository";
-    application = self as Gtk.Application;
-  }
+  dialog.wrap_license = true;
+  dialog.website = "https://github.com/Miqueas/GTK-Examples";
+  dialog.website_label = "GitHub Repository";
+  dialog.application = self as Gtk.Application;
 }

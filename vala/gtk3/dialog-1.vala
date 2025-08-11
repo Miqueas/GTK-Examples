@@ -36,30 +36,24 @@ void onAppStartup(Application self) {
   var epilogLabel = new Gtk.Label(epilogText);
   unowned var contentBox = dialog.get_content_area();
 
-  with (dialog) {
-    title = appTitle;
-    application = self as Gtk.Application;
-    border_width = 10;
-    default_width = 400;
-    add_button("Yes 👍", Gtk.ResponseType.OK);
-    add_button("No 🤚", Gtk.ResponseType.CANCEL);
-  }
+  dialog.title = appTitle;
+  dialog.application = self as Gtk.Application;
+  dialog.border_width = 10;
+  dialog.default_width = 400;
+  dialog.add_button("Yes 👍", Gtk.ResponseType.OK);
+  dialog.add_button("No 🤚", Gtk.ResponseType.CANCEL);
 
   titleLabel.use_markup = true;
 
-  with (summaryLabel) {
-    xalign = 0;
-    wrap = true;
-    wrap_mode = Pango.WrapMode.CHAR;
-  }
+  summaryLabel.xalign = 0;
+  summaryLabel.wrap = true;
+  summaryLabel.wrap_mode = Pango.WrapMode.CHAR;
 
   epilogLabel.use_markup = true;
 
-  with (contentBox) {
-    spacing = 10;
-    pack_start(titleLabel, false);
-    pack_start(summaryLabel, false);
-    pack_start(epilogLabel, false, true, 10);
-    show_all();
-  }
+  contentBox.spacing = 10;
+  contentBox.pack_start(titleLabel, false);
+  contentBox.pack_start(summaryLabel, false);
+  contentBox.pack_start(epilogLabel, false, true, 10);
+  contentBox.show_all();
 }

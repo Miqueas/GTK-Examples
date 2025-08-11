@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.ButtonBox";
-const string appTitle = "GtkButtonBox";
+const string appTitle = "Gtk.ButtonBox";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -20,22 +20,18 @@ void onAppStartup(Application self) {
   var button2 = new Gtk.Button.with_label("Button 2");
   var button3 = new Gtk.Button.with_label("Button 3");
 
-  with (window) {
-    add(buttonBox);
-    title = appTitle;
-    border_width = 10;
-    set_default_size(400, 400);
-  }
+  window.add(buttonBox);
+  window.title = appTitle;
+  window.border_width = 10;
+  window.set_default_size(400, 400);
 
-  with (buttonBox) {
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-    pack_start(button1, true, true, 0);
-    pack_start(button2, true, true, 0);
-    pack_start(button3, true, true, 0);
-    layout_style = Gtk.ButtonBoxStyle.EXPAND;
-    show_all();
-  }
+  buttonBox.halign = Gtk.Align.CENTER;
+  buttonBox.valign = Gtk.Align.CENTER;
+  buttonBox.pack_start(button1, true, true, 0);
+  buttonBox.pack_start(button2, true, true, 0);
+  buttonBox.pack_start(button3, true, true, 0);
+  buttonBox.layout_style = Gtk.ButtonBoxStyle.EXPAND;
+  buttonBox.show_all();
 
   button1.clicked.connect(onButtonClicked);
   button2.clicked.connect(onButtonClicked);

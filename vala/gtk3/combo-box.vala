@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.ComboBox";
-const string appTitle = "GtkComboBox";
+const string appTitle = "Gtk.ComboBox";
 const string[] items = {
   "GNOME",
   "KDE Plasma",
@@ -38,31 +38,25 @@ void onAppStartup(Application self) {
     listStore.set(iter, 0, item);
   }
 
-  with (window) {
-    add(box);
-    title = appTitle;
-    border_width = 10;
-    set_default_size(400, 400);
-  }
+  window.add(box);
+  window.title = appTitle;
+  window.border_width = 10;
+  window.set_default_size(400, 400);
 
-  with (comboBox) {
-    model = listStore;
-    active = 0;
-    pack_start(renderer, true);
-    add_attribute(renderer, "text", 0);
-    changed.connect((self) => {
-      var hint = @"Option $(self.active) selected ($(items[self.active]))\n";
-      hintLabel.label = hint;
-      print(hint);
-    });
-  }
+  comboBox.model = listStore;
+  comboBox.active = 0;
+  comboBox.pack_start(renderer, true);
+  comboBox.add_attribute(renderer, "text", 0);
+  comboBox.changed.connect((self) => {
+    var hint = @"Option $(self.active) selected ($(items[self.active]))\n";
+    hintLabel.label = hint;
+    print(hint);
+  });
 
-  with (box) {
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-    pack_start(messageLabel, false, true, 0);
-    pack_start(comboBox, false, true, 0);
-    pack_start(hintLabel, false, true, 0);
-    show_all();
-  }
+  box.halign = Gtk.Align.CENTER;
+  box.valign = Gtk.Align.CENTER;
+  box.pack_start(messageLabel, false, true, 0);
+  box.pack_start(comboBox, false, true, 0);
+  box.pack_start(hintLabel, false, true, 0);
+  box.show_all();
 }

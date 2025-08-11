@@ -20,20 +20,16 @@ void onAppStartup(Application self) {
   var showEditorCheckButton = new Gtk.CheckButton.with_label("Show Editor");
   var printButton = new Gtk.Button.with_label("Print Color");
 
-  with (window) {
-    add(box);
-    title = appTitle;
-    border_width = 10;
-  }
+  window.add(box);
+  window.title = appTitle;
+  window.border_width = 10;
 
-  with (box) {
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-    pack_start(widget, true, true, 0);
-    pack_start(showEditorCheckButton, false, false, 0);
-    pack_start(printButton, false, false, 0);
-    show_all();
-  }
+  box.halign = Gtk.Align.CENTER;
+  box.valign = Gtk.Align.CENTER;
+  box.pack_start(widget, true, true, 0);
+  box.pack_start(showEditorCheckButton, false, false, 0);
+  box.pack_start(printButton, false, false, 0);
+  box.show_all();
 
   showEditorCheckButton.active = widget.show_editor;
   showEditorCheckButton.toggled.connect((self) => {

@@ -26,20 +26,16 @@ void onAppStartup(Application self) {
     stderr.printf("Failed to load CSS file: %s\n", e.message);
   }
 
-  with (window) {
-    add(box);
-    title = appTitle;
-    border_width = 10;
-    set_default_size(400, 400);
-  }
+  window.add(box);
+  window.title = appTitle;
+  window.border_width = 10;
+  window.set_default_size(400, 400);
 
-  with (box) {
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-    pack_start(label, false, false, 0);
-    pack_start(button, false, false, 0);
-    show_all();
-  }
+  box.halign = Gtk.Align.CENTER;
+  box.valign = Gtk.Align.CENTER;
+  box.pack_start(label, false, false, 0);
+  box.pack_start(button, false, false, 0);
+  box.show_all();
 
   Gtk.StyleContext.add_provider_for_screen(
     window.get_screen(),

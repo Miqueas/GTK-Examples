@@ -30,9 +30,7 @@ void onAppActivate(Application self) {
 void onAppStartup(Application self) {
   var dialog = new Gtk.ColorChooserDialog(null, null);
 
-  with (dialog) {
-    title = appTitle;
-    application = self as Gtk.Application;
-    border_width = 10;
-  }
+  dialog.title = appTitle;
+  dialog.application = self as Gtk.Application;
+  dialog.border_width = 10;
 }

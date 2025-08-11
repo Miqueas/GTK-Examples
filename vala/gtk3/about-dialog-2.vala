@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.AboutDialog";
-const string appTitle = "GtkAboutDialog";
+const string appTitle = "Gtk.AboutDialog";
 const string[] artists = { "Josué Martínez" };
 const string[] authors = { "Josué Martínez" };
 const string[] documenters = { "Josué Martínez" };
@@ -15,7 +15,8 @@ void onAppActivate(Application self) {
   var window = (self as Gtk.Application)?.get_active_window();
   window?.present();
 
-  Gtk.show_about_dialog(window,
+  Gtk.show_about_dialog(
+    window,
     modal: true,
     artists: artists,
     authors: authors,
@@ -53,10 +54,8 @@ void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var label = new Gtk.Label("Just an empty window") { visible = true };
 
-  with (window) {
-    add(label);
-    title = appTitle;
-    border_width = 10;
-    set_default_size(400, 400);
-  }
+  window.add(label);
+  window.title = appTitle;
+  window.border_width = 10;
+  window.set_default_size(400, 400);
 }

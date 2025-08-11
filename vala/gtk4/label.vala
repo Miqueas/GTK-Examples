@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.Label";
-const string appTitle = "GtkLabel";
+const string appTitle = "Gtk.Label";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);

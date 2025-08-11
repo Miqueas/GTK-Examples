@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.AppChooserDialog";
-const string appTitle = "GtkBox";
+const string appTitle = "Gtk.AppChooserDialog";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -9,12 +9,12 @@ int main(string[] args) {
 }
 
 void onAppActivate(Application self) {
-  var window = (self as Gtk.Application)?.get_active_window()
-    as Gtk.AppChooserDialog;
+  var app = self as Gtk.Application;
+  var window = app?.get_active_window() as Gtk.AppChooserDialog;
   var result = window?.run();
 
   switch (result) {
-    case Gtk.ResponseType.OK: {
+    case Gtk.ResponseType.OK:
       var info = window?.get_app_info();
       print("ID: %s\n", info?.get_id());
       print("Executable: %s\n", info?.get_executable());
@@ -22,7 +22,6 @@ void onAppActivate(Application self) {
       print("Commandline: %s\n", info?.get_commandline());
       print("Display name: %s\n", info?.get_display_name());
       break;
-    }
     default: break;
   }
 
@@ -32,9 +31,7 @@ void onAppActivate(Application self) {
 void onAppStartup(Application self) {
   var dialog = new Gtk.AppChooserDialog.for_content_type(null, 0, "image/png");
 
-  with (dialog) {
-    title = appTitle;
-    application = self as Gtk.Application;
-    border_width = 10;
-  }
+  dialog.title = appTitle;
+  dialog.application = self as Gtk.Application;
+  dialog.border_width = 10;
 }

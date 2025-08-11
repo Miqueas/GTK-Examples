@@ -1,4 +1,4 @@
-const string appTitle = "GtkWindow";
+const string appTitle = "Gtk.Window";
 
 void main() {
   Gtk.init();

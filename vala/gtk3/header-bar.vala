@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.HeaderBar";
-const string appTitle = "GtkHeaderBar";
+const string appTitle = "Gtk.HeaderBar";
 const string appSubtitle = "App subtitle";
 
 int main(string[] args) {
@@ -18,15 +18,11 @@ void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var headerBar = new Gtk.HeaderBar();
 
-  with (window) {
-    set_titlebar(headerBar);
-    set_default_size(400, 400);
-  }
+  window.set_titlebar(headerBar);
+  window.set_default_size(400, 400);
 
-  with (headerBar) {
-    visible = true;
-    title = appTitle;
-    subtitle = appSubtitle;
-    show_close_button = true;
-  }
+  headerBar.visible = true;
+  headerBar.title = appTitle;
+  headerBar.subtitle = appSubtitle;
+  headerBar.show_close_button = true;
 }

@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk4.HeaderBar";
-const string appTitle = "GtkHeaderBar";
+const string appTitle = "Gtk.HeaderBar";
 const string appSubtitle = "App subtitle";
 
 int main(string[] args) {

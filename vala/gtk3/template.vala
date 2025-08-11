@@ -5,7 +5,7 @@ int main(string[] args) {
   return new App().run(args);
 }
 
-class App : Gtk.Application {
+public class App : Gtk.Application {
   public App() {
     Object(
       application_id: appID,
@@ -14,18 +14,18 @@ class App : Gtk.Application {
     );
   }
 
-  public override void activate() {
-    this.active_window.present();
+  protected override void activate() {
+    active_window.present();
   }
 
-  public override void startup() {
+  protected override void startup() {
     base.startup();
     new Window(this);
   }
 }
 
 [GtkTemplate (ui = "/io/github/Miqueas/GTK-Examples/template.ui")]
-class Window : Gtk.ApplicationWindow {
+public class Window : Gtk.ApplicationWindow {
   [GtkChild]
   public unowned Gtk.Label label;
 
@@ -33,7 +33,7 @@ class Window : Gtk.ApplicationWindow {
     Object(application: app);
   }
 
-  public override void constructed() {
+  protected override void constructed() {
     Timeout.add(1000, () => {
       this.label.label = greetings[Random.int_range(0, 5)];
       return Source.CONTINUE;

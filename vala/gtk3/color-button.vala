@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.ColorButton";
-const string appTitle = "GtkColorButton";
+const string appTitle = "Gtk.ColorButton";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -17,20 +17,16 @@ void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var colorButton = new Gtk.ColorButton();
 
-  with (window) {
-    add(colorButton);
-    title = appTitle;
-    border_width = 10;
-    set_default_size(400, 400);
-  }
+  window.add(colorButton);
+  window.title = appTitle;
+  window.border_width = 10;
+  window.set_default_size(400, 400);
 
-  with (colorButton) {
-    show();
-    title = "Pick a Color";
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-    color_set.connect((self) => {
-      print("Color: %s\n", self.rgba.to_string());
-    });
-  }
+  colorButton.show();
+  colorButton.title = "Pick a Color";
+  colorButton.halign = Gtk.Align.CENTER;
+  colorButton.valign = Gtk.Align.CENTER;
+  colorButton.color_set.connect(self => {
+    print("Color: %s\n", self.rgba.to_string());
+  });
 }

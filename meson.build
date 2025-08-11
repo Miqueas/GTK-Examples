@@ -4,9 +4,6 @@ project('GTK-Examples', [ 'c', 'vala' ],
   meson_version: '>= 0.56.0',
 )
 
-# Allows using the 'with' keyword in Vala without warnings
-add_project_arguments('--enable-experimental', language: 'vala')
-
 gtk3 = dependency('gtk+-3.0', required: true)
 gtk4 = dependency('gtk4', required: true)
 epoxy = dependency('epoxy', required: true)

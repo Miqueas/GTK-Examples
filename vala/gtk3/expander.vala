@@ -26,16 +26,12 @@ void onAppStartup(Application self) {
   var expander = new Gtk.Expander(expanderTitle);
   var expanderLabel = new Gtk.Label(expanderText);
 
-  with (window) {
-    add(expander);
-    title = appTitle;
-    resizable = false;
-    border_width = 10;
-  }
+  window.add(expander);
+  window.title = appTitle;
+  window.resizable = false;
+  window.border_width = 10;
 
-  with(expander) {
-    add(expanderLabel);
-    show_all();
-    use_markup = true;
-  }
+  expander.add(expanderLabel);
+  expander.show_all();
+  expander.use_markup = true;
 }

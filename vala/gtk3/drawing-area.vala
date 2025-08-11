@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.DrawingArea";
-const string appTitle = "GtkDrawingArea";
+const string appTitle = "Gtk.DrawingArea";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -20,67 +20,57 @@ void onAppStartup(Application self) {
   var circleDrawingArea = new Gtk.DrawingArea();
   var triangleDrawingArea = new Gtk.DrawingArea();
 
-  with (window) {
-    add(box);
-    title = appTitle;
-    border_width = 10;
-    set_default_size(400, 400);
-  }
+  window.add(box);
+  window.title = appTitle;
+  window.border_width = 10;
+  window.set_default_size(400, 400);
 
-  with (box) {
-    halign = Gtk.Align.CENTER;
-    valign = Gtk.Align.CENTER;
-    pack_start(squareDrawingArea, false, false, 0);
-    pack_start(circleDrawingArea, false, false, 0);
-    pack_start(triangleDrawingArea, false, false, 0);
-    show_all();
-  }
+  box.halign = Gtk.Align.CENTER;
+  box.valign = Gtk.Align.CENTER;
+  box.pack_start(squareDrawingArea, false, false, 0);
+  box.pack_start(circleDrawingArea, false, false, 0);
+  box.pack_start(triangleDrawingArea, false, false, 0);
+  box.show_all();
 
-  with (squareDrawingArea) {
-    set_size_request(80, 80);
-    draw.connect((self, cr) => {
-      var width = self.get_allocated_width();
-      var height = self.get_allocated_height();
-      var context = self.get_style_context();
+  squareDrawingArea.set_size_request(80, 80);
+  squareDrawingArea.draw.connect((self, cr) => {
+    var width = self.get_allocated_width();
+    var height = self.get_allocated_height();
+    var context = self.get_style_context();
 
-      cr.rectangle(0, 0, width, height);
-      Gdk.cairo_set_source_rgba(cr, context.get_color(context.get_state()));
-      cr.fill();
+    cr.rectangle(0, 0, width, height);
+    Gdk.cairo_set_source_rgba(cr, context.get_color(context.get_state()));
+    cr.fill();
 
-      return true;
-    });
-  }
+    return true;
+  });
 
-  with (circleDrawingArea) {
-    set_size_request(80, 80);
-    draw.connect((self, cr) => {
-      var width = self.get_allocated_width();
-      var height = self.get_allocated_height();
-      var context = self.get_style_context();
+  circleDrawingArea.set_size_request(80, 80);
+  circleDrawingArea.draw.connect((self, cr) => {
+    var width = self.get_allocated_width();
+    var height = self.get_allocated_height();
+    var context = self.get_style_context();
 
-      cr.arc(width / 2, height / 2, int.min(width, height) / 2, 0, 2 * Math.PI);
-      Gdk.cairo_set_source_rgba(cr, context.get_color(context.get_state()));
-      cr.fill();
+    cr.arc(width / 2, height / 2, int.min(width, height) / 2, 0, 2 * Math.PI);
+    Gdk.cairo_set_source_rgba(cr, context.get_color(context.get_state()));
+    cr.fill();
 
-      return true;
-    });
-  }
+    return true;
+  });
 
-  with (triangleDrawingArea) {
-    set_size_request(80, 80);
-    draw.connect((self, cr) => {
-      var width = self.get_allocated_width();
-      var height = self.get_allocated_height();
-      var context = self.get_style_context();
+  triangleDrawingArea.set_size_request(80, 80);
+  triangleDrawingArea.draw.connect((self, cr) => {
+    var width = self.get_allocated_width();
+    var height = self.get_allocated_height();
+    var context = self.get_style_context();
 
-      cr.move_to(width / 2, 0);
-      cr.line_to(0, height);
-      cr.line_to(width, height);
-      cr.close_path();
-      Gdk.cairo_set_source_rgba(cr, context.get_color(context.get_state()));
-      cr.fill();
+    cr.move_to(width / 2, 0);
+    cr.line_to(0, height);
+    cr.line_to(width, height);
+    cr.close_path();
+    Gdk.cairo_set_source_rgba(cr, context.get_color(context.get_state()));
+    cr.fill();
 
-      return true;
-    });
-  }
+    return true;
+  });
 }

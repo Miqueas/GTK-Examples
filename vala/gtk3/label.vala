@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Label";
-const string appTitle = "GtkLabel";
+const string appTitle = "Gtk.Label";
 
 int main(string[] args) {
   var app = new Gtk.Application(appID, 0);
@@ -15,18 +15,9 @@ void onAppActivate(Application self) {
 
 void onAppStartup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
-  var headerBar = new Gtk.HeaderBar();
   var label = new Gtk.Label("Hi there!") { visible = true };
 
-  with (window) {
-    add(label);
-    set_titlebar(headerBar);
-    set_default_size(400, 400);
-  }
-
-  with (headerBar) {
-    visible = true;
-    title = appTitle;
-    show_close_button = true;
-  }
+  window.add(label);
+  window.title = appTitle;
+  window.set_default_size(400, 400);
 }

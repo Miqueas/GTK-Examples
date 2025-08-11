@@ -1,5 +1,5 @@
 const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.MessageDialog";
-const string appTitle = "GtkMessageDialog";
+const string appTitle = "Gtk.MessageDialog";
 const string titleText = "<span size='x-large' font-weight='bold'>Universe destruction</span>";
 const string summaryText = "Our universe has a lot of problems and the only way to fix it is destroying the entire universe and this important decision is now in your hands.";
 const string epilogText = "<span size='large' font-weight='bold'>Do you accept?</span>";
@@ -38,13 +38,11 @@ void onAppStartup(Application self) {
     null
   );
 
-  with (messageDialog) {
-    title = appTitle;
-    text = titleText;
-    use_markup = true;
-    secondary_text = summaryText;
-    application = self as Gtk.Application;
-    add_button("Yes 👍", Gtk.ResponseType.OK);
-    add_button("No 🛑", Gtk.ResponseType.CANCEL);
-  }
+  messageDialog.title = appTitle;
+  messageDialog.text = titleText;
+  messageDialog.use_markup = true;
+  messageDialog.secondary_text = summaryText;
+  messageDialog.application = self as Gtk.Application;
+  messageDialog.add_button("Yes 👍", Gtk.ResponseType.OK);
+  messageDialog.add_button("No 🛑", Gtk.ResponseType.CANCEL);
 }
