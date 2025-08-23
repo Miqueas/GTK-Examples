@@ -19,6 +19,7 @@ src = [
   'image-2',
   'label',
   'list-box',
+  'list-view',
   'stack-1',
   'stack-2',
   'text-view',
