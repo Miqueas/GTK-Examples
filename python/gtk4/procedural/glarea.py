@@ -5,8 +5,8 @@ from OpenGL.GL import *
 from OpenGL.GL import shaders
 import numpy as np
 
-appID = "io.github.Miqueas.GTK-Examples.Python.Gtk4.Procedural.GLArea"
-appTitle = "Gtk.GLArea"
+APP_ID = "io.github.Miqueas.GTK-Examples.Python.Gtk4.Procedural.GLArea"
+APP_TITLE = "Gtk.GLArea"
 
 vsSource = """#version 100
 attribute vec2 coord2d;
@@ -89,13 +89,13 @@ def onGLAreaRender(self, context):
     return True
 
 def onAppStartup(self):
-    global appTitle
+    global APP_TITLE
 
     window = Gtk.ApplicationWindow(application = self)
     glArea = Gtk.GLArea()
 
     window.set_child(glArea)
-    window.set_title(appTitle)
+    window.set_title(APP_TITLE)
     window.set_default_size(400, 400)
 
     glArea.set_vexpand(True)
@@ -104,7 +104,7 @@ def onAppStartup(self):
     glArea.connect("render", onGLAreaRender)
 
 if __name__ == "__main__":
-    app = Gtk.Application(application_id = appID, flags = 0)
+    app = Gtk.Application(application_id = APP_ID, flags = 0)
     app.connect("activate", lambda self: self.get_active_window().present())
     app.connect("startup", onAppStartup)
 
