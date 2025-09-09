@@ -5,7 +5,7 @@ from OpenGL.GL import *
 from OpenGL.GL import shaders
 import numpy as np
 
-appID = "io.github.Miqueas.GTK-Examples.Python.Gtk4.GLArea"
+appID = "io.github.Miqueas.GTK-Examples.Python.Gtk4.Procedural.GLArea"
 appTitle = "Gtk.GLArea"
 
 vsSource = """#version 100
@@ -103,8 +103,9 @@ def onAppStartup(self):
     glArea.connect("realize", onGLAreaRealize)
     glArea.connect("render", onGLAreaRender)
 
-app = Gtk.Application(application_id = appID, flags = 0)
-app.connect("activate", lambda self: self.get_active_window().present())
-app.connect("startup", onAppStartup)
+if __name__ == "__main__":
+    app = Gtk.Application(application_id = appID, flags = 0)
+    app.connect("activate", lambda self: self.get_active_window().present())
+    app.connect("startup", onAppStartup)
 
-sys.exit(app.run(sys.argv))
+    sys.exit(app.run(sys.argv))

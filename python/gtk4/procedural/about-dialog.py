@@ -2,7 +2,7 @@ import gi, sys
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk
 
-appID = "io.github.Miqueas.GTK-Examples.Python.Gtk4.AboutDialog"
+appID = "io.github.Miqueas.GTK-Examples.Python.Gtk4.Procedural.AboutDialog"
 appTitle = "Gtk.AboutDialog"
 
 def onAppStartup(self):
