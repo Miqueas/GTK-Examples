@@ -7,10 +7,10 @@ static void on_setup(GtkListItemFactory* self, GObject* item, gpointer data);
 static void on_bind(GtkListItemFactory* self, GObject* item, gpointer data);
 static void on_activate(GtkListView* self, guint position, gpointer data);
 
-int
-main(int argc,
-     char** argv)
-{
+const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.ListView";
+const gchar* APP_TITLE = "GtkListView";
+
+int main(int argc, char** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);
   g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
   g_signal_connect(app, "startup", G_CALLBACK(on_app_startup),  NULL);
@@ -21,18 +21,12 @@ main(int argc,
   return result;
 }
 
-static void
-on_app_activate(GApplication* self,
-                gpointer data)
-{
+static void on_app_activate(GApplication* self, gpointer data) {
   GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
   gtk_window_present(window);
 }
 
-static void
-on_app_startup(GApplication* self,
-               gpointer data)
-{
+static void on_app_startup(GApplication* self, gpointer data) {
   GListStore* model = create_store();
   GtkNoSelection* selection_model = gtk_no_selection_new(G_LIST_MODEL(model));
   GtkListItemFactory* factory = gtk_signal_list_item_factory_new();
@@ -47,7 +41,7 @@ on_app_startup(GApplication* self,
   );
 
   gtk_window_set_child(GTK_WINDOW(window), scroll);
-  gtk_window_set_title(GTK_WINDOW(window), APP_NAME);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
   gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), list_view);
@@ -55,9 +49,7 @@ on_app_startup(GApplication* self,
   g_signal_connect(list_view, "activate", G_CALLBACK(on_activate), NULL);
 }
 
-static GListStore*
-create_store(void)
-{
+static GListStore* create_store(void) {
   GListStore* store = g_list_store_new(MGE_TYPE_ITEM);
 
   for (guint8 i = 0; i < G_MAXUINT8; i++) {
@@ -73,11 +65,7 @@ create_store(void)
   return store;
 }
 
-static void
-on_setup(GtkListItemFactory* self,
-         GObject* item,
-         gpointer data)
-{
+static void on_setup(GtkListItemFactory* self, GObject* item, gpointer data) {
   GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
   GtkWidget* keyLabel = gtk_label_new("Key");
   GtkWidget* valueLabel = gtk_label_new("Value");
@@ -88,11 +76,7 @@ on_setup(GtkListItemFactory* self,
   gtk_list_item_set_child(GTK_LIST_ITEM(item), box);
 }
 
-static void
-on_bind(GtkListItemFactory* self,
-        GObject* item,
-        gpointer data)
-{
+static void on_bind(GtkListItemFactory* self, GObject* item, gpointer data) {
   GtkWidget* box = gtk_list_item_get_child(GTK_LIST_ITEM(item));
   GtkWidget* keyLabel = gtk_widget_get_first_child(box);
   GtkWidget* valueLabel = gtk_widget_get_last_child(box);
@@ -102,11 +86,7 @@ on_bind(GtkListItemFactory* self,
   gtk_label_set_label(GTK_LABEL(valueLabel), mge_item->value);
 }
 
-static void
-on_activate(GtkListView* self,
-            guint position,
-            gpointer data)
-{
+static void on_activate(GtkListView* self, guint position, gpointer data) {
   GtkNoSelection* selection = GTK_NO_SELECTION(gtk_list_view_get_model(self));
   GListModel* model = gtk_no_selection_get_model(selection);
   MgeItem* mge_item = MGE_ITEM(g_list_model_get_item(model, position));
@@ -123,19 +103,14 @@ on_activate(GtkListView* self,
 
 // ! `MgeItem` class definitions ! //
 
-MgeItem*
-mge_item_new(const gchar* key,
-             const gchar* value)
-{
+MgeItem* mge_item_new(const gchar* key, const gchar* value) {
   MgeItem* self = g_object_new(MGE_TYPE_ITEM, NULL);
   self->key = g_strdup(key);
   self->value = g_strdup(value);
   return self;
 }
 
-static GType
-mge_item_get_type_once(void)
-{
+static GType mge_item_get_type_once(void) {
   static const GTypeInfo type_info = {
     .class_size = sizeof(MgeItemClass),
     .base_init = NULL,
@@ -159,12 +134,12 @@ mge_item_get_type_once(void)
   return type_id;
 }
 
-GType
-mge_item_get_type(void)
-{
+GType mge_item_get_type(void) {
   static volatile gsize type_once = 0;
 
+  PUSH_IGNORE_DISCARDS_VOLATILE
   if (g_once_init_enter(&type_once)) {
+  POP_IGNORE_DISCARDS_VOLATILE
     GType type_id = mge_item_get_type_once();
     g_once_init_leave(&type_once, type_id);
   }

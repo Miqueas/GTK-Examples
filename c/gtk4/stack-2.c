@@ -4,11 +4,11 @@ void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 GtkWidget* buildStack();
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Stack2";
-const gchar *appTitle = "GtkStack";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Stack2";
+const gchar *APP_TITLE = "GtkStack";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -33,7 +33,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
 
   gtk_window_set_child(GTK_WINDOW(win), box);
-  gtk_window_set_title(GTK_WINDOW(win), appTitle);
+  gtk_window_set_title(GTK_WINDOW(win), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(win), 400, 400);
 
   gtk_stack_sidebar_set_stack(GTK_STACK_SIDEBAR(sidebar), GTK_STACK(stack));

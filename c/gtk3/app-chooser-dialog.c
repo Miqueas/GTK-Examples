@@ -3,11 +3,11 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AppChooserDialog";
-const gchar *appTitle = "GtkAppChooserDialog";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AppChooserDialog";
+const gchar *APP_TITLE = "GtkAppChooserDialog";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -45,7 +45,7 @@ void onAppStartup(GApplication *self, gpointer data) {
     NULL, 0, "image/png"
   );
 
-  gtk_window_set_title(GTK_WINDOW(dialog), appTitle);
+  gtk_window_set_title(GTK_WINDOW(dialog), APP_TITLE);
   gtk_window_set_application(GTK_WINDOW(dialog), GTK_APPLICATION(self));
   gtk_container_set_border_width(GTK_CONTAINER(dialog), 10);
 }

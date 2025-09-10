@@ -90,14 +90,29 @@ image1 = configure_file(
 
 foreach name : src
   if name == 'builder'
-    executable(name, builder, dependencies: gtk3)
+    executable(name, builder,
+      dependencies: gtk3,
+      c_args: [ '-std=c11' ],
+    )
   elif name == 'css-provider'
-    executable(name, css_provider, dependencies: gtk3)
+    executable(name, css_provider,
+      dependencies: gtk3,
+      c_args: [ '-std=c11' ],
+    )
   elif name == 'glarea'
-    executable(name, name + '.c', dependencies: [ gtk3, epoxy ])
+    executable(name, name + '.c',
+      dependencies: [ gtk3, epoxy ],
+      c_args: [ '-std=c11' ],
+    )
   elif name == 'image-1'
-    executable(name, image1, dependencies: gtk3)
+    executable(name, image1,
+      dependencies: gtk3,
+      c_args: [ '-std=c11' ],
+    )
   else
-    executable(name, name + '.c', dependencies: gtk3)
+    executable(name, name + '.c',
+      dependencies: gtk3,
+      c_args: [ '-std=c11' ],
+    )
   endif
 endforeach

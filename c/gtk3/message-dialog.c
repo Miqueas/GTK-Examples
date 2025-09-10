@@ -3,14 +3,14 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.MessageDialog";
-const gchar *appTitle = "GtkMessageDialog";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.MessageDialog";
+const gchar *APP_TITLE = "GtkMessageDialog";
 const gchar *titleText = "<span size=\"x-large\" font-weight=\"bold\">Universe destruction</span>";
 const gchar *summaryText = "Our universe has a lot of problems and the only way to fix\n"
 "it is destroying the entire universe and this important decision\nis now in your hands.";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -52,7 +52,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   g_object_set(dialog, "text", titleText, NULL);
   g_object_set(dialog, "use-markup", TRUE, NULL);
   g_object_set(dialog, "secondary-text", summaryText, NULL);
-  gtk_window_set_title(GTK_WINDOW(dialog), appTitle);
+  gtk_window_set_title(GTK_WINDOW(dialog), APP_TITLE);
   gtk_dialog_add_button(GTK_DIALOG(dialog), "Yes 👍", GTK_RESPONSE_OK);
   gtk_dialog_add_button(GTK_DIALOG(dialog), "No 🛑", GTK_RESPONSE_CANCEL);
 }

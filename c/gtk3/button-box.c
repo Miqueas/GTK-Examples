@@ -4,11 +4,11 @@ void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 void onButtonClicked(GtkButton *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ButtonBox";
-const gchar *appTitle = "GtkButtonBox";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ButtonBox";
+const gchar *APP_TITLE = "GtkButtonBox";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -32,7 +32,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   GtkWidget* button3 = gtk_button_new_with_label("Button 3");
 
   gtk_container_add(GTK_CONTAINER(window), buttonBox);
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 

@@ -3,8 +3,8 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Dialog2";
-const gchar *appTitle = "GtkDialog";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Dialog2";
+const gchar *APP_TITLE = "GtkDialog";
 const gchar *titleText = "<span size='x-large' font-weight='bold'>"
 "Universe destruction</span>";
 const gchar *epilogText = "<span size='large' font-weight='bold'>"
@@ -14,8 +14,7 @@ const gchar *summaryText = "Our universe has a lot of problems and the only "
 "\nis now in your hands.";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
-
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
@@ -72,4 +71,5 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_box_pack_start(GTK_BOX(contentBox), titleLabel, FALSE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(contentBox), summaryLabel, FALSE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(contentBox), epilogLabel, FALSE, TRUE, 10);
+  gtk_widget_show_all(contentBox);
 }

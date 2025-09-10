@@ -3,8 +3,8 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Expander";
-const gchar *appTitle = "GtkExpander";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Expander";
+const gchar *APP_TITLE = "GtkExpander";
 const char *loremIpsumText = "Duis in metus eros. Duis faucibus rutrum eros eu vestibulum.\n"
 "Proin et arcu nulla. Etiam at lacinia nibh. Vivamus pellentesque nunc nibh,\n"
 "ac dignissim massa lobortis ut. Integer eu felis in elit semper ullamcorper\n"
@@ -14,7 +14,7 @@ const char *loremIpsumText = "Duis in metus eros. Duis faucibus rutrum eros eu v
 "justo tristique a.";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -38,7 +38,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   expanderText = gtk_label_new(loremIpsumText);
 
   gtk_container_add(GTK_CONTAINER(window), expander);
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 

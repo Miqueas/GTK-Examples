@@ -6,11 +6,11 @@ void onInfoBarResponse(GtkInfoBar *self, int responseID, gpointer data);
 void createInfoBar(GtkButton *self, gpointer data);
 GtkMessageType stringToGtkMessageType(const gchar *label);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.InfoBar";
-const gchar *appTitle = "GtkInfoBar";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.InfoBar";
+const gchar *APP_TITLE = "GtkInfoBar";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -39,7 +39,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   otherButton = gtk_button_new_with_label("Other");
 
   gtk_container_add(GTK_CONTAINER(window), box);
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
   gtk_box_pack_end(GTK_BOX(box), grid, TRUE, TRUE, 0);

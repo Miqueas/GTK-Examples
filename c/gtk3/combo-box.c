@@ -4,8 +4,8 @@ void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 void onComboBoxChanged(GtkComboBox *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ComboBox";
-const gchar *appTitle = "GtkComboBox";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ComboBox";
+const gchar *APP_TITLE = "GtkComboBox";
 const char *items[8] = {
   "GNOME",
   "KDE Plasma",
@@ -18,7 +18,7 @@ const char *items[8] = {
 };
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -54,6 +54,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   }
 
   gtk_container_add(GTK_CONTAINER(window), box);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
   gtk_combo_box_set_model(GTK_COMBO_BOX(comboBox), GTK_TREE_MODEL(listStore));

@@ -3,11 +3,11 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FileChooserDialog";
-const gchar *appTitle = "GtkFileChooserDialog";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FileChooserDialog";
+const gchar *APP_TITLE = "GtkFileChooserDialog";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -44,7 +44,7 @@ void onAppActivate(GApplication *self, gpointer data) {
 }
 
 void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window = gtk_file_chooser_dialog_new(appTitle, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
+  GtkWidget *window = gtk_file_chooser_dialog_new(APP_TITLE, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
   gtk_dialog_add_button(GTK_DIALOG(window), "Open", GTK_RESPONSE_OK);
   gtk_dialog_add_button(GTK_DIALOG(window), "Cancel", GTK_RESPONSE_CANCEL);
   gtk_application_add_window(GTK_APPLICATION(self), GTK_WINDOW(window));

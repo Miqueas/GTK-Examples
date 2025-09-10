@@ -3,18 +3,18 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog";
-const gchar *appTitle = "GtkAboutDialog";
-const gchar *authors[1] = { "Josué Martínez\0" };
-const gchar *artists[1] = { "Josué Martínez\0" };
-const gchar *documenters[1] = { "Josué Martínez\0" };
-const gchar *translatorCredits = "Josué Martínez\0";
-const gchar *comments = "GTK+ 3.0 AboutDialog Example";
-const gchar *copyright = "Copyright © 2021-2025 Josué Martínez\0";
-const gchar *version = "0.1.0";
-const gchar *website = "https://github.com/Miqueas/GTK-Examples\0";
-const gchar *websiteLabel = "GitHub Repository\0";
-const gchar *license = "Copyright (C) 2021-2025 Josué Martínez\n"
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog";
+const gchar *APP_TITLE = "GtkAboutDialog";
+const gchar *AUTHORS[1] = { "Josué Martínez\0" };
+const gchar *ARTISTS[1] = { "Josué Martínez\0" };
+const gchar *DOCUMENTERS[1] = { "Josué Martínez\0" };
+const gchar *TRANSLATOR_CREDITS = "Josué Martínez\0";
+const gchar *COMMENTS = "GTK+ 3.0 AboutDialog Example";
+const gchar *COPYRIGHT = "Copyright © 2021-2025 Josué Martínez\0";
+const gchar *VERSION = "0.1.0";
+const gchar *WEBSITE = "https://github.com/Miqueas/GTK-Examples\0";
+const gchar *WEBSITE_TEXT = "GitHub Repository\0";
+const gchar *LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "\n"
 "  This software is provided 'as-is', without any express or implied\n"
 "  warranty.  In no event will the authors be held liable for any damages\n"
@@ -34,7 +34,7 @@ const gchar *license = "Copyright (C) 2021-2025 Josué Martínez\n"
 ;
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -58,19 +58,19 @@ void onAppStartup(GApplication *self, gpointer data) {
 
   gtk_window_set_application(GTK_WINDOW(dialog), GTK_APPLICATION(self));
   gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-  gtk_about_dialog_set_artists(GTK_ABOUT_DIALOG(dialog), artists);
-  gtk_about_dialog_set_authors(GTK_ABOUT_DIALOG(dialog), authors);
-  gtk_about_dialog_set_documenters(GTK_ABOUT_DIALOG(dialog), documenters);
+  gtk_about_dialog_set_artists(GTK_ABOUT_DIALOG(dialog), ARTISTS);
+  gtk_about_dialog_set_authors(GTK_ABOUT_DIALOG(dialog), AUTHORS);
+  gtk_about_dialog_set_documenters(GTK_ABOUT_DIALOG(dialog), DOCUMENTERS);
   gtk_about_dialog_set_translator_credits(
     GTK_ABOUT_DIALOG(dialog),
-    translatorCredits
+    TRANSLATOR_CREDITS
   );
-  gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog), appTitle);
-  gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), comments);
-  gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog), copyright);
-  gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), version);
-  gtk_about_dialog_set_license(GTK_ABOUT_DIALOG(dialog), license);
+  gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog), APP_TITLE);
+  gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), COMMENTS);
+  gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog), COPYRIGHT);
+  gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), VERSION);
+  gtk_about_dialog_set_license(GTK_ABOUT_DIALOG(dialog), LICENSE);
   gtk_about_dialog_set_wrap_license(GTK_ABOUT_DIALOG(dialog), TRUE);
-  gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), website);
-  gtk_about_dialog_set_website_label(GTK_ABOUT_DIALOG(dialog), websiteLabel);
+  gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), WEBSITE);
+  gtk_about_dialog_set_website_label(GTK_ABOUT_DIALOG(dialog), WEBSITE_TEXT);
 }

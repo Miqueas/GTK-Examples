@@ -40,12 +40,24 @@ image1 = configure_file(
 
 foreach name : src
   if name == 'builder'
-    executable(name, builder, dependencies: gtk4)
+    executable(name, builder,
+      dependencies: gtk4,
+      c_args: [ '-std=c23' ],
+    )
   elif name == 'glarea'
-    executable(name, name + '.c', dependencies: [ gtk4, epoxy ])
+    executable(name, name + '.c',
+      dependencies: [ gtk4, epoxy ],
+      c_args: [ '-std=c23' ],
+    )
   elif name == 'image-1'
-    executable(name, image1, dependencies: gtk4)
+    executable(name, image1,
+      dependencies: gtk4,
+      c_args: [ '-std=c23' ],
+    )
   else
-    executable(name, name + '.c', dependencies: gtk4)
+    executable(name, name + '.c',
+      dependencies: gtk4,
+      c_args: [ '-std=c23' ],
+    )
   endif
 endforeach

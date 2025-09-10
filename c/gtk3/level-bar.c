@@ -17,15 +17,15 @@ gint getMatches(const gchar *pattern, const gchar *password);
 const gchar* passwordStrengthToString(PasswordStrength strength);
 PasswordStrength checkPasswordStrength(const gchar *password);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.LevelBar";
-const gchar *appTitle = "GtkLevelBar";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.LevelBar";
+const gchar *APP_TITLE = "GtkLevelBar";
 const gchar *digitsPattern = "[0-9]";
 const gchar *lowercasePattern = "[a-z]";
 const gchar *uppercasePattern = "[A-Z]";
 const gchar *symbolsPattern = "\\W";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
@@ -53,7 +53,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   g_ptr_array_add(shared, levelBarLabel);
 
   gtk_container_add(GTK_CONTAINER(window), box);
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 

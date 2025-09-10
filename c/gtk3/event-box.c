@@ -9,11 +9,11 @@ void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 gboolean onClicked(GtkWidget* self, GdkEventButton event, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.EventBox";
-const gchar *appTitle = "GtkEventBox";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.EventBox";
+const gchar *APP_TITLE = "GtkEventBox";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -35,7 +35,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   GtkWidget *label = gtk_label_new("Click me!");
 
   gtk_container_add(GTK_CONTAINER(window), eventBox);
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 

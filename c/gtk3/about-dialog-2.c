@@ -3,18 +3,18 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog";
-const gchar *appTitle = "GtkAboutDialog";
-const gchar *authors[1] = { "Josué Martínez\0" };
-const gchar *artists[1] = { "Josué Martínez\0" };
-const gchar *documenters[1] = { "Josué Martínez\0" };
-const gchar *translatorCredits = "Josué Martínez\0";
-const gchar *comments = "GTK+ 3.0 AboutDialog Example";
-const gchar *copyright = "Copyright © 2021-2025 Josué Martínez\0";
-const gchar *version = "0.1.0";
-const gchar *website = "https://github.com/Miqueas/GTK-Examples\0";
-const gchar *websiteLabel = "GitHub Repository\0";
-const gchar *license = "Copyright (C) 2021-2025 Josué Martínez\n"
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog";
+const gchar *APP_TITLE = "GtkAboutDialog";
+const gchar *AUTHORS[1] = { "Josué Martínez\0" };
+const gchar *ARTISTS[1] = { "Josué Martínez\0" };
+const gchar *DOCUMENTERS[1] = { "Josué Martínez\0" };
+const gchar *TRANSLATOR_CREDITS = "Josué Martínez\0";
+const gchar *COMMENTS = "GTK+ 3.0 AboutDialog Example";
+const gchar *COPYRIGHT = "Copyright © 2021-2025 Josué Martínez\0";
+const gchar *VERSION = "0.1.0";
+const gchar *WEBSITE = "https://github.com/Miqueas/GTK-Examples\0";
+const gchar *WEBSITE_TEXT = "GitHub Repository\0";
+const gchar *LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "\n"
 "  This software is provided 'as-is', without any express or implied\n"
 "  warranty.  In no event will the authors be held liable for any damages\n"
@@ -34,7 +34,7 @@ const gchar *license = "Copyright (C) 2021-2025 Josué Martínez\n"
 ;
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -51,18 +51,18 @@ void onAppActivate(GApplication *self, gpointer data) {
 
   gtk_show_about_dialog(window,
     "modal", TRUE,
-    "artists", artists,
-    "authors", authors,
-    "documenters", documenters,
-    "translator-credits", translatorCredits,
-    "program-name", appTitle,
-    "comments", comments,
-    "copyright", copyright,
-    "version", version,
-    "license", license,
+    "artists", ARTISTS,
+    "authors", AUTHORS,
+    "documenters", DOCUMENTERS,
+    "translator-credits", TRANSLATOR_CREDITS,
+    "program-name", APP_TITLE,
+    "comments", COMMENTS,
+    "copyright", COPYRIGHT,
+    "version", VERSION,
+    "license", LICENSE,
     "wrap-license", TRUE,
-    "website", website,
-    "website-label", websiteLabel,
+    "website", WEBSITE,
+    "website-label", WEBSITE_TEXT,
     "destroy-with-parent", TRUE,
     NULL
   );
@@ -75,7 +75,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   label = gtk_label_new("Just an empty window");
 
   gtk_container_add(GTK_CONTAINER(window), label);
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 

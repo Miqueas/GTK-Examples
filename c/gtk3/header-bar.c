@@ -3,12 +3,12 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.HeaderBar";
-const gchar *appTitle = "GtkHeaderBar";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.HeaderBar";
+const gchar *APP_TITLE = "GtkHeaderBar";
 const gchar *appSubtitle = "App subtitle";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -34,7 +34,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
   gtk_widget_set_visible(header, TRUE);
-  gtk_header_bar_set_title(GTK_HEADER_BAR(header), appTitle);
+  gtk_header_bar_set_title(GTK_HEADER_BAR(header), APP_TITLE);
   gtk_header_bar_set_subtitle(GTK_HEADER_BAR(header), appSubtitle);
   gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(header), TRUE);
 }

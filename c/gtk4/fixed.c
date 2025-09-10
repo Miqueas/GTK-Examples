@@ -3,11 +3,11 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Fixed";
-const gchar *appTitle = "GtkFixed";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Fixed";
+const gchar *APP_TITLE = "GtkFixed";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -30,6 +30,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   fixed = gtk_fixed_new();
 
   gtk_window_set_child(GTK_WINDOW(window), fixed);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
   gtk_fixed_put(GTK_FIXED(fixed), gtk_label_new("A"), 10, 20);

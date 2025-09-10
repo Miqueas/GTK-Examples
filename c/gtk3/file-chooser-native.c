@@ -2,11 +2,11 @@
 
 void onAppActivate(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FileChooserNative";
-const gchar *appTitle = "GtkFileChooserNative";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FileChooserNative";
+const gchar *APP_TITLE = "GtkFileChooserNative";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
   int result = g_application_run(G_APPLICATION(app), argc, argv);
@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
 
 void onAppActivate(GApplication *self, gpointer data) {
   GtkFileChooserNative *native = gtk_file_chooser_native_new(
-    appTitle,
+    APP_TITLE,
     // In normal circumstances, you should set a parent window for this dialog
     NULL,
     GTK_FILE_CHOOSER_ACTION_OPEN,

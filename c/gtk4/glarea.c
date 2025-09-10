@@ -15,8 +15,8 @@ void onAppActivate(GApplication *self, gpointer data);
 void onGLAreaRealize(GtkGLArea *self, gint width, gint height, gpointer data);
 gboolean onGLAreaRender(GtkGLArea *self, GdkGLContext *context, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk4.GLArea";
-const gchar *appTitle = "GtkGLArea";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.GLArea";
+const gchar *APP_TITLE = "GtkGLArea";
 
 const char *vsSource = "#version 100\n"
 "attribute vec2 coord2d;\n"
@@ -33,7 +33,7 @@ GLuint program, vao, vbo;
 GLint attributeCoord2D;
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
 
@@ -56,7 +56,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   glArea = gtk_gl_area_new();
 
   gtk_window_set_child(GTK_WINDOW(window), glArea);
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
   gtk_widget_set_vexpand(glArea, TRUE);

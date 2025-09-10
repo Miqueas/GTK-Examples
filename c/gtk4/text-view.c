@@ -3,8 +3,8 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.TextView";
-const gchar *appTitle = "GtkTextView";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.TextView";
+const gchar *APP_TITLE = "GtkTextView";
 const gchar *loremIpsum =
 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
 "incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad"
@@ -24,7 +24,7 @@ const gchar *loremIpsum =
 "neque.\0";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -49,7 +49,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
 
   gtk_window_set_child(GTK_WINDOW(window), textView);
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
   gtk_text_view_set_editable(GTK_TEXT_VIEW(textView), FALSE);

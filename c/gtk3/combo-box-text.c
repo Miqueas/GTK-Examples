@@ -4,8 +4,8 @@ void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 void onComboBoxChanged(GtkComboBox *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ComboBoxText";
-const gchar *appTitle = "GtkComboBoxText";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ComboBoxText";
+const gchar *APP_TITLE = "GtkComboBoxText";
 const gchar *values[8][2] = {
   { "gnome", "GNOME" },
   { "plasma", "KDE Plasma" },
@@ -18,7 +18,7 @@ const gchar *values[8][2] = {
 };
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -42,7 +42,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   hintLabel = gtk_label_new("Default id: gnome");
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
   gtk_container_add(GTK_CONTAINER(window), box);
 

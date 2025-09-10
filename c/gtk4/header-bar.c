@@ -3,12 +3,12 @@
 void onAppActivate(GApplication *self, gpointer data);
 void onAppStartup(GApplication *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk4.HeaderBar";
-const gchar *appTitle = "<span weight='bold'>GtkHeaderBar</span>";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.HeaderBar";
+const gchar *APP_TITLE = "<span weight='bold'>GtkHeaderBar</span>";
 const gchar *appSubtitle = "<span weight='light'>App subtitle</span>";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -28,7 +28,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   GtkWidget *window, *titleText, *subtitleText, *titleBox, *headerBar;
 
   window = gtk_application_window_new(GTK_APPLICATION(self));
-  titleText = gtk_label_new(appTitle);
+  titleText = gtk_label_new(APP_TITLE);
   subtitleText = gtk_label_new(appSubtitle);
   titleBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
   headerBar = gtk_header_bar_new();

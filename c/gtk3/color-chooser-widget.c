@@ -5,11 +5,11 @@ void onAppStartup(GApplication *self, gpointer data);
 void onShowEditorToggled(GtkToggleButton *self, gpointer data);
 void onPrintClicked(GtkButton *self, gpointer data);
 
-const gchar *appID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AppChooserWidget";
-const gchar *appTitle = "GtkAppChooserWidget";
+const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AppChooserWidget";
+const gchar *APP_TITLE = "GtkAppChooserWidget";
 
 int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(appID, 0);
+  GtkApplication *app = gtk_application_new(APP_ID, 0);
 
   g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
@@ -37,7 +37,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   printButton = gtk_button_new_with_label("Print Color");
 
   gtk_container_add(GTK_CONTAINER(window), box);
-  gtk_window_set_title(GTK_WINDOW(window), appTitle);
+  gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
   gtk_box_pack_start(GTK_BOX(box), colorChooserWidget, TRUE, TRUE, 0);
