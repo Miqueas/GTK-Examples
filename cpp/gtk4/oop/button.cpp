@@ -2,8 +2,8 @@
 #include <gtkmm.h>
 #include <iostream>
 
-const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.Button";
-const Glib::ustring APP_TITLE = "Gtk::Button";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.Button";
+static const Glib::ustring APP_TITLE = "Gtk::Button";
 
 class App : public Gtk::Application {
   public:

@@ -2,7 +2,7 @@
 #include <gtkmm.h>
 #include <iostream>
 
-const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.Application";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.Application";
 
 class App : public Gtk::Application {
   public:
