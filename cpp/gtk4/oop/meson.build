@@ -1,4 +1,6 @@
 src = [
+  'about-dialog',
+  'action-bar',
   'application-window',
   'application',
   'button',
