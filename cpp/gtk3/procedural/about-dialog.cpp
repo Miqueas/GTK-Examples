@@ -1,7 +1,7 @@
 #include <gtkmm.h>
 #include <iostream>
 
-const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Procedural.AboutDialog";
+const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Procedural.AboutDialog";
 const Glib::ustring APP_TITLE = "Gtk::AboutDialog";
 const Glib::ustring LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "\n"
@@ -21,37 +21,44 @@ const Glib::ustring LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "     misrepresented as being the original software.\n"
 "  3. This notice may not be removed or altered from any source distribution.\0";
 
-void onAppStartup();
-void onAppActivate();
-
-Glib::RefPtr<Gtk::Application> app;
+static void on_app_activate(Glib::RefPtr<Gtk::Application> self);
+static void on_app_startup(Glib::RefPtr<Gtk::Application> self);
 
 int main(int argc, char** argv) {
-  app = Gtk::Application::create(APP_ID);
-  app->signal_startup().connect(sigc::ptr_fun(&onAppStartup));
-  app->signal_activate().connect(sigc::ptr_fun(&onAppActivate));
+  Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(APP_ID);
+
+  app->signal_startup().connect(sigc::bind<Glib::RefPtr<Gtk::Application>>(
+    sigc::ptr_fun(&on_app_startup),
+    app
+  ));
+
+  app->signal_activate().connect(sigc::bind<Glib::RefPtr<Gtk::Application>>(
+    sigc::ptr_fun(&on_app_activate),
+    app
+  ));
+
   return app->run(argc, argv);
 }
 
-void onAppActivate() {
-  Gtk::Window* window = app->get_active_window();
+void on_app_activate(Glib::RefPtr<Gtk::Application> self) {
+  Gtk::Window* window = self->get_active_window();
 
   if (window) {
     auto dialog = dynamic_cast<Gtk::Dialog*>(window);
 
     if (dialog) {
       dialog->run();
-      app->quit();
+      self->quit();
     }
   }
 }
 
-void onAppStartup() {
+void on_app_startup(Glib::RefPtr<Gtk::Application> self) {
   // Because `Gtk::AboutDialog` doesn't have a parent widget per se, there's no
   // point in using `Gtk::make_managed()` with it.
   auto dialog = new Gtk::AboutDialog();
   dialog->set_modal(true);
-  dialog->set_application(app);
+  dialog->set_application(self);
   dialog->set_artists({ "Josué Martínez" });
   dialog->set_authors({ "Josué Martínez" });
   dialog->set_documenters({ "Josué Martínez" });
