@@ -1,6 +1,9 @@
 src = [
   'about-dialog',
   'action-bar',
+  'app-chooser-button',
+  'app-chooser-dialog',
+  'app-chooser-widget',
   'application-window',
   'application',
   'button',
