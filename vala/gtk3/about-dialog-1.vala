@@ -1,21 +1,21 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.AboutDialog";
-const string appTitle = "Gtk.AboutDialog";
+const string APP_ID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.AboutDialog";
+const string APP_TITLE = "Gtk.AboutDialog";
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, 0);
-  app.startup.connect(onAppStartup);
-  app.activate.connect(onAppActivate);
+  var app = new Gtk.Application(APP_ID, 0);
+  app.startup.connect(on_app_startup);
+  app.activate.connect(on_app_activate);
   return app.run(args);
 }
 
-void onAppActivate(Application self) {
+void on_app_activate(Application self) {
   var app = self as Gtk.Application;
   var window = app?.get_active_window() as Gtk.AboutDialog?;
   window?.run();
   window?.destroy();
 }
 
-void onAppStartup(Application self) {
+void on_app_startup(Application self) {
   var dialog = new Gtk.AboutDialog();
 
   dialog.modal = true;
@@ -23,7 +23,7 @@ void onAppStartup(Application self) {
   dialog.authors = { "Josué Martínez" };
   dialog.documenters = { "Josué Martínez" };
   dialog.translator_credits = "Josué Martínez";
-  dialog.program_name = appTitle;
+  dialog.program_name = APP_TITLE;
   dialog.comments = "GTK+ 3.0 AboutDialog Example";
   dialog.copyright = "Copyright © 2021-2025 Josué Martínez";
   dialog.version = "0.1.0";

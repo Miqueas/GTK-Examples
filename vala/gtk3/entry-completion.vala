@@ -1,20 +1,20 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.EntryCompletion";
-const string appTitle = "Gtk.Entry";
+const string APP_ID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.EntryCompletion";
+const string APP_TITLE = "Gtk.Entry";
 const string[] items = { "GNOME", "Vala", "GTK", "Example", "Entry", "Completion" };
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, 0);
-  app.startup.connect(onAppStartup);
-  app.activate.connect(onAppActivate);
+  var app = new Gtk.Application(APP_ID, 0);
+  app.startup.connect(on_app_startup);
+  app.activate.connect(on_app_activate);
   return app.run(args);
 }
 
-void onAppActivate(Application self) {
+void on_app_activate(Application self) {
   var window = (self as Gtk.Application)?.get_active_window();
   window?.present();
 }
 
-void onAppStartup(Application self) {
+void on_app_startup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var entryCompletionModel = new Gtk.ListStore(1, typeof(string));
   var entryCompletion = new Gtk.EntryCompletion();
@@ -23,7 +23,7 @@ void onAppStartup(Application self) {
   Gtk.TreeIter iter;
 
   window.add(box);
-  window.title = appTitle;
+  window.title = APP_TITLE;
   window.set_default_size(400, 400);
 
   foreach (var name in items) {

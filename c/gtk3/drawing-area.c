@@ -1,37 +1,37 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
-gboolean onDrawSquare(GtkWidget *self, cairo_t *cr, gpointer data);
-gboolean onDrawCircle(GtkWidget *self, cairo_t *cr, gpointer data);
-gboolean onDrawTriangle(GtkWidget *self, cairo_t *cr, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
+gboolean onDrawSquare(GtkWidget* self, cairo_t* cr, gpointer data);
+gboolean onDrawCircle(GtkWidget* self, cairo_t* cr, gpointer data);
+gboolean onDrawTriangle(GtkWidget* self, cairo_t* cr, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.DrawingArea";
-const gchar *APP_TITLE = "GtkDrawingArea";
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.DrawingArea";
+const static gchar* APP_TITLE = "GtkDrawingArea";
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
 
-  g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
+  g_signal_connect(app, "startup", G_CALLBACK(on_app_startup), NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  if (window != NULL) gtk_window_present(window);
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window = gtk_application_window_new(GTK_APPLICATION(self));
-  GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-  GtkWidget *squareDrawingArea = gtk_drawing_area_new();
-  GtkWidget *circleDrawingArea = gtk_drawing_area_new();
-  GtkWidget *triangleDrawingArea = gtk_drawing_area_new();
+static void on_app_startup(GApplication* self, gpointer data) {
+  GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
+  GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+  GtkWidget* squareDrawingArea = gtk_drawing_area_new();
+  GtkWidget* circleDrawingArea = gtk_drawing_area_new();
+  GtkWidget* triangleDrawingArea = gtk_drawing_area_new();
 
   gtk_container_add(GTK_CONTAINER(window), box);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
@@ -60,11 +60,11 @@ void onAppStartup(GApplication *self, gpointer data) {
   );
 }
 
-gboolean onDrawSquare(GtkWidget *self, cairo_t *cr, gpointer data) {
-  GtkStyleContext *context = gtk_widget_get_style_context(self);
+gboolean onDrawSquare(GtkWidget* self, cairo_t* cr, gpointer data) {
+  GtkStyleContext* context = gtk_widget_get_style_context(self);
   GtkStateFlags flags = gtk_style_context_get_state(context);
-  int width = gtk_widget_get_allocated_width(self);
-  int height = gtk_widget_get_allocated_height(self);
+  gint width = gtk_widget_get_allocated_width(self);
+  gint height = gtk_widget_get_allocated_height(self);
   GdkRGBA color;
 
   cairo_rectangle(cr, 0, 0, width, height);
@@ -75,11 +75,11 @@ gboolean onDrawSquare(GtkWidget *self, cairo_t *cr, gpointer data) {
   return TRUE;
 }
 
-gboolean onDrawCircle(GtkWidget *self, cairo_t *cr, gpointer data) {
-  GtkStyleContext *context = gtk_widget_get_style_context(self);
+gboolean onDrawCircle(GtkWidget* self, cairo_t* cr, gpointer data) {
+  GtkStyleContext* context = gtk_widget_get_style_context(self);
   GtkStateFlags flags = gtk_style_context_get_state(context);
-  int width = gtk_widget_get_allocated_width(self);
-  int height = gtk_widget_get_allocated_height(self);
+  gint width = gtk_widget_get_allocated_width(self);
+  gint height = gtk_widget_get_allocated_height(self);
   double xc = width / 2.0;
   double yc = height / 2.0;
   double radius = MIN(width, height) / 2.0;
@@ -93,11 +93,11 @@ gboolean onDrawCircle(GtkWidget *self, cairo_t *cr, gpointer data) {
   return TRUE;
 }
 
-gboolean onDrawTriangle(GtkWidget *self, cairo_t *cr, gpointer data) {
-  GtkStyleContext *context = gtk_widget_get_style_context(self);
+gboolean onDrawTriangle(GtkWidget* self, cairo_t* cr, gpointer data) {
+  GtkStyleContext* context = gtk_widget_get_style_context(self);
   GtkStateFlags flags = gtk_style_context_get_state(context);
-  int width = gtk_widget_get_allocated_width(self);
-  int height = gtk_widget_get_allocated_height(self);
+  gint width = gtk_widget_get_allocated_width(self);
+  gint height = gtk_widget_get_allocated_height(self);
   GdkRGBA color;
 
   cairo_move_to(cr, width / 2.0, 0);

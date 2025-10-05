@@ -1,25 +1,25 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.AspectFrame";
-const string appTitle = "Gtk.AspectFrame";
+const string APP_ID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.AspectFrame";
+const string APP_TITLE = "Gtk.AspectFrame";
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, 0);
-  app.startup.connect(onAppStartup);
-  app.activate.connect(onAppActivate);
+  var app = new Gtk.Application(APP_ID, 0);
+  app.startup.connect(on_app_startup);
+  app.activate.connect(on_app_activate);
   return app.run(args);
 }
 
-void onAppActivate(Application self) {
+void on_app_activate(Application self) {
   var window = (self as Gtk.Application)?.get_active_window();
   window?.present();
 }
 
-void onAppStartup(Application self) {
+void on_app_startup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var aspectFrame = new Gtk.AspectFrame(null, 0.5f, 0.5f, 1.7f, false);
   var button = new Gtk.Button.with_label("Long button label");
 
   window.add(aspectFrame);
-  window.title = appTitle;
+  window.title = APP_TITLE;
   window.border_width = 10;
   window.set_default_size(400, 400);
 

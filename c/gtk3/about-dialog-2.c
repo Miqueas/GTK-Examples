@@ -1,20 +1,20 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog";
-const gchar *APP_TITLE = "GtkAboutDialog";
-const gchar *AUTHORS[1] = { "Josué Martínez\0" };
-const gchar *ARTISTS[1] = { "Josué Martínez\0" };
-const gchar *DOCUMENTERS[1] = { "Josué Martínez\0" };
-const gchar *TRANSLATOR_CREDITS = "Josué Martínez\0";
-const gchar *COMMENTS = "GTK+ 3.0 AboutDialog Example";
-const gchar *COPYRIGHT = "Copyright © 2021-2025 Josué Martínez\0";
-const gchar *VERSION = "0.1.0";
-const gchar *WEBSITE = "https://github.com/Miqueas/GTK-Examples\0";
-const gchar *WEBSITE_TEXT = "GitHub Repository\0";
-const gchar *LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog2";
+const static gchar* APP_TITLE = "GtkAboutDialog";
+const static gchar* AUTHORS[1] = { "Josué Martínez\0" };
+const static gchar* ARTISTS[1] = { "Josué Martínez\0" };
+const static gchar* DOCUMENTERS[1] = { "Josué Martínez\0" };
+const static gchar* TRANSLATOR_CREDITS = "Josué Martínez\0";
+const static gchar* COMMENTS = "GTK+ 3.0 AboutDialog Example";
+const static gchar* COPYRIGHT = "Copyright © 2021-2025 Josué Martínez\0";
+const static gchar* VERSION = "0.1.0";
+const static gchar* WEBSITE = "https://github.com/Miqueas/GTK-Examples\0";
+const static gchar* WEBSITE_TEXT = "GitHub Repository\0";
+const static gchar* LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "\n"
 "  This software is provided 'as-is', without any express or implied\n"
 "  warranty.  In no event will the authors be held liable for any damages\n"
@@ -33,22 +33,22 @@ const gchar *LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "  3. This notice may not be removed or altered from any source distribution.\0"
 ;
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
+  g_signal_connect(app, "startup", G_CALLBACK(on_app_startup), NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
-
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  if (window == NULL) return g_printerr("No active window found.\n");
 
+  gtk_window_present(window);
   gtk_show_about_dialog(window,
     "modal", TRUE,
     "artists", ARTISTS,
@@ -68,11 +68,9 @@ void onAppActivate(GApplication *self, gpointer data) {
   );
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window, *label;
-
-  window = gtk_application_window_new(GTK_APPLICATION(self));
-  label = gtk_label_new("Just an empty window");
+static void on_app_startup(GApplication* self, gpointer data) {
+  GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
+  GtkWidget* label = gtk_label_new("(This is just an empty window)\0");
 
   gtk_container_add(GTK_CONTAINER(window), label);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);

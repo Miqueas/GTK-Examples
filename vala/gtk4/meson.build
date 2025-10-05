@@ -4,6 +4,7 @@ src = [
   'application',
   'box',
   'builder',
+  'column-view',
   'css-provider',
   'fixed',
   'header-bar',

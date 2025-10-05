@@ -1,31 +1,31 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
-void onButtonClicked(GtkButton *self, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
+void on_button_clicked(GtkButton* self, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ListBox";
-const gchar *APP_TITLE = "GtkListBox";
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ListBox";
+const static gchar* APP_TITLE = "GtkListBox";
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
 
-  g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
+  g_signal_connect(app, "startup",  G_CALLBACK(on_app_startup),  NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  if (window != NULL) gtk_window_present(window);
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window, *box, *listBox, *scrolledWindow, *button;
+static void on_app_startup(GApplication* self, gpointer data) {
+  GtkWidget* window, *box, *listBox, *scrolledWindow, *button;
 
   window = gtk_application_window_new(GTK_APPLICATION(self));
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -52,19 +52,19 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_widget_set_margin_start(button, 10);
   gtk_widget_set_margin_end(button, 10);
   gtk_widget_set_margin_bottom(button, 10);
-  g_signal_connect(button, "clicked", G_CALLBACK(onButtonClicked), listBox);
+  g_signal_connect(button, "clicked", G_CALLBACK(on_button_clicked), listBox);
 }
 
-void onButtonClicked(GtkButton *self, gpointer data) {
-  for (int i = 0; i < 100; i++) {
-    char str[16];
+void on_button_clicked(GtkButton* self, gpointer data) {
+  for (gint i = 0; i < 100; i++) {
+    gchar str[16];
     sprintf(str, "Some text %d", (i + 1));
-    GtkWidget *tempLabel = gtk_label_new(str);
-    gtk_widget_set_margin_start(tempLabel, 10);
-    gtk_widget_set_margin_end(tempLabel, 10);
-    gtk_widget_set_margin_top(tempLabel, 10);
-    gtk_widget_set_margin_bottom(tempLabel, 10);
-    gtk_list_box_insert(GTK_LIST_BOX(data), tempLabel, i);
+    GtkWidget* temp_label = gtk_label_new(str);
+    gtk_widget_set_margin_start(temp_label, 10);
+    gtk_widget_set_margin_end(temp_label, 10);
+    gtk_widget_set_margin_top(temp_label, 10);
+    gtk_widget_set_margin_bottom(temp_label, 10);
+    gtk_list_box_insert(GTK_LIST_BOX(data), temp_label, i);
   }
 
   gtk_widget_show_all(GTK_WIDGET(data));

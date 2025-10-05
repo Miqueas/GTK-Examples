@@ -1,10 +1,10 @@
 #include <gtk/gtk.h>
 
-int main(void) {
+gint main(void) {
   // In GTK 4, this function no longer requires the `argc` and `argv` parameters
   gtk_init();
 
-  GtkWidget *win = gtk_window_new();
+  GtkWidget* win = gtk_window_new();
   gtk_window_set_default_size(GTK_WINDOW(win), 400, 400);
 
   // I think this is optional

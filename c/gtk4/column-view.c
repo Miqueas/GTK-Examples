@@ -25,8 +25,8 @@ static void on_app_activate(GApplication* self, gpointer data) {
 }
 
 static void on_app_startup(GApplication* self, gpointer data) {
-  GtkStringList* model = gtk_string_list_new(NULL);
-  GtkNoSelection* selection_model = gtk_no_selection_new(G_LIST_MODEL(model));
+  GtkStringList* list_model = gtk_string_list_new(NULL);
+  GtkNoSelection* selection_model = gtk_no_selection_new(G_LIST_MODEL(list_model));
   GtkListItemFactory* key_factory = gtk_signal_list_item_factory_new();
   GtkListItemFactory* value_factory = gtk_signal_list_item_factory_new();
   GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
@@ -35,7 +35,9 @@ static void on_app_startup(GApplication* self, gpointer data) {
   GtkColumnViewColumn* key_column = gtk_column_view_column_new("Key", key_factory);
   GtkColumnViewColumn* value_column = gtk_column_view_column_new("Value", value_factory);
 
-  for (guint8 i = 0; i < G_MAXUINT8; i++) gtk_string_list_append(model, g_strdup_printf("%d", i));
+  for (guint8 i = 0; i < G_MAXUINT8; i++) {
+    gtk_string_list_append(list_model, g_strdup_printf("%d", i));
+  }
 
   g_signal_connect(key_factory, "setup", G_CALLBACK(on_factory_setup), NULL);
   g_signal_connect(key_factory, "bind", G_CALLBACK(on_factory_bind), "Key");
@@ -43,13 +45,15 @@ static void on_app_startup(GApplication* self, gpointer data) {
   g_signal_connect(value_factory, "setup", G_CALLBACK(on_factory_setup), NULL);
   g_signal_connect(value_factory, "bind", G_CALLBACK(on_factory_bind), "Value");
 
-  gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), column_view);
-
   gtk_window_set_child(GTK_WINDOW(window), scroll);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
+  gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), column_view);
+
   gtk_column_view_set_reorderable(GTK_COLUMN_VIEW(column_view), FALSE);
+  gtk_column_view_set_show_row_separators(GTK_COLUMN_VIEW(column_view), TRUE);
+  gtk_column_view_set_show_column_separators(GTK_COLUMN_VIEW(column_view), TRUE);
   gtk_column_view_append_column(GTK_COLUMN_VIEW(column_view), key_column);
   gtk_column_view_append_column(GTK_COLUMN_VIEW(column_view), value_column);
 
@@ -60,6 +64,9 @@ static void on_app_startup(GApplication* self, gpointer data) {
 
 static void on_factory_setup(GtkListItemFactory* self, GObject* object, gpointer data) {
 	GtkWidget* label = gtk_label_new("");
+
+  gtk_widget_set_halign(label, GTK_ALIGN_START);
+
 	gtk_list_item_set_child(GTK_LIST_ITEM(object), label);
 }
 
@@ -71,5 +78,4 @@ static void on_factory_bind(GtkListItemFactory* self, GObject* object, gpointer 
   gchar* text = g_strdup_printf("%s: %s", name, value);
 
 	gtk_label_set_label(GTK_LABEL(label), text);
-  gtk_widget_set_halign(label, GTK_ALIGN_START);
 }

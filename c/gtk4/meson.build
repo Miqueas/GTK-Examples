@@ -5,6 +5,7 @@ src = [
   'box',
   'builder',
   'button',
+  'column-view',
   'drop-down',
   'entry',
   'expander',

@@ -1,5 +1,5 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.ComboBoxText";
-const string appTitle = "Gtk.ActionBar";
+const string APP_ID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.ComboBoxText";
+const string APP_TITLE = "Gtk.ActionBar";
 const string[] desktops = {
   "GNOME", "Plasma",
   "Pantheon", "XFCE",
@@ -8,25 +8,25 @@ const string[] desktops = {
 };
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, 0);
-  app.startup.connect(onAppStartup);
-  app.activate.connect(onAppActivate);
+  var app = new Gtk.Application(APP_ID, 0);
+  app.startup.connect(on_app_startup);
+  app.activate.connect(on_app_activate);
   return app.run(args);
 }
 
-void onAppActivate(Application self) {
+void on_app_activate(Application self) {
   var window = (self as Gtk.Application)?.get_active_window();
   window?.present();
 }
 
-void onAppStartup(Application self) {
+void on_app_startup(Application self) {
   var window = new Gtk.ApplicationWindow(self as Gtk.Application);
   var comboBox = new Gtk.ComboBoxText();
   var hintLabel = new Gtk.Label("Default id: gnome");
   var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 10);
 
   window.add(box);
-  window.title = appTitle;
+  window.title = APP_TITLE;
   window.set_default_size(400, 400);
 
   foreach (var name in desktops) comboBox.append(name.down(), name);

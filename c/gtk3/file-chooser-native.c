@@ -1,22 +1,22 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FileChooserNative";
-const gchar *APP_TITLE = "GtkFileChooserNative";
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FileChooserNative";
+const static gchar* APP_TITLE = "GtkFileChooserNative";
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkFileChooserNative *native = gtk_file_chooser_native_new(
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkFileChooserNative* native = gtk_file_chooser_native_new(
     APP_TITLE,
     // In normal circumstances, you should set a parent window for this dialog
     NULL,
@@ -32,7 +32,7 @@ void onAppActivate(GApplication *self, gpointer data) {
     case GTK_RESPONSE_APPLY:
     case GTK_RESPONSE_YES:
     case GTK_RESPONSE_OK: {
-      gchar *name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native));
+      gchar* name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native));
       g_print("You selected: %s\n", name);
       break;
     }

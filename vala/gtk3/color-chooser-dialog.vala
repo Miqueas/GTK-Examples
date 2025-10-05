@@ -1,14 +1,14 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.ColorChooserDialog";
-const string appTitle = "Gtk.ColorChooserDialog";
+const string APP_ID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.ColorChooserDialog";
+const string APP_TITLE = "Gtk.ColorChooserDialog";
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, 0);
-  app.startup.connect(onAppStartup);
-  app.activate.connect(onAppActivate);
+  var app = new Gtk.Application(APP_ID, 0);
+  app.startup.connect(on_app_startup);
+  app.activate.connect(on_app_activate);
   return app.run(args);
 }
 
-void onAppActivate(Application self) {
+void on_app_activate(Application self) {
   var window = (self as Gtk.Application)?.get_active_window();
   var result = (window as Gtk.ColorChooserDialog)?.run();
 
@@ -27,10 +27,10 @@ void onAppActivate(Application self) {
   window?.destroy();
 }
 
-void onAppStartup(Application self) {
+void on_app_startup(Application self) {
   var dialog = new Gtk.ColorChooserDialog(null, null);
 
-  dialog.title = appTitle;
+  dialog.title = APP_TITLE;
   dialog.application = self as Gtk.Application;
   dialog.border_width = 10;
 }

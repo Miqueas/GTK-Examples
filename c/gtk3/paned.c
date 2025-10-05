@@ -4,33 +4,33 @@
 // presenting it's children in parallel with a thin draggable divider in the
 // middle
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Paned";
-const gchar *APP_TITLE = "GtkPaned";
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Paned";
+const static gchar* APP_TITLE = "GtkPaned";
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
-  g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
+  g_signal_connect(app, "startup", G_CALLBACK(on_app_startup), NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  if (window != NULL) gtk_window_present(window);
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window = gtk_application_window_new(GTK_APPLICATION(self));
-  GtkWidget *paned = gtk_paned_new(GTK_ORIENTATION_HORIZONTAL);
-  GtkWidget *leftLabel = gtk_label_new("Left Pane");
-  GtkWidget *rightLabel = gtk_label_new("Right Pane");
+static void on_app_startup(GApplication* self, gpointer data) {
+  GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
+  GtkWidget* paned = gtk_paned_new(GTK_ORIENTATION_HORIZONTAL);
+  GtkWidget* leftLabel = gtk_label_new("Left Pane");
+  GtkWidget* rightLabel = gtk_label_new("Right Pane");
 
   gtk_container_add(GTK_CONTAINER(window), paned);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);

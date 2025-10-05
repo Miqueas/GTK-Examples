@@ -1,55 +1,54 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
-void onButtonClicked(GtkButton *self, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
+static void on_button_clicked(GtkButton* self, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ButtonBox";
-const gchar *APP_TITLE = "GtkButtonBox";
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ButtonBox";
+const static gchar* APP_TITLE = "GtkButtonBox";
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
+  g_signal_connect(app, "startup", G_CALLBACK(on_app_startup), NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
-
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  if (window != NULL) gtk_window_present(window);
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
+static void on_app_startup(GApplication* self, gpointer data) {
   GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
-  GtkWidget* buttonBox = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-  GtkWidget* button1 = gtk_button_new_with_label("Button 1");
-  GtkWidget* button2 = gtk_button_new_with_label("Button 2");
-  GtkWidget* button3 = gtk_button_new_with_label("Button 3");
+  GtkWidget* button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+  GtkWidget* button_1 = gtk_button_new_with_label("Button 1");
+  GtkWidget* button_2 = gtk_button_new_with_label("Button 2");
+  GtkWidget* button_3 = gtk_button_new_with_label("Button 3");
 
-  gtk_container_add(GTK_CONTAINER(window), buttonBox);
+  gtk_container_add(GTK_CONTAINER(window), button_box);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
-  gtk_widget_set_halign(buttonBox, GTK_ALIGN_CENTER);
-  gtk_widget_set_valign(buttonBox, GTK_ALIGN_CENTER);
-  gtk_box_pack_start(GTK_BOX(buttonBox), button1, TRUE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(buttonBox), button2, TRUE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(buttonBox), button3, TRUE, TRUE, 0);
-  gtk_button_box_set_layout(GTK_BUTTON_BOX(buttonBox), GTK_BUTTONBOX_EXPAND);
-  gtk_widget_show_all(buttonBox);
+  gtk_widget_set_halign(button_box, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign(button_box, GTK_ALIGN_CENTER);
+  gtk_box_pack_start(GTK_BOX(button_box), button_1, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(button_box), button_2, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(button_box), button_3, TRUE, TRUE, 0);
+  gtk_button_box_set_layout(GTK_BUTTON_BOX(button_box), GTK_BUTTONBOX_EXPAND);
+  gtk_widget_show_all(button_box);
 
-  g_signal_connect(button1, "clicked", G_CALLBACK(onButtonClicked), NULL);
-  g_signal_connect(button2, "clicked", G_CALLBACK(onButtonClicked), NULL);
-  g_signal_connect(button3, "clicked", G_CALLBACK(onButtonClicked), NULL);
+  g_signal_connect(button_1, "clicked", G_CALLBACK(on_button_clicked), NULL);
+  g_signal_connect(button_2, "clicked", G_CALLBACK(on_button_clicked), NULL);
+  g_signal_connect(button_3, "clicked", G_CALLBACK(on_button_clicked), NULL);
 }
 
-void onButtonClicked(GtkButton *self, gpointer data) {
-  const gchar *label = gtk_button_get_label(self);
+static void on_button_clicked(GtkButton* self, gpointer data) {
+  const gchar* label = gtk_button_get_label(self);
   g_print("%s clicked\n", label);
 }

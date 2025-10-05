@@ -1,17 +1,17 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.MessageDialog";
-const string appTitle = "Gtk.MessageDialog";
+const string APP_ID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.MessageDialog";
+const string APP_TITLE = "Gtk.MessageDialog";
 const string titleText = "<span size='x-large' font-weight='bold'>Universe destruction</span>";
 const string summaryText = "Our universe has a lot of problems and the only way to fix it is destroying the entire universe and this important decision is now in your hands.";
 const string epilogText = "<span size='large' font-weight='bold'>Do you accept?</span>";
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, 0);
-  app.startup.connect(onAppStartup);
-  app.activate.connect(onAppActivate);
+  var app = new Gtk.Application(APP_ID, 0);
+  app.startup.connect(on_app_startup);
+  app.activate.connect(on_app_activate);
   return app.run(args);
 }
 
-void onAppActivate(Application self) {
+void on_app_activate(Application self) {
   var window = (self as Gtk.Application)?.get_active_window() as Gtk.MessageDialog;
   var response = window?.run();
   window?.destroy();
@@ -29,7 +29,7 @@ void onAppActivate(Application self) {
   }
 }
 
-void onAppStartup(Application self) {
+void on_app_startup(Application self) {
   var messageDialog = new Gtk.MessageDialog(
     null,
     Gtk.DialogFlags.MODAL,
@@ -38,7 +38,7 @@ void onAppStartup(Application self) {
     null
   );
 
-  messageDialog.title = appTitle;
+  messageDialog.title = APP_TITLE;
   messageDialog.text = titleText;
   messageDialog.use_markup = true;
   messageDialog.secondary_text = summaryText;

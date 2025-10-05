@@ -1,36 +1,36 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.RadioButton";
-const gchar *APP_TITLE = "GtkRadioButton";
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.RadioButton";
+const static gchar* APP_TITLE = "GtkRadioButton";
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
-  g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
+  g_signal_connect(app, "startup", G_CALLBACK(on_app_startup), NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  if (window != NULL) gtk_window_present(window);
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window = gtk_application_window_new(GTK_APPLICATION(self));
-  GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-  GtkWidget *radioButton1 = gtk_radio_button_new_with_label(NULL, "Option 1");
-  GtkWidget *radioButton2 = gtk_radio_button_new_with_label_from_widget(
+static void on_app_startup(GApplication* self, gpointer data) {
+  GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
+  GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+  GtkWidget* radioButton1 = gtk_radio_button_new_with_label(NULL, "Option 1");
+  GtkWidget* radioButton2 = gtk_radio_button_new_with_label_from_widget(
     GTK_RADIO_BUTTON(radioButton1),
     "Option 2"
   );
-  GtkWidget *radioButton3 = gtk_radio_button_new_with_label_from_widget(
+  GtkWidget* radioButton3 = gtk_radio_button_new_with_label_from_widget(
     GTK_RADIO_BUTTON(radioButton1),
     "Option 3"
   );

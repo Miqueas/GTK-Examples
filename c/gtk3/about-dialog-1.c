@@ -1,20 +1,20 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog";
-const gchar *APP_TITLE = "GtkAboutDialog";
-const gchar *AUTHORS[1] = { "Josué Martínez\0" };
-const gchar *ARTISTS[1] = { "Josué Martínez\0" };
-const gchar *DOCUMENTERS[1] = { "Josué Martínez\0" };
-const gchar *TRANSLATOR_CREDITS = "Josué Martínez\0";
-const gchar *COMMENTS = "GTK+ 3.0 AboutDialog Example";
-const gchar *COPYRIGHT = "Copyright © 2021-2025 Josué Martínez\0";
-const gchar *VERSION = "0.1.0";
-const gchar *WEBSITE = "https://github.com/Miqueas/GTK-Examples\0";
-const gchar *WEBSITE_TEXT = "GitHub Repository\0";
-const gchar *LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog1";
+const static gchar* APP_TITLE = "GtkAboutDialog";
+const static gchar* AUTHORS[1] = { "Josué Martínez\0" };
+const static gchar* ARTISTS[1] = { "Josué Martínez\0" };
+const static gchar* DOCUMENTERS[1] = { "Josué Martínez\0" };
+const static gchar* TRANSLATOR_CREDITS = "Josué Martínez\0";
+const static gchar* COMMENTS = "GTK+ 3.0 AboutDialog Example";
+const static gchar* COPYRIGHT = "Copyright © 2021-2025 Josué Martínez\0";
+const static gchar* VERSION = "0.1.0";
+const static gchar* WEBSITE = "https://github.com/Miqueas/GTK-Examples\0";
+const static gchar* WEBSITE_TEXT = "GitHub Repository\0";
+const static gchar* LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "\n"
 "  This software is provided 'as-is', without any express or implied\n"
 "  warranty.  In no event will the authors be held liable for any damages\n"
@@ -33,38 +33,38 @@ const gchar *LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "  3. This notice may not be removed or altered from any source distribution.\0"
 ;
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
+  g_signal_connect(app, "startup", G_CALLBACK(on_app_startup), NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  g_signal_connect(app, "startup", G_CALLBACK(onAppStartup), NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
-
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+
+  if (window == NULL) {
+    g_printerr("No active window found.\n");
+    return;
+  }
+
   gtk_dialog_run(GTK_DIALOG(window));
   gtk_widget_destroy(GTK_WIDGET(window));
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *dialog;
-
-  dialog = gtk_about_dialog_new();
+static void on_app_startup(GApplication* self, gpointer data) {
+  GtkWidget* dialog = gtk_about_dialog_new();
 
   gtk_window_set_application(GTK_WINDOW(dialog), GTK_APPLICATION(self));
   gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
   gtk_about_dialog_set_artists(GTK_ABOUT_DIALOG(dialog), ARTISTS);
   gtk_about_dialog_set_authors(GTK_ABOUT_DIALOG(dialog), AUTHORS);
   gtk_about_dialog_set_documenters(GTK_ABOUT_DIALOG(dialog), DOCUMENTERS);
-  gtk_about_dialog_set_translator_credits(
-    GTK_ABOUT_DIALOG(dialog),
-    TRANSLATOR_CREDITS
-  );
+  gtk_about_dialog_set_translator_credits(GTK_ABOUT_DIALOG(dialog), TRANSLATOR_CREDITS);
   gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog), APP_TITLE);
   gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), COMMENTS);
   gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog), COPYRIGHT);

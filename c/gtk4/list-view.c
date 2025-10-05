@@ -10,12 +10,12 @@ static void on_activate(GtkListView* self, guint position, gpointer data);
 const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.ListView";
 const gchar* APP_TITLE = "GtkListView";
 
-int main(int argc, char** argv) {
+gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);
   g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
   g_signal_connect(app, "startup", G_CALLBACK(on_app_startup),  NULL);
 
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
 
 static void on_app_activate(GApplication* self, gpointer data) {
   GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+  if (window != NULL) gtk_window_present(window);
 }
 
 static void on_app_startup(GApplication* self, gpointer data) {

@@ -1,30 +1,30 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Grid1";
-const gchar *APP_TITLE = "GtkGrid";
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Grid1";
+const static gchar* APP_TITLE = "GtkGrid";
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
 
-  g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
+  g_signal_connect(app, "startup",  G_CALLBACK(on_app_startup),  NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  if (window != NULL) gtk_window_present(window);
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window, *grid;
+static void on_app_startup(GApplication* self, gpointer data) {
+  GtkWidget* window, *grid;
 
   window = gtk_application_window_new(GTK_APPLICATION(self));
   grid = gtk_grid_new();
@@ -33,9 +33,9 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
-  for (int i = 0; i < 3; ++i) {
-    for (int j = 0; j < 3; ++j) {
-      char str[20];
+  for (gint i = 0; i < 3; ++i) {
+    for (gint j = 0; j < 3; ++j) {
+      gchar str[20];
       sprintf(str, "Top: %d. Left: %d", i, j);
       gtk_grid_attach(GTK_GRID(grid), gtk_label_new(str), j, i, 1, 1);
     }

@@ -1,42 +1,39 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
-void onInfoBarResponse(GtkInfoBar *self, int responseID, gpointer data);
-void createInfoBar(GtkButton *self, gpointer data);
-GtkMessageType stringToGtkMessageType(const gchar *label);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
+void on_info_bar_response(GtkInfoBar* self, gint responseID, gpointer data);
+void build_info_bar(GtkButton* self, gpointer data);
+GtkMessageType string_to_gtk_message_type(const gchar* label);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.InfoBar";
-const gchar *APP_TITLE = "GtkInfoBar";
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.InfoBar";
+const static gchar* APP_TITLE = "GtkInfoBar";
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
+  g_signal_connect(app, "startup",  G_CALLBACK(on_app_startup),  NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
-
-  int result = g_application_run(G_APPLICATION(app), argc, argv);
+  gint result = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return result;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  if (window != NULL) gtk_window_present(window);
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window, *box, *grid, *infoButton, *warningButton, *questionButton, *errorButton, *otherButton;
-
-  window = gtk_application_window_new(GTK_APPLICATION(self));
-  box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-  grid = gtk_grid_new();
-  infoButton = gtk_button_new_with_label("Info");
-  warningButton = gtk_button_new_with_label("Warning");
-  questionButton = gtk_button_new_with_label("Question");
-  errorButton = gtk_button_new_with_label("Error");
-  otherButton = gtk_button_new_with_label("Other");
+static void on_app_startup(GApplication* self, gpointer data) {
+  GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
+  GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+  GtkWidget* grid = gtk_grid_new();
+  GtkWidget* infoButton = gtk_button_new_with_label("Info");
+  GtkWidget* warningButton = gtk_button_new_with_label("Warning");
+  GtkWidget* questionButton = gtk_button_new_with_label("Question");
+  GtkWidget* errorButton = gtk_button_new_with_label("Error");
+  GtkWidget* otherButton = gtk_button_new_with_label("Other");
 
   gtk_container_add(GTK_CONTAINER(window), box);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
@@ -59,48 +56,42 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_grid_attach(GTK_GRID(grid), otherButton, 0, 2, 2, 1);
   gtk_widget_show_all(grid);
 
-  g_signal_connect(infoButton, "clicked", G_CALLBACK(createInfoBar), box);
-  g_signal_connect(warningButton, "clicked", G_CALLBACK(createInfoBar), box);
-  g_signal_connect(questionButton, "clicked", G_CALLBACK(createInfoBar), box);
-  g_signal_connect(errorButton, "clicked", G_CALLBACK(createInfoBar), box);
-  g_signal_connect(otherButton, "clicked", G_CALLBACK(createInfoBar), box);
+  g_signal_connect(infoButton, "clicked", G_CALLBACK(build_info_bar), box);
+  g_signal_connect(warningButton, "clicked", G_CALLBACK(build_info_bar), box);
+  g_signal_connect(questionButton, "clicked", G_CALLBACK(build_info_bar), box);
+  g_signal_connect(errorButton, "clicked", G_CALLBACK(build_info_bar), box);
+  g_signal_connect(otherButton, "clicked", G_CALLBACK(build_info_bar), box);
 }
 
-void createInfoBar(GtkButton *self, gpointer data) {
-  const gchar *buttonText = gtk_button_get_label(self);
-  GtkWidget *infoBar, *infoBarContentBox;
+void build_info_bar(GtkButton* self, gpointer data) {
+  const gchar* buttonText = gtk_button_get_label(self);
+  GtkWidget* info_bar = gtk_info_bar_new();
+  GtkWidget* info_bar_content_box = gtk_info_bar_get_content_area(GTK_INFO_BAR(info_bar));
 
-  infoBar = gtk_info_bar_new();
-  infoBarContentBox = gtk_info_bar_get_content_area(GTK_INFO_BAR(infoBar));
+  gtk_info_bar_set_show_close_button(GTK_INFO_BAR(info_bar), TRUE);
+  gtk_info_bar_set_message_type(GTK_INFO_BAR(info_bar), string_to_gtk_message_type(buttonText));
+  g_signal_connect(info_bar, "response", G_CALLBACK(on_info_bar_response), data);
 
-  gtk_info_bar_set_show_close_button(GTK_INFO_BAR(infoBar), TRUE);
-  gtk_info_bar_set_message_type(GTK_INFO_BAR(infoBar), stringToGtkMessageType(buttonText));
-  g_signal_connect(infoBar, "response", G_CALLBACK(onInfoBarResponse), data);
+  gtk_box_pack_start(GTK_BOX(info_bar_content_box), gtk_label_new(buttonText), FALSE, TRUE, 0);
 
-  gtk_box_pack_start(GTK_BOX(infoBarContentBox), gtk_label_new(buttonText), FALSE, TRUE, 0);
-
-  gtk_box_pack_start(GTK_BOX(data), infoBar, FALSE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(data), info_bar, FALSE, TRUE, 0);
   gtk_widget_show_all(GTK_WIDGET(data));
 }
 
-void onInfoBarResponse(GtkInfoBar *self, int responseID, gpointer data) {
+void on_info_bar_response(GtkInfoBar* self, gint responseID, gpointer data) {
   gtk_container_remove(GTK_CONTAINER(data), GTK_WIDGET(self));
   gtk_widget_destroy(GTK_WIDGET(self));
 }
 
-GtkMessageType stringToGtkMessageType(const gchar *label) {
-  GtkMessageType result;
-  gchar *string = g_ascii_strup(label, strlen(label));
+GtkMessageType string_to_gtk_message_type(const gchar* label) {
+  GtkMessageType result = 0;
+  gchar* string = g_utf8_strup(label, g_utf8_strlen(label, 16));
 
-  if (g_str_equal("INFO", string))
-    result = GTK_MESSAGE_INFO;
-  else if (g_str_equal("WARNING", string))
-    result = GTK_MESSAGE_WARNING;
-  else if (g_str_equal("QUESTION", string))
-    result = GTK_MESSAGE_QUESTION;
-  else if (g_str_equal("ERROR", string))
-    result = GTK_MESSAGE_ERROR;
-  else result = GTK_MESSAGE_OTHER;
+  if (g_str_equal("INFO",     string)) result = GTK_MESSAGE_INFO;
+  if (g_str_equal("WARNING",  string)) result = GTK_MESSAGE_WARNING;
+  if (g_str_equal("QUESTION", string)) result = GTK_MESSAGE_QUESTION;
+  if (g_str_equal("ERROR",    string)) result = GTK_MESSAGE_ERROR;
+  if (result == 0)                     result = GTK_MESSAGE_OTHER;
 
   return result;
 }

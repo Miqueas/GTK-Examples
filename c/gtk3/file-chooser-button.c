@@ -1,37 +1,35 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
-void onFileSet(GtkFileChooserButton *self, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
+void onFileSet(GtkFileChooserButton* self, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FileChooserButton";
-const gchar *APP_TITLE = "GtkFileChooserButton";
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FileChooserButton";
+const static gchar* APP_TITLE = "GtkFileChooserButton";
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
 
-  g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
+  g_signal_connect(app, "startup",  G_CALLBACK(on_app_startup),  NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  int res = g_application_run(G_APPLICATION(app), argc, argv);
+  gint res = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return res;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  if (window != NULL) gtk_window_present(window);
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
-  GtkWidget *window, *box, *hintText, *button, *outputText;
-
-  window = gtk_application_window_new(GTK_APPLICATION(self));
-  box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-  hintText = gtk_label_new("Open a file");
-  button = gtk_file_chooser_button_new("", GTK_FILE_CHOOSER_ACTION_OPEN);
-  outputText = gtk_label_new("");
+static void on_app_startup(GApplication* self, gpointer data) {
+  GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
+  GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+  GtkWidget* hintText = gtk_label_new("Open a file");
+  GtkWidget* button = gtk_file_chooser_button_new("", GTK_FILE_CHOOSER_ACTION_OPEN);
+  GtkWidget* outputText = gtk_label_new("");
 
   gtk_container_add(GTK_CONTAINER(window), box);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
@@ -51,7 +49,7 @@ void onAppStartup(GApplication *self, gpointer data) {
   gtk_label_set_line_wrap(GTK_LABEL(outputText), TRUE);
 }
 
-void onFileSet(GtkFileChooserButton *self, gpointer data) {
-  gchar *filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(self));
+void onFileSet(GtkFileChooserButton* self, gpointer data) {
+  gchar* filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(self));
   g_object_set(data, "label", g_strconcat("Selected file: ", filename, NULL), NULL);
 }

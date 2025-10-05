@@ -1,4 +1,4 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Gtk3.Template";
+const string APP_ID = "io.github.Miqueas.GTK-Examples.Gtk3.Template";
 const string[] greetings = { "Hello!", "¡Hola!", "Bonjour!", "Ciao!", "こんにちは！" };
 
 int main(string[] args) {
@@ -8,7 +8,7 @@ int main(string[] args) {
 public class App : Gtk.Application {
   public App() {
     Object(
-      application_id: appID,
+      application_id: APP_ID,
       flags: 0,
       resource_base_path: "/io/github/Miqueas/GTK-Examples"
     );

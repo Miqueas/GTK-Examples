@@ -1,48 +1,39 @@
 #include <gtk/gtk.h>
 
-void onAppActivate(GApplication *self, gpointer data);
-void onAppStartup(GApplication *self, gpointer data);
+static void on_app_activate(GApplication* self, gpointer data);
+static void on_app_startup(GApplication* self, gpointer data);
 
-const gchar *APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.EntryCompletion";
-const gchar *APP_TITLE = "GtkEntryCompletion";
-const char *items[6] = { "GNOME", "C", "GTK", "Example", "Hello, world!" };
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.EntryCompletion";
+const static gchar* APP_TITLE = "GtkEntryCompletion";
+const gchar* items[6] = { "GNOME", "C", "GTK", "Example", "Hello, world!" };
 
-int main(int argc, char **argv) {
-  GtkApplication *app = gtk_application_new(APP_ID, 0);
+gint main(gint argc, gchar** argv) {
+  GtkApplication* app = gtk_application_new(APP_ID, 0);
 
-  g_signal_connect(app, "startup",  G_CALLBACK(onAppStartup),  NULL);
-  g_signal_connect(app, "activate", G_CALLBACK(onAppActivate), NULL);
+  g_signal_connect(app, "startup",  G_CALLBACK(on_app_startup),  NULL);
+  g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 
-  int res = g_application_run(G_APPLICATION(app), argc, argv);
+  gint res = g_application_run(G_APPLICATION(app), argc, argv);
   g_object_unref(app);
 
   return res;
 }
 
-void onAppActivate(GApplication *self, gpointer data) {
-  GtkWindow *window = gtk_application_get_active_window(GTK_APPLICATION(self));
-  gtk_window_present(window);
+static void on_app_activate(GApplication* self, gpointer data) {
+  GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
+  if (window != NULL) gtk_window_present(window);
 }
 
-void onAppStartup(GApplication *self, gpointer data) {
-  GtkListStore *model;
+static void on_app_startup(GApplication* self, gpointer data) {
+  GtkListStore* model = gtk_list_store_new(1, G_TYPE_STRING);
+  GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
+  GtkWidget* entry = gtk_entry_new();
+  GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+  GtkWidget* hintLabel = gtk_label_new("Try typing \"gnome\" or \"hello\"");
+  GtkEntryCompletion* completion = gtk_entry_completion_new();
   GtkTreeIter iter;
-  GtkWidget *window, *entry, *box, *hintLabel;
-  GtkEntryCompletion *completion;
 
-  model = gtk_list_store_new(1, G_TYPE_STRING);
-  window = gtk_application_window_new(GTK_APPLICATION(self));
-  entry = gtk_entry_new();
-  box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-  hintLabel = gtk_label_new("Try typing \"gnome\" or \"hello\"");
-  completion = gtk_entry_completion_new();
-
-  GtkWidget* widgets[3] = { entry, box, hintLabel };
-
-  for (int i = 0; i < 3; i++)
-    gtk_widget_set_visible(widgets[i], TRUE);
-
-  for (int i = 0; i < 6; i++) {
+  for (gint i = 0; i < 6; i++) {
     gtk_list_store_append(model, &iter);
     gtk_list_store_set(model, &iter, 0, items[i], -1);
   }
@@ -53,6 +44,7 @@ void onAppStartup(GApplication *self, gpointer data) {
 
   gtk_entry_set_completion(GTK_ENTRY(entry), completion);
 
+  gtk_widget_show_all(box);
   gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
   gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
   gtk_box_pack_start(GTK_BOX(box), hintLabel, FALSE, TRUE, 0);

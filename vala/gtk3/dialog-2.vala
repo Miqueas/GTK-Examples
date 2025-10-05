@@ -1,17 +1,17 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Dialog2";
-const string appTitle = "Gtk.Dialog";
+const string APP_ID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Dialog2";
+const string APP_TITLE = "Gtk.Dialog";
 const string titleText = "<span size='x-large' font-weight='bold'>Universe destruction</span>";
 const string epilogText = "<span size='large' font-weight='bold'>Do you accept?</span>";
 const string summaryText = "Our universe has a lot of problems and the only way to fix it is by destroying it entirely and this important decision is now in your hands.";
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, 0);
-  app.startup.connect(onAppStartup);
-  app.activate.connect(onAppActivate);
+  var app = new Gtk.Application(APP_ID, 0);
+  app.startup.connect(on_app_startup);
+  app.activate.connect(on_app_activate);
   return app.run(args);
 }
 
-void onAppActivate(Application self) {
+void on_app_activate(Application self) {
   var window = (self as Gtk.Application)?.get_active_window() as Gtk.Dialog;
   var response = window?.run();
   window?.destroy();
@@ -29,7 +29,7 @@ void onAppActivate(Application self) {
   }
 }
 
-void onAppStartup(Application self) {
+void on_app_startup(Application self) {
   var window = Object.new(typeof (Gtk.Dialog), use_header_bar: true);
   var dialog = window as Gtk.Dialog;
   unowned var headerBar = dialog?.get_header_bar();
@@ -38,14 +38,14 @@ void onAppStartup(Application self) {
   var epilogLabel = new Gtk.Label(epilogText);
   unowned var contentBox = dialog?.get_content_area();
 
-  dialog.title = appTitle;
+  dialog.title = APP_TITLE;
   dialog.application = self as Gtk.Application;
   dialog.border_width = 10;
   dialog.default_width = 400;
   dialog.add_button("Yes 👍", Gtk.ResponseType.OK);
   dialog.add_button("No 🤚", Gtk.ResponseType.CANCEL);
 
-  headerBar.title = appTitle;
+  headerBar.title = APP_TITLE;
   headerBar.subtitle = "Example 2";
 
   titleLabel.use_markup = true;

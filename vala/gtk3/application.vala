@@ -1,16 +1,16 @@
-const string appID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Application";
+const string APP_ID = "io.github.Miqueas.GTK-Examples.Vala.Gtk3.Application";
 
 int main(string[] args) {
-  var app = new Gtk.Application(appID, 0);
-  app.startup.connect(onAppStartup);
-  app.activate.connect(onAppActivate);
+  var app = new Gtk.Application(APP_ID, 0);
+  app.startup.connect(on_app_startup);
+  app.activate.connect(on_app_activate);
   return app.run(args);
 }
 
-void onAppActivate() {
+void on_app_activate() {
   print("Hello there!\n");
 }
 
-void onAppStartup() {
+void on_app_startup() {
   print("Initializing... Done!\n");
 }
