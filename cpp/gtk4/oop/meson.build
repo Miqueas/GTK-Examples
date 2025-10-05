@@ -4,6 +4,7 @@ src = [
   'application-window',
   'application',
   'button',
+  'column-view',
 ]
 
 foreach name : src
