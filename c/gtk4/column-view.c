@@ -58,15 +58,12 @@ static void on_app_startup(GApplication* self, gpointer data) {
   gtk_column_view_append_column(GTK_COLUMN_VIEW(column_view), value_column);
 
   gtk_column_view_column_set_expand(key_column, TRUE);
-  
   gtk_column_view_column_set_expand(value_column, TRUE);
 }
 
 static void on_factory_setup(GtkListItemFactory* self, GObject* object, gpointer data) {
 	GtkWidget* label = gtk_label_new("");
-
   gtk_widget_set_halign(label, GTK_ALIGN_START);
-
 	gtk_list_item_set_child(GTK_LIST_ITEM(object), label);
 }
 
