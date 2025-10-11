@@ -94,6 +94,7 @@ GtkTreeModel* create_model() {
       -1
     );
 
+    if (child == NULL) goto NEXT;
     while (child->enabled) {
       GtkTreeIter child_iter;
 
@@ -107,7 +108,7 @@ GtkTreeModel* create_model() {
       child++;
     }
 
-    data++;
+    NEXT: data++;
   }
 
   return GTK_TREE_MODEL(model);
