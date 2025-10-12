@@ -8,7 +8,7 @@
 
 A set of diverse GTK examples written in different programming languages (currently C, Lua & Vala).
 
-![GTK Examples Banner](banner.png)
+![GTK Examples Banner](new-banner.png)
 
 ## Building and running
 
