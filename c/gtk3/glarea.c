@@ -1,31 +1,33 @@
-/*****************************************************************************
- * DashGL.com GTK GL-Area                                                    *
- * This file is in the public domain                                         *
- * Contributors: Benjamin Collins                                            *
- *****************************************************************************/
-
-#include <gtk/gtk.h>
-#include <epoxy/gl.h>
+#include "glarea.h"
 
 static void on_app_startup(GApplication* self, gpointer data);
 static void on_app_activate(GApplication* self, gpointer data);
-void on_gl_area_realize(GtkGLArea* self, gint width, gint height, gpointer data);
-gboolean on_gl_area_render(GtkGLArea* self, GdkGLContext* context, gpointer data);
+static void on_gl_area_realize(GtkGLArea* self, gpointer data);
+static gboolean on_gl_area_render(GtkGLArea* self, GdkGLContext* context, gpointer data);
+static gboolean gl_area_tick_callback(GtkWidget* self, GdkFrameClock* frame_clock, gpointer data);
+static void init_shaders(AppContext* ctx);
+static void init_buffers(AppContext* ctx);
+static GLuint compile_shader(GLenum type, const gchar* source);
 
 const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.GLArea";
 const static gchar* APP_TITLE = "GtkGLArea";
-const static gchar* VS_SOURCE = "#version 100\n"
-"attribute vec2 coord2d;\n"
-"void main (void) {\n"
-"  gl_Position = vec4(coord2d, 0.0, 1.0);\n"
-"}";
-const static gchar* FS_SOURCE = "#version 100\n"
-"void main (void) {\n"
-"  gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);\n"
+const static gchar* FRAGMENT_SHADER = "#version 100\n"
+"precision mediump float;\n"
+"varying vec3 color;\n"
+"void main() {\n"
+"  gl_FragColor = vec4(color, 1.0);\n"
 "}";
 
-static GLuint program, vao, vbo;
-static GLint attribute_coord_2d;
+const static gchar* VERTEX_SHADER = "#version 100\n"
+"precision mediump float;\n"
+"attribute vec3 pos;\n"
+"attribute vec3 vertex_color;\n"
+"uniform mat4 transform;\n"
+"varying vec3 color;\n"
+"void main() {\n"
+"  gl_Position = transform * vec4(pos, 1.0);\n"
+"  color = vertex_color;\n"
+"}";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);
@@ -45,6 +47,7 @@ static void on_app_activate(GApplication* self, gpointer data) {
 }
 
 static void on_app_startup(GApplication* self, gpointer data) {
+  AppContext* context = g_new0(AppContext, 1);
   GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
   GtkWidget* gl_area = gtk_gl_area_new();
 
@@ -55,21 +58,20 @@ static void on_app_startup(GApplication* self, gpointer data) {
   gtk_widget_show(gl_area);
   gtk_widget_set_vexpand(gl_area, TRUE);
   gtk_widget_set_hexpand(gl_area, TRUE);
-  g_signal_connect(gl_area, "realize", G_CALLBACK(on_gl_area_realize), NULL);
-  g_signal_connect(gl_area, "render", G_CALLBACK(on_gl_area_render), NULL);
+  gtk_widget_add_tick_callback(gl_area, gl_area_tick_callback, NULL, NULL);
+  gtk_gl_area_set_has_depth_buffer(GTK_GL_AREA(gl_area), TRUE);
+  g_signal_connect(gl_area, "render", G_CALLBACK(on_gl_area_render), context);
+  g_signal_connect(gl_area, "realize", G_CALLBACK(on_gl_area_realize), context);
 }
 
-void on_gl_area_realize(GtkGLArea* self, gint width, gint height, gpointer data) {
-  const GLfloat triangle_vertices[] = { 0.0, 0.8, -0.8, -0.8, 0.8, -0.8 };
-  const gchar* attribute_name = "coord2d";
-  GLint compile_ok = GL_FALSE;
-  GLint link_ok = GL_FALSE;
+static void on_gl_area_realize(GtkGLArea* self, gpointer data) {
+  AppContext* context = (AppContext*) data;
 
   g_print("[GtkGLArea::realize] Called\n");
   gtk_gl_area_make_current(self);
   
   if (gtk_gl_area_get_error (self) != NULL) {
-    g_printerr("[GtkGLArea::realize] Unknown error\n");
+    g_critical("[GtkGLArea::realize] Unknown error\n");
     return;
   }
 
@@ -79,99 +81,182 @@ void on_gl_area_realize(GtkGLArea* self, gint width, gint height, gpointer data)
   g_print("[GtkGLArea::realize] Renderer: %s\n", renderer);
   g_print("[GtkGLArea::realize] Version: %s\n", version);
 
-  gtk_gl_area_set_has_depth_buffer(self, TRUE);
-  
-  glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+  glEnable(GL_DEPTH_TEST);
 
-  glGenVertexArrays(1, &vao);
-  glBindVertexArray(vao);
+  init_shaders(context);
+  init_buffers(context);
 
-  glGenBuffers(1, &vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_vertices), triangle_vertices, GL_STATIC_DRAW);
-  
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-  glEnableVertexAttribArray(0);
-  glDisableVertexAttribArray(0);
+  glBindVertexArray(0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-  GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-  GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-
-  glShaderSource(fs, 1, &FS_SOURCE, NULL);
-  glCompileShader(fs);
-  glGetShaderiv(fs, GL_COMPILE_STATUS, &compile_ok);
-
-  if(!compile_ok) {
-    GLint logLength;
-    glGetShaderiv(fs, GL_INFO_LOG_LENGTH, &logLength);
-
-    if (logLength > 0) {
-      gchar* log = g_malloc(logLength);
-      glGetShaderInfoLog(fs, logLength, NULL, log);
-      g_printerr("[GtkGLArea::realize] Fragment Shader error: %s\n", log);
-      g_free(log);
-    }
-
-    return;
-  }
-
-  glShaderSource(vs, 1, &VS_SOURCE, NULL);
-  glCompileShader(vs);
-  glGetShaderiv(vs, GL_COMPILE_STATUS, &compile_ok);
-
-  if(!compile_ok) {
-    GLint logLength;
-    glGetShaderiv(vs, GL_INFO_LOG_LENGTH, &logLength);
-
-    if (logLength > 0) {
-      gchar* log = g_malloc(logLength);
-      glGetShaderInfoLog(vs, logLength, NULL, log);
-      g_printerr("[GtkGLArea::realize] Vertex Shader error: %s\n", log);
-      g_free(log);
-    }
-
-    return;
-  }
-
-  program = glCreateProgram();
-  glAttachShader(program, vs);
-  glAttachShader(program, fs);
-  glLinkProgram(program);
-  glGetProgramiv(program, GL_LINK_STATUS, &link_ok);
-
-  if(!link_ok) {
-    GLint logLength;
-    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
-
-    if (logLength > 0) {
-      gchar* log = g_malloc(logLength);
-      glGetProgramInfoLog(program, logLength, NULL, log);
-      g_printerr("[GtkGLArea::realize] Program link error: %s\n", log);
-      g_free(log);
-    }
-
-    return;
-  }
-
-  attribute_coord_2d = glGetAttribLocation(program, attribute_name);
-
-  if(attribute_coord_2d == -1) {
-    g_printerr("[GtkGLArea::realize] Could not bind attribute %s\n", attribute_name);
-    return;
-  }
+  context->start_time = g_get_monotonic_time();
 }
 
-gboolean on_gl_area_render(GtkGLArea* self, GdkGLContext* context, gpointer data) {
-  g_print("[GtkGLArea::render] Called\n");
-  
+static gboolean on_gl_area_render(GtkGLArea* self, GdkGLContext* context, gpointer data) {
+  AppContext* ctx = (AppContext*) data;
+
+  glClearColor(0.1, 0.12, 0.2, 1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glUseProgram(program);
-  glBindVertexArray(vao);
-  glEnableVertexAttribArray(attribute_coord_2d);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glVertexAttribPointer(attribute_coord_2d, 2, GL_FLOAT, GL_FALSE, 0, 0);
-  glDrawArrays(GL_TRIANGLES, 0, 3);
-  glDisableVertexAttribArray(attribute_coord_2d);
+  glUseProgram(ctx->program);
+
+  gint64 now = g_get_monotonic_time();
+  gdouble time_seconds = (now - ctx->start_time) / 1000000.0;
+  gfloat rotation = fmod(time_seconds, 10.0) / 10.0 * 2.0 * G_PI;
+
+  mat4f_t transform = mat4f_identity;
+  transform = mat4f_multiply(transform, mat4f_perspective());
+  transform = mat4f_multiply(transform, mat4f_translation(0, 0, -3));
+  transform = mat4f_multiply(transform, mat4f_rotate_x(0.15 * G_PI));
+  transform = mat4f_multiply(transform, mat4f_rotate_y(rotation));
+
+  glUniformMatrix4fv(ctx->uniform_transform, 1, GL_FALSE, mat4f_gl(&transform));
+  glBindVertexArray(ctx->vao);
+  glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, NULL);
 
   return TRUE;
+}
+
+static gboolean gl_area_tick_callback(GtkWidget* self, GdkFrameClock* frame_clock, gpointer data) {
+  gtk_widget_queue_draw(self);
+  return G_SOURCE_CONTINUE;
+}
+
+static void init_shaders(AppContext* ctx) {
+  GLuint vertex_shader = compile_shader(GL_VERTEX_SHADER, VERTEX_SHADER);
+  GLuint fragment_shader = compile_shader(GL_FRAGMENT_SHADER, FRAGMENT_SHADER);
+
+  if (vertex_shader == 0 || fragment_shader == 0) {
+    g_critical("[GtkGLArea::realize] Shader compilation failed\n");
+    return;
+  }
+
+  ctx->program = glCreateProgram();
+  glAttachShader(ctx->program, vertex_shader);
+  glAttachShader(ctx->program, fragment_shader);
+  
+  // Bind attribute locations before linking (required for GLSL 100)
+  glBindAttribLocation(ctx->program, 0, "pos");
+  glBindAttribLocation(ctx->program, 1, "vertex_color");
+  
+  glLinkProgram(ctx->program);
+
+  GLint status = GL_FALSE;
+  glGetProgramiv(ctx->program, GL_LINK_STATUS, &status);
+
+  if (!status) {
+    GLint log_length;
+    glGetProgramiv(ctx->program, GL_INFO_LOG_LENGTH, &log_length);
+
+    if (log_length > 0) {
+      gchar* log = g_malloc(log_length);
+      glGetProgramInfoLog(ctx->program, log_length, NULL, log);
+      g_critical("[GtkGLArea::realize] Link Program error: %s\n", log);
+      g_free(log);
+    }
+
+    return;
+  }
+
+  glDeleteShader(vertex_shader);
+  glDeleteShader(fragment_shader);
+
+  ctx->uniform_transform = glGetUniformLocation(ctx->program, "transform");
+}
+
+static void init_buffers(AppContext* ctx) {
+  const GLuint vertices_index = 0;
+  const GLuint colors_index = 1; 
+  GLfloat vertices[] = {
+    // Front
+     0.5,  0.5,  0.5,
+    -0.5,  0.5,  0.5,
+    -0.5, -0.5,  0.5,
+     0.5, -0.5,  0.5,
+    // Back
+     0.5,  0.5, -0.5,
+    -0.5,  0.5, -0.5,
+    -0.5, -0.5, -0.5,
+     0.5, -0.5, -0.5,
+  };
+
+  GLfloat vertex_colors[] = {
+    1.0, 0.4, 0.6,
+    1.0, 0.9, 0.2,
+    0.7, 0.3, 0.8,
+    0.5, 0.3, 1.0,
+
+    0.2, 0.6, 1.0,
+    0.6, 1.0, 0.4,
+    0.6, 0.8, 0.8,
+    0.4, 0.8, 0.8,
+  };
+
+  GLushort indices[] = {
+    // Front
+    0, 1, 2,
+    2, 3, 0,
+    // Right
+    0, 3, 7,
+    7, 4, 0,
+    // Bottom
+    2, 6, 7,
+    7, 3, 2,
+    // Left
+    1, 5, 6,
+    6, 2, 1,
+    // Back
+    4, 7, 6,
+    6, 5, 4,
+    // Top
+    5, 1, 0,
+    0, 4, 5,
+  };
+
+  glGenVertexArrays(1, &ctx->vao);
+  glBindVertexArray(ctx->vao);
+
+  GLuint ebo;
+  glGenBuffers(1, &ebo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+  GLuint vertices_vbo;
+  glGenBuffers(1, &vertices_vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vertices_vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+  glVertexAttribPointer(vertices_index, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+  glEnableVertexAttribArray(vertices_index);
+
+  GLuint colors_vbo;
+  glGenBuffers(1, &colors_vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_colors), vertex_colors, GL_STATIC_DRAW);
+  glVertexAttribPointer(colors_index, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+  glEnableVertexAttribArray(colors_index);
+}
+
+static GLuint compile_shader(GLenum type, const gchar* source) {
+  GLuint shader = glCreateShader(type);
+  glShaderSource(shader, 1, &source, NULL);
+  glCompileShader(shader);
+
+  GLint status = GL_FALSE;
+  glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+
+  if (!status) {
+    GLint log_length;
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
+
+    if (log_length > 0) {
+      gchar* log = g_malloc(log_length);
+      glGetShaderInfoLog(shader, log_length, NULL, log);
+      g_critical("[GtkGLArea::realize] Compile Shader error: %s\n", log);
+      g_free(log);
+    }
+
+    return 0;
+  }
+
+  return shader;
 }
