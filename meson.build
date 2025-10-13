@@ -4,6 +4,16 @@ project('GTK-Examples', [ 'c', 'vala', 'cpp' ],
   meson_version: '>= 0.56.0',
 )
 
+m = dependency('m',
+  required: false,
+  not_found_message: 'math library not found, trying to find it manually',
+)
+
+if not m.found()
+  cc = meson.get_compiler('c')
+  m = cc.find_library('m', required: true)
+endif
+
 gtk3 = dependency('gtk+-3.0', required: true)
 gtk4 = dependency('gtk4', required: true)
 epoxy = dependency('epoxy', required: true)
