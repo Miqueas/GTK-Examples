@@ -1,5 +1,4 @@
 #include <gtkmm.h>
-#include <iostream>
 
 const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.ActionBar";
 const Glib::ustring APP_TITLE = "Gtk::ActionBar";

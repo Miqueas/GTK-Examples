@@ -10,5 +10,6 @@ foreach name : src
   executable(name, name + '.cpp',
     dependencies: gtkmm3,
     cpp_args: [ '-std=c++23' ],
+    win_subsystem: 'windows'
   )
 endforeach

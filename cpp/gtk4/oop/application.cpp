@@ -1,6 +1,5 @@
 #include <print>
 #include <gtkmm.h>
-#include <iostream>
 
 static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.Application";
 

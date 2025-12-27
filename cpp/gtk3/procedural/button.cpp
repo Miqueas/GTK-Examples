@@ -1,6 +1,5 @@
 #include <print>
 #include <gtkmm.h>
-#include <iostream>
 
 const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Procedural.Button";
 const Glib::ustring APP_TITLE = "Gtk::Button";

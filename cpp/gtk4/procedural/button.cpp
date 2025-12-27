@@ -1,6 +1,5 @@
 #include <print>
 #include <gtkmm.h>
-#include <iostream>
 
 static void on_app_activate();
 static void on_app_startup();
@@ -31,7 +30,5 @@ static void on_app_startup() {
 
   button->set_halign(Gtk::Align::CENTER);
   button->set_valign(Gtk::Align::CENTER);
-  button->signal_clicked().connect([]() {
-    std::println("You clicked me!");
-  });
+  button->signal_clicked().connect([]() { std::println("You clicked me!"); });
 }

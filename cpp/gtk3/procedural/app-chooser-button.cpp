@@ -1,5 +1,4 @@
 #include <gtkmm.h>
-#include <iostream>
 
 static void on_app_startup(Glib::RefPtr<Gtk::Application> self);
 static void on_app_activate(Glib::RefPtr<Gtk::Application> self);

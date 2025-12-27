@@ -1,6 +1,5 @@
 #include <print>
 #include <gtkmm.h>
-#include <iostream>
 
 static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.Button";
 static const Glib::ustring APP_TITLE = "Gtk::Button";
@@ -27,9 +26,7 @@ class App : public Gtk::Application {
 
       button->set_halign(Gtk::Align::CENTER);
       button->set_valign(Gtk::Align::CENTER);
-      button->signal_clicked().connect([]() {
-        std::println("You clicked me!");
-      });
+      button->signal_clicked().connect([]() { std::println("You clicked me!"); });
 
       add_window(*window);
     }

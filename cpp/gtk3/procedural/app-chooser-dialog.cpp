@@ -29,9 +29,7 @@ static void on_app_activate(Glib::RefPtr<Gtk::Application> self) {
   if (!window) return std::println(std::cerr, "No active window found.");
 
   auto dialog = dynamic_cast<Gtk::AppChooserDialog*>(window);
-  if (!dialog) {
-    return std::println(std::cerr, "The active window is not an `Gtk::AppChooserDialog`");
-  }
+  if (!dialog) return std::println(std::cerr, "The active window is not an `Gtk::AppChooserDialog`");
 
   switch (dialog->run()) {
     case Gtk::RESPONSE_OK: {

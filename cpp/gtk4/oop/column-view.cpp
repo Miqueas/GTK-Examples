@@ -1,6 +1,4 @@
-#include <print>
 #include <gtkmm.h>
-#include <iostream>
 
 static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.ColumnView";
 static const Glib::ustring APP_TITLE = "Gtk::ColumnView";
@@ -41,7 +39,7 @@ class App : public Gtk::Application {
       window->set_default_size(400, 400);
 
       scroll->set_child(*column_view);
-      
+
       column_view->set_reorderable(false);
       column_view->set_show_row_separators(true);
       column_view->set_show_column_separators(true);

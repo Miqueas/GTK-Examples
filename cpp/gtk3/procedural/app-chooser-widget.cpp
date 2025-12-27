@@ -1,5 +1,4 @@
 #include <gtkmm.h>
-#include <iostream>
 
 enum class AppChooserWidgetSetting {
   SHOW_ALL,

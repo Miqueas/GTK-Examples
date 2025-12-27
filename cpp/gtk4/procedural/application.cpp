@@ -1,6 +1,5 @@
 #include <print>
 #include <gtkmm.h>
-#include <iostream>
 
 static void on_app_activate();
 static void on_app_startup();
