@@ -60,7 +60,7 @@ static void on_app_startup(const GApplication* self, gpointer data) {
   gtk_widget_set_tooltip_text(button_01, "This is button 01");
 
   gtk_widget_set_has_tooltip(button_02, TRUE);
-  gtk_widget_set_tooltip_markup(button_02, "<span font='Bold 20'>This is button 02</span>");
+  gtk_widget_set_tooltip_markup(button_02, "<span font='Bold 16'>This is button 02</span>");
 
   gtk_widget_set_has_tooltip(button_03, TRUE);
   g_signal_connect(button_03, "query-tooltip", G_CALLBACK(on_button_03_query_tooltip), NULL);
