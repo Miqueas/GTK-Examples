@@ -40,6 +40,7 @@ src = [
   'font-chooser-dialog',
   'font-chooser-widget',
   'frame',
+  'gesture-drag',
   'glarea',
   'grid-1',
   'grid-2',
