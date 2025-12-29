@@ -1,8 +1,10 @@
+#include <print>
 #include <gtkmm.h>
+#include <iostream>
 
-const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.AboutDialog";
-const Glib::ustring APP_TITLE = "Gtk::AboutDialog";
-const Glib::ustring LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.OOP.AboutDialog";
+static const Glib::ustring APP_TITLE = "Gtk::AboutDialog";
+static const Glib::ustring LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "\n"
 "  This software is provided 'as-is', without any express or implied\n"
 "  warranty.  In no event will the authors be held liable for any damages\n"
@@ -29,6 +31,17 @@ class App : public Gtk::Application {
   protected:
     App() : Gtk::Application(APP_ID) {}
 
+    void on_activate() override {
+      Gtk::Window* window = get_active_window();
+      if (!window) return std::println(std::cerr, "No window");
+
+      auto dialog = dynamic_cast<Gtk::Dialog*>(window);
+      if (!dialog) return std::println(std::cerr, "Window is not a dialog");
+
+      dialog->run();
+      quit();
+    }
+
     void on_startup() override {
       // Ensures chain-up
       Gtk::Application::on_startup();
@@ -49,19 +62,6 @@ class App : public Gtk::Application {
       dialog->set_website_label("GitHub Repository");
 
       add_window(*dialog);
-    }
-
-    void on_activate() override {
-      Gtk::Window* window = get_active_window();
-
-      if (window) {
-        auto dialog = dynamic_cast<Gtk::Dialog*>(window);
-
-        if (dialog) {
-          dialog->run();
-          quit();
-        }
-      }
     }
 };
 

@@ -1,8 +1,10 @@
+#include <print>
 #include <gtkmm.h>
+#include <iostream>
 
-const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Procedural.AboutDialog";
-const Glib::ustring APP_TITLE = "Gtk::AboutDialog";
-const Glib::ustring LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.Procedural.AboutDialog";
+static const Glib::ustring APP_TITLE = "Gtk::AboutDialog";
+static const Glib::ustring LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "\n"
 "  This software is provided 'as-is', without any express or implied\n"
 "  warranty.  In no event will the authors be held liable for any damages\n"
@@ -20,42 +22,31 @@ const Glib::ustring LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "     misrepresented as being the original software.\n"
 "  3. This notice may not be removed or altered from any source distribution.\0";
 
-static void on_app_activate(Glib::RefPtr<Gtk::Application> self);
-static void on_app_startup(Glib::RefPtr<Gtk::Application> self);
+static void on_app_activate(const Glib::RefPtr<Gtk::Application>& self);
+static void on_app_startup(const Glib::RefPtr<Gtk::Application>& self);
 
 int main(int argc, char** argv) {
   Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(APP_ID);
-
-  app->signal_startup().connect(sigc::bind<Glib::RefPtr<Gtk::Application>>(
-    sigc::ptr_fun(&on_app_startup),
-    app
-  ));
-
-  app->signal_activate().connect(sigc::bind<Glib::RefPtr<Gtk::Application>>(
-    sigc::ptr_fun(&on_app_activate),
-    app
-  ));
-
+  app->signal_activate().connect(sigc::bind(sigc::ptr_fun(&on_app_activate), app));
+  app->signal_startup().connect(sigc::bind(sigc::ptr_fun(&on_app_startup), app));
   return app->run(argc, argv);
 }
 
-void on_app_activate(Glib::RefPtr<Gtk::Application> self) {
+static void on_app_activate(const Glib::RefPtr<Gtk::Application>& self) {
   Gtk::Window* window = self->get_active_window();
+  if (!window) return std::println(std::cerr, "No window");
 
-  if (window) {
-    auto dialog = dynamic_cast<Gtk::Dialog*>(window);
+  auto dialog = dynamic_cast<Gtk::Dialog*>(window);
+  if (!dialog) return std::println(std::cerr, "Window is not a dialog");
 
-    if (dialog) {
-      dialog->run();
-      self->quit();
-    }
-  }
+  dialog->run();
+  self->quit();
 }
 
-void on_app_startup(Glib::RefPtr<Gtk::Application> self) {
+static void on_app_startup(const Glib::RefPtr<Gtk::Application>& self) {
   // Because `Gtk::AboutDialog` doesn't have a parent widget per se, there's no
   // point in using `Gtk::make_managed()` with it.
-  auto dialog = new Gtk::AboutDialog();
+  Gtk::AboutDialog* dialog = new Gtk::AboutDialog();
   dialog->set_modal(true);
   dialog->set_application(self);
   dialog->set_artists({ "Josué Martínez" });

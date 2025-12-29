@@ -1,7 +1,7 @@
 #include <print>
 #include <gtkmm.h>
 
-const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.Application";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.OOP.Application";
 
 class App : public Gtk::Application {
   public:
@@ -12,14 +12,14 @@ class App : public Gtk::Application {
   protected:
     App() : Gtk::Application(APP_ID) {}
 
+    void on_activate() override {
+      std::println("::activate");
+    }
+
     void on_startup() override {
       // Ensures chain-up
       Gtk::Application::on_startup();
       std::println("::startup");
-    }
-
-    void on_activate() override {
-      std::println("::activate");
     }
 };
 

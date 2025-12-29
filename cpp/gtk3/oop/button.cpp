@@ -1,8 +1,8 @@
 #include <print>
 #include <gtkmm.h>
 
-const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.Button";
-const Glib::ustring APP_TITLE = "Gtk::Button";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.OOP.Button";
+static const Glib::ustring APP_TITLE = "Gtk::Button";
 
 class App : public Gtk::Application {
   public:
@@ -12,6 +12,11 @@ class App : public Gtk::Application {
 
   protected:
     App() : Gtk::Application(APP_ID) {}
+
+    void on_activate() override {
+      Gtk::Window* window = get_active_window();
+      if (window != nullptr) window->present();
+    }
 
     void on_startup() override {
       // Ensures chain-up
@@ -32,11 +37,6 @@ class App : public Gtk::Application {
       });
 
       add_window(*window);
-    }
-
-    void on_activate() override {
-      Gtk::Window* window = get_active_window();
-      if (window != nullptr) window->present();
     }
 };
 

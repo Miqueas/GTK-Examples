@@ -1,7 +1,7 @@
 #include <gtkmm.h>
 
-const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.OOP.AppChooserButton";
-const Glib::ustring APP_TITLE = "Gtk::AppChooserButton";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.OOP.AppChooserButton";
+static const Glib::ustring APP_TITLE = "Gtk::AppChooserButton";
 
 class App : public Gtk::Application {
   public:
@@ -11,6 +11,11 @@ class App : public Gtk::Application {
 
   protected:
     App() : Gtk::Application(APP_ID) {}
+
+    void on_activate() override {
+      Gtk::Window* window = get_active_window();
+      if (window) window->present();
+    }
 
     void on_startup() override {
       // Ensures chain-up
@@ -29,11 +34,6 @@ class App : public Gtk::Application {
       app_chooser_button->set_valign(Gtk::Align::ALIGN_CENTER);
 
       add_window(*window);
-    }
-
-    void on_activate() override {
-      Gtk::Window* window = get_active_window();
-      if (window) window->present();
     }
 };
 

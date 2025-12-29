@@ -1,26 +1,26 @@
 #include <gtkmm.h>
 
-static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Procedural.ColumnView";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk4.Procedural.ColumnView";
 static const Glib::ustring APP_TITLE = "Gtk::ColumnView";
 
-static void on_app_startup(const Glib::RefPtr<Gtk::Application>& self);
 static void on_app_activate(const Glib::RefPtr<Gtk::Application>& self);
+static void on_app_startup(const Glib::RefPtr<Gtk::Application>& self);
 static void on_factory_setup(const Glib::RefPtr<Gtk::ListItem>& list_item);
 static void on_factory_bind(const Glib::RefPtr<Gtk::ListItem>& list_item, Glib::ustring name);
 
 int main(int argc, char** argv) {
   auto app = Gtk::Application::create(APP_ID);
-  app->signal_startup().connect(sigc::bind(sigc::ptr_fun(&on_app_startup), app));
   app->signal_activate().connect(sigc::bind(sigc::ptr_fun(&on_app_activate), app));
+  app->signal_startup().connect(sigc::bind(sigc::ptr_fun(&on_app_startup), app));
   return app->run(argc, argv);
 }
 
-static void on_app_startup(const Glib::RefPtr<Gtk::Application>& self) {
+static void on_app_activate(const Glib::RefPtr<Gtk::Application>& self) {
   auto window = self->get_active_window();
   if (window) window->present();
 }
 
-static void on_app_activate(const Glib::RefPtr<Gtk::Application>& self) {
+static void on_app_startup(const Glib::RefPtr<Gtk::Application>& self) {
   auto list_model = Gtk::StringList::create();
   auto selection_model = Gtk::NoSelection::create(list_model);
   auto key_factory = Gtk::SignalListItemFactory::create();

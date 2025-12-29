@@ -1,6 +1,6 @@
 #include <gtkmm.h>
 
-static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.ColumnView";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk4.OOP.ColumnView";
 static const Glib::ustring APP_TITLE = "Gtk::ColumnView";
 
 class App : public Gtk::Application {
@@ -9,8 +9,26 @@ class App : public Gtk::Application {
       return Glib::make_refptr_for_instance<App>(new App());
     }
 
+  private:
+    void on_factory_setup(const Glib::RefPtr<Gtk::ListItem>& list_item) {
+      auto label = Gtk::make_managed<Gtk::Label>("");
+      label->set_halign(Gtk::Align::START);
+      list_item->set_child(*label);
+    }
+
+    void on_factory_bind(const Glib::RefPtr<Gtk::ListItem>& list_item, Glib::ustring name) {
+      auto label = dynamic_cast<Gtk::Label*>(list_item->get_child());
+      auto string_object = std::dynamic_pointer_cast<Gtk::StringObject>(list_item->get_item());
+      label->set_label(name + ": " + string_object->get_string());
+    }
+
   protected:
     App() : Gtk::Application(APP_ID) {}
+
+    void on_activate() override {
+      Gtk::Window* window = get_active_window();
+      if (window != nullptr) window->present();
+    }
 
     void on_startup() override {
       // Ensures chain-up
@@ -50,24 +68,6 @@ class App : public Gtk::Application {
       value_column->set_expand(true);
 
       add_window(*window);
-    }
-
-    void on_activate() override {
-      Gtk::Window* window = get_active_window();
-      if (window != nullptr) window->present();
-    }
-
-  private:
-    void on_factory_setup(const Glib::RefPtr<Gtk::ListItem>& list_item) {
-      auto label = Gtk::make_managed<Gtk::Label>("");
-      label->set_halign(Gtk::Align::START);
-      list_item->set_child(*label);
-    }
-
-    void on_factory_bind(const Glib::RefPtr<Gtk::ListItem>& list_item, Glib::ustring name) {
-      auto label = dynamic_cast<Gtk::Label*>(list_item->get_child());
-      auto string_object = std::dynamic_pointer_cast<Gtk::StringObject>(list_item->get_item());
-      label->set_label(name + ": " + string_object->get_string());
     }
 };
 

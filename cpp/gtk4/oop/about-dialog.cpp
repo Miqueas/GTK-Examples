@@ -1,6 +1,6 @@
 #include <gtkmm.h>
 
-static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.AboutDialog";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk4.OOP.AboutDialog";
 static const Glib::ustring APP_TITLE = "Gtk::AboutDialog";
 static const Glib::ustring LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "\n"
@@ -29,6 +29,11 @@ class App : public Gtk::Application {
   protected:
     App() : Gtk::Application(APP_ID) {}
 
+    void on_activate() override {
+      Gtk::Window* window = get_active_window();
+      if (window) window->present();
+    }
+
     void on_startup() override {
       // Ensures chain-up
       Gtk::Application::on_startup();
@@ -49,11 +54,6 @@ class App : public Gtk::Application {
       dialog->set_website_label("GitHub Repository");
 
       add_window(*dialog);
-    }
-
-    void on_activate() override {
-      Gtk::Window* window = get_active_window();
-      if (window) window->present();
     }
 };
 

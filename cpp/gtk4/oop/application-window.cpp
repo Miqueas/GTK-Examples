@@ -1,6 +1,6 @@
 #include <gtkmm.h>
 
-static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.OOP.ApplicationWindow";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk4.OOP.ApplicationWindow";
 static const Glib::ustring APP_TITLE = "Gtk::ApplicationWindow";
 
 class App : public Gtk::Application {
@@ -12,6 +12,11 @@ class App : public Gtk::Application {
   protected:
     App() : Gtk::Application(APP_ID) {}
 
+    void on_activate() override {
+      Gtk::Window* window = get_active_window();
+      if (window != nullptr) window->present();
+    }
+
     void on_startup() override {
       // Ensures chain-up
       Gtk::Application::on_startup();
@@ -20,11 +25,6 @@ class App : public Gtk::Application {
       window->set_title(APP_TITLE);
       window->set_default_size(400, 400);
       add_window(*window);
-    }
-
-    void on_activate() override {
-      Gtk::Window* window = get_active_window();
-      if (window != nullptr) window->present();
     }
 };
 
