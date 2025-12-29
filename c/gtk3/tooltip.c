@@ -19,8 +19,8 @@ static gboolean on_button_04_query_tooltip(
   gpointer data
 );
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.GestureDrag";
-const static gchar* APP_TITLE = "GtkGestureDrag";
+const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Tooltip";
+const static gchar* APP_TITLE = "GtkTooltip";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);
