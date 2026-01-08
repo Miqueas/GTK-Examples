@@ -41,6 +41,7 @@ static void on_app_activate(const GApplication* self, gpointer data) {
 static void on_app_startup(const GApplication* self, gpointer data) {
   GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
   GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+  GtkWidget* label = gtk_label_new("Hover the buttons to see the tooltips");
   GtkWidget* button_01 = gtk_button_new_with_label("Button 01");
   GtkWidget* button_02 = gtk_button_new_with_label("Button 02");
   GtkWidget* button_03 = gtk_button_new_with_label("Button 03");
@@ -48,12 +49,17 @@ static void on_app_startup(const GApplication* self, gpointer data) {
 
   gtk_container_add(GTK_CONTAINER(window), box);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
+  gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
+  gtk_box_pack_start(GTK_BOX(box), label, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box), button_01, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box), button_02, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box), button_03, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box), button_04, FALSE, FALSE, 0);
+  gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
+  gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
+  gtk_box_set_homogeneous(GTK_BOX(box), FALSE);
   gtk_widget_show_all(box);
 
   gtk_widget_set_has_tooltip(button_01, TRUE);
