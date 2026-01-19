@@ -14,11 +14,11 @@ enum {
   NUM_COLUMNS
 };
 
-void app_activate(GApplication* self, gpointer data);
-void app_startup(GApplication* self, gpointer data);
-GtkTreeModel* create_model();
-void add_columns(GtkTreeView* treeview);
-void on_cell_toggled(GtkCellRendererToggle* cell, gchar* path, gpointer data);
+static void app_activate(GApplication* self, gpointer data);
+static void app_startup(GApplication* self, gpointer data);
+static GtkTreeModel* create_model();
+static void add_columns(GtkTreeView* treeview);
+static void on_cell_toggled(GtkCellRendererToggle* cell, gchar* path, gpointer data);
 
 static TreeItem ROW1[] = {
   { TRUE, "Sublime Text", NULL },
@@ -58,20 +58,20 @@ gint main(gint argc, gchar** argv) {
   return result;
 }
 
-void app_activate(GApplication* self, gpointer data) {
+static void app_activate(GApplication* self, gpointer data) {
   GtkWindow* window = gtk_application_get_active_window(GTK_APPLICATION(self));
   if (window != NULL) gtk_window_present(window);
 }
 
-void app_startup(GApplication* self, gpointer data) {
+static void app_startup(GApplication* self, gpointer data) {
   GtkTreeModel* model = create_model();
   GtkWidget* window = gtk_application_window_new(GTK_APPLICATION(self));
   GtkWidget* tree_view = gtk_tree_view_new_with_model(model);
-  
+
   gtk_container_add(GTK_CONTAINER(window), tree_view);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
-  
+
   add_columns(GTK_TREE_VIEW(tree_view));
   g_signal_connect(tree_view, "realize", G_CALLBACK(gtk_tree_view_expand_all), NULL);
   gtk_widget_show_all(tree_view);
@@ -79,7 +79,7 @@ void app_startup(GApplication* self, gpointer data) {
   g_object_unref(model);
 }
 
-GtkTreeModel* create_model() {
+static GtkTreeModel* create_model() {
   GtkTreeStore* model = gtk_tree_store_new(NUM_COLUMNS, G_TYPE_BOOLEAN, G_TYPE_STRING);
   GtkTreeIter iter;
   TreeItem* data = ROWS;
@@ -114,7 +114,7 @@ GtkTreeModel* create_model() {
   return GTK_TREE_MODEL(model);
 }
 
-void add_columns(GtkTreeView* tree_view) {
+static void add_columns(GtkTreeView* tree_view) {
   GtkCellRenderer* cell = gtk_cell_renderer_toggle_new();
   gtk_tree_view_insert_column_with_attributes(tree_view, -1, "Enabled", cell,
     "active", ENABLED_COLUMN,
@@ -129,7 +129,7 @@ void add_columns(GtkTreeView* tree_view) {
   );
 }
 
-void on_cell_toggled(GtkCellRendererToggle* self, gchar* path_str, gpointer data) {
+static void on_cell_toggled(GtkCellRendererToggle* self, gchar* path_str, gpointer data) {
   GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(data));
   GtkTreePath* path  = gtk_tree_path_new_from_string((const gchar*) path_str);
   GtkTreeIter iter;
