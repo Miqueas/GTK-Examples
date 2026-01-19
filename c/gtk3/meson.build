@@ -67,6 +67,7 @@ src = [
   'stack-1',
   'stack-2',
   'text-view',
+  'toggle-button',
   'toolbar',
   'tooltip',
   'tree-view',
