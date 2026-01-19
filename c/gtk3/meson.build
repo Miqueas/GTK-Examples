@@ -66,6 +66,7 @@ src = [
   'scrolled-window',
   'stack-1',
   'stack-2',
+  'switch',
   'text-view',
   'toggle-button',
   'toolbar',
