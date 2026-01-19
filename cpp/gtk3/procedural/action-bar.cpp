@@ -8,8 +8,8 @@ static void on_app_startup(const Glib::RefPtr<Gtk::Application>& self);
 
 int main(int argc, char** argv) {
   Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(APP_ID);
-  app->signal_startup().connect(sigc::ptr_fun(&on_app_startup));
-  app->signal_activate().connect(sigc::ptr_fun(&on_app_activate));
+  app->signal_startup().connect(sigc::bind(sigc::ptr_fun(&on_app_startup), app));
+  app->signal_activate().connect(sigc::bind(sigc::ptr_fun(&on_app_activate), app));
   return app->run(argc, argv);
 }
 
