@@ -64,6 +64,7 @@ src = [
   'scale-button',
   'scale',
   'scrolled-window',
+  'search-entry',
   'spin-button',
   'spinner',
   'stack-1',
