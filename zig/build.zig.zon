@@ -1,0 +1,16 @@
+.{
+    .name = .GTK_Examples,
+    .version = "0.0.0",
+    .fingerprint = 0xdb7c543ce716cccb, // Changing this has security and trust implications.
+    .minimum_zig_version = "0.16.0",
+    .dependencies = .{
+        .gobject = .{
+            .path = "../zig-gobject/zig-out/bindings",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}
