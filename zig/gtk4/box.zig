@@ -1,5 +1,5 @@
 const std = @import("std");
-const gtk = @import("gtk4");
+const gtk = @import("gtk");
 const gio = @import("gio");
 
 const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.Box";
