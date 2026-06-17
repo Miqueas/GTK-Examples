@@ -2,7 +2,7 @@ const std = @import("std");
 const gtk = @import("gtk");
 const gio = @import("gio");
 
-const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.Box";
+const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.Gtk3.Box";
 const APP_TITLE = "GtkBox";
 
 pub fn main(init: std.process.Init) void {
@@ -13,7 +13,8 @@ pub fn main(init: std.process.Init) void {
     _ = gio.Application.signals.activate.connect(app, ?*anyopaque, &onActivate, null, .{});
 
     const argv = init.minimal.args.vector;
-    const status = app.as(gio.Application).run(
+    const status = gio.Application.run(
+        app.as(gio.Application),
         @intCast(argv.len),
         @ptrCast(@constCast(argv.ptr))
     );
@@ -31,19 +32,19 @@ fn onStartup(self: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
     var button = gtk.Button.newWithLabel("🤔");
     var box = gtk.Box.new(.vertical, 10);
 
-    window.as(gtk.Window).setTitle(APP_TITLE);
-    window.as(gtk.Window).setDefaultSize(400, 400);
-    window.as(gtk.Container).add(box.as(gtk.Widget));
+    gtk.Window.setTitle(window.as(gtk.Window), APP_TITLE);
+    gtk.Window.setDefaultSize(window.as(gtk.Window), 400, 400);
+    gtk.Container.add(window.as(gtk.Container), box.as(gtk.Widget));
 
-    button.as(gtk.Widget).setHalign(.center);
-    button.as(gtk.Widget).setValign(.center);
+    gtk.Widget.setHalign(button.as(gtk.Widget), .center);
+    gtk.Widget.setValign(button.as(gtk.Widget), .center);
     _ = gtk.Button.signals.clicked.connect(button, ?*anyopaque, &onClicked, null, .{});
 
-    box.as(gtk.Widget).setHalign(.center);
-    box.as(gtk.Widget).setValign(.center);
-    box.packStart(label.as(gtk.Widget), 0, 1, 0);
-    box.packStart(button.as(gtk.Widget), 0, 1, 0);
-    box.as(gtk.Widget).showAll();
+    gtk.Widget.setHalign(box.as(gtk.Widget), .center);
+    gtk.Widget.setValign(box.as(gtk.Widget), .center);
+    box.packStart(label.as(gtk.Widget), gtk.@"false"(), gtk.@"true"(), 0);
+    box.packStart(button.as(gtk.Widget), gtk.@"false"(), gtk.@"true"(), 0);
+    gtk.Widget.showAll(box.as(gtk.Widget));
 }
 
 var count: i32 = 0;

@@ -2,7 +2,7 @@ const std = @import("std");
 const gtk = @import("gtk");
 const gio = @import("gio");
 
-const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.ApplicationWindow";
+const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.Gtk3.ApplicationWindow";
 const APP_TITLE = "GtkApplicationWindow";
 
 pub fn main(init: std.process.Init) void {
@@ -13,7 +13,8 @@ pub fn main(init: std.process.Init) void {
     _ = gio.Application.signals.activate.connect(app, ?*anyopaque, &onActivate, null, .{});
 
     const argv = init.minimal.args.vector;
-    const status = app.as(gio.Application).run(
+    const status = gio.Application.run(
+        app.as(gio.Application),
         @intCast(argv.len),
         @ptrCast(@constCast(argv.ptr))
     );
@@ -27,6 +28,6 @@ fn onActivate(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
 
 fn onStartup(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
     var window = gtk.ApplicationWindow.new(app);
-    window.as(gtk.Window).setTitle(APP_TITLE);
-    window.as(gtk.Window).setDefaultSize(400, 400);
+    gtk.Window.setTitle(window.as(gtk.Window), APP_TITLE);
+    gtk.Window.setDefaultSize(window.as(gtk.Window), 400, 400);
 }

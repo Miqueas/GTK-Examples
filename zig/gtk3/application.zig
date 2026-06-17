@@ -12,7 +12,8 @@ pub fn main(init: std.process.Init) void {
     _ = gio.Application.signals.activate.connect(app, ?*anyopaque, &onActivate, null, .{});
 
     const argv = init.minimal.args.vector;
-    const status = app.as(gio.Application).run(
+    const status = gio.Application.run(
+        app.as(gio.Application),
         @intCast(argv.len),
         @ptrCast(@constCast(argv.ptr))
     );
