@@ -38,7 +38,6 @@ gint main(gint argc, gchar** argv) {
   g_object_unref(app);
 
   return result;
-
 }
 
 static void on_app_activate(GApplication* self, gpointer data) {
@@ -69,7 +68,7 @@ static void on_gl_area_realize(GtkGLArea* self, gpointer data) {
 
   g_print("[GtkGLArea::realize] Called\n");
   gtk_gl_area_make_current(self);
-  
+
   if (gtk_gl_area_get_error (self) != NULL) {
     g_critical("[GtkGLArea::realize] Unknown error\n");
     return;
@@ -134,11 +133,11 @@ static void init_shaders(AppContext* ctx) {
   ctx->program = glCreateProgram();
   glAttachShader(ctx->program, vertex_shader);
   glAttachShader(ctx->program, fragment_shader);
-  
+
   // Bind attribute locations before linking (required for GLSL 100)
   glBindAttribLocation(ctx->program, 0, "pos");
   glBindAttribLocation(ctx->program, 1, "vertex_color");
-  
+
   glLinkProgram(ctx->program);
 
   GLint status = GL_FALSE;
@@ -166,7 +165,7 @@ static void init_shaders(AppContext* ctx) {
 
 static void init_buffers(AppContext* ctx) {
   const GLuint vertices_index = 0;
-  const GLuint colors_index = 1; 
+  const GLuint colors_index = 1;
   GLfloat vertices[] = {
     // Front
      0.5,  0.5,  0.5,
