@@ -7,10 +7,15 @@
         .zigGObject = .{
             .path = "../zig-gobject/zig-out/bindings",
         },
+        .zgl = .{
+            .url = "https://github.com/ziglibs/zgl/archive/a73479a8036ebf806759f8dd7e6d60abc631da1d.tar.gz",
+            .hash = "zgl-1.1.0-p_NpAD9FCgAY_XDO_EXxSGJ5-n9b3deO0V-9z9HJKYTQ",
+        },
     },
     .paths = .{
         "build.zig",
         "build.zig.zon",
-        "src",
+        "gtk3",
+        "gtk4",
     },
 }

@@ -1,11 +1,14 @@
+const os = builtin.os.tag;
 const std = @import("std");
-const Import = std.Build.Module.Import;
+const builtin = @import("builtin");
+
 const BuildContext = struct {
     b: *std.Build,
     dir: std.Io.Dir,
+    zgl: *std.Build.Dependency,
     target: std.Build.ResolvedTarget,
+    version: u8,
     optimize: std.builtin.OptimizeMode,
-    gtkModName: []const u8,
     zigGObject: *std.Build.Dependency,
 };
 
@@ -13,6 +16,10 @@ pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
     const zigGObject = b.dependency("zigGObject", .{
+        .target = target,
+        .optimize = optimize,
+    });
+    const zgl = b.dependency("zgl", .{
         .target = target,
         .optimize = optimize,
     });
@@ -26,19 +33,21 @@ pub fn build(b: *std.Build) !void {
 
     try genExes(.{
         .b = b,
+        .zgl = zgl,
         .dir = gtk3Dir,
         .target = target,
+        .version = 3,
         .optimize = optimize,
-        .gtkModName = "gtk3",
         .zigGObject = zigGObject,
     });
 
     try genExes(.{
         .b = b,
+        .zgl = zgl,
         .dir = gtk4Dir,
         .target = target,
+        .version = 4,
         .optimize = optimize,
-        .gtkModName = "gtk4",
         .zigGObject = zigGObject,
     });
 }
@@ -47,34 +56,45 @@ fn genExes(ctx: BuildContext) !void {
     var walker = try ctx.dir.walk(ctx.b.allocator);
     defer walker.deinit();
 
+    const gtkModName = @as([]const u8, ctx.b.fmt("gtk{}", .{ctx.version}));
+    const gdkModName = @as([]const u8, ctx.b.fmt("gdk{}", .{ctx.version}));
+
     while (try walker.next(ctx.b.graph.io)) |entry| {
         if (entry.kind != .file) continue;
 
         const path = entry.path;
         if (!std.mem.endsWith(u8, path, ".zig")) continue;
 
+        const isGLArea = std.mem.containsAtLeast(u8, path, 1, "glarea.zig");
+        if (isGLArea and os != .linux) continue;
+
         const mod = ctx.b.createModule(.{
-            .root_source_file = ctx.b.path(ctx.b.fmt("{s}/{s}", .{ ctx.gtkModName, path })),
             .target = ctx.target,
             .optimize = ctx.optimize,
+            .root_source_file = ctx.b.path(ctx.b.fmt("{s}/{s}", .{ gtkModName, path })),
         });
 
         mod.addImport("gio", ctx.zigGObject.module("gio2"));
         mod.addImport("glib", ctx.zigGObject.module("glib2"));
         mod.addImport("gobject", ctx.zigGObject.module("gobject2"));
-        mod.addImport("gtk", ctx.zigGObject.module(ctx.gtkModName));
+        mod.addImport("gdk", ctx.zigGObject.module(gdkModName));
+        mod.addImport("gtk", ctx.zigGObject.module(gtkModName));
+        if (isGLArea) mod.addImport("zgl", ctx.zgl.module("zgl"));
 
         const basename = std.mem.trimEnd(u8, path, ".zig");
         const exe = ctx.b.addExecutable(.{
-            .name = ctx.b.fmt("{s}-{s}", .{ ctx.gtkModName, basename }),
+            .name = ctx.b.fmt("{s}-{s}", .{ gtkModName, basename }),
+            .use_lld = if (isGLArea) true else null,
+            .use_llvm = if (isGLArea) true else null,
             .root_module = mod,
         });
+
         ctx.b.installArtifact(exe);
 
         const exe_run = ctx.b.addRunArtifact(exe);
         const run_step = ctx.b.step(
-            ctx.b.fmt("run-{s}-{s}", .{ ctx.gtkModName, basename }),
-            ctx.b.fmt("Run {s}/{s}", .{ ctx.gtkModName, basename })
+            ctx.b.fmt("run-{s}-{s}", .{ gtkModName, basename }),
+            ctx.b.fmt("Run {s}/{s}", .{ gtkModName, basename })
         );
 
         exe_run.step.dependOn(ctx.b.getInstallStep());
