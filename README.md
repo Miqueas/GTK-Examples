@@ -116,6 +116,9 @@ zig build
 
 After that, check out the `zig/zig-out/bin/` folder for the binaries.
 
+> [!NOTE]
+> On Linux: `zig build` command could fail if you don't have OpenGL on your system. I highly doubt that could happen, but I wanted to leave the note anyways because the `GtkGLArea` example loads OpenGL using `dlopen`, so please keep that in mind.
+
 ## About GTK 3 vs GTK 4
 
 GTK 4 is a huge jump from GTK 3 that came with many changes in the API, deprecating some classes and adding new ones. For that reason, not all GTK 3 examples are available in GTK 4 (and the other way around). Of course, I'll try to have the same examples in both GTK versions, but I can't guarantee all of them will be available. For more details on this, check out [this list][GTK4ClassList], which contains all the GTK 4 classes and indicates which ones are deprecated in GTK 4.
