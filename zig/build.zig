@@ -79,7 +79,17 @@ fn genExes(ctx: BuildContext) !void {
         mod.addImport("gobject", ctx.zigGObject.module("gobject2"));
         mod.addImport("gdk", ctx.zigGObject.module(gdkModName));
         mod.addImport("gtk", ctx.zigGObject.module(gtkModName));
-        if (isGLArea) mod.addImport("zgl", ctx.zgl.module("zgl"));
+        if (isGLArea) {
+            mod.addImport("zgl", ctx.zgl.module("zgl"));
+
+            const glarea_shared = ctx.b.createModule(.{
+                .target = ctx.target,
+                .optimize = ctx.optimize,
+                .root_source_file = ctx.b.path("shared/glarea.zig"),
+            });
+            glarea_shared.addImport("zgl", ctx.zgl.module("zgl"));
+            mod.addImport("glarea-shared", glarea_shared);
+        }
 
         const basename = std.mem.trimEnd(u8, path, ".zig");
         const exe = ctx.b.addExecutable(.{

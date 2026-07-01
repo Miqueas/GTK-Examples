@@ -3,19 +3,19 @@ const gtk = @import("gtk");
 const gio = @import("gio");
 const gobject = @import("gobject");
 
-const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.Gtk3.AboutDialog1";
+const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.Gtk4.AboutDialog1";
 const APP_TITLE = "GtkAboutDialog";
 const AUTHORS = [_]?[*:0]const u8{ "Josué Martínez", null };
 const ARTISTS = [_]?[*:0]const u8{ "Josué Martínez", null };
 const DOCUMENTERS = [_]?[*:0]const u8{ "Josué Martínez", null };
 const TRANSLATOR_CREDITS = "Josué Martínez";
-const COMMENTS = "GTK+ 3.0 AboutDialog Example";
-const COPYRIGHT = "Copyright © 2021-2025 Josué Martínez";
+const COMMENTS = "GTK 4 AboutDialog Example";
+const COPYRIGHT = "Copyright © 2021-2026 Josué Martínez";
 const VERSION = "0.1.0";
 const WEBSITE = "https://github.com/Miqueas/GTK-Examples";
 const WEBSITE_TEXT = "GitHub Repository";
 const LICENSE =
-\\Copyright (C) 2021-2025 Josué Martínez
+\\Copyright (C) 2021-2026 Josué Martínez
 \\
 \\  This software is provided 'as-is', without any express or implied
 \\  warranty.  In no event will the authors be held liable for any damages
@@ -52,11 +52,7 @@ pub fn main(init: std.process.Init) void {
 }
 
 fn onActivate(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
-    if (app.getActiveWindow()) |window| {
-        var dialog = gobject.ext.cast(gtk.Dialog, window).?;
-        _ = dialog.run();
-        gtk.Widget.destroy(window.as(gtk.Widget));
-    }
+    if (app.getActiveWindow()) |window| window.present();
 }
 
 fn onStartup(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {

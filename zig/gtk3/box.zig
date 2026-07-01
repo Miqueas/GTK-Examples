@@ -42,8 +42,8 @@ fn onStartup(self: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
 
     gtk.Widget.setHalign(box.as(gtk.Widget), .center);
     gtk.Widget.setValign(box.as(gtk.Widget), .center);
-    box.packStart(label.as(gtk.Widget), gtk.@"false"(), gtk.@"true"(), 0);
-    box.packStart(button.as(gtk.Widget), gtk.@"false"(), gtk.@"true"(), 0);
+    box.packStart(label.as(gtk.Widget), 0, 1, 0);
+    box.packStart(button.as(gtk.Widget), 0, 1, 0);
     gtk.Widget.showAll(box.as(gtk.Widget));
 }
 

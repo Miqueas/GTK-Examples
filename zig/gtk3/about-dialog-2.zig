@@ -56,7 +56,7 @@ fn onActivate(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
         window.present();
         gtk.showAboutDialog(
             window,
-            "modal", gtk.@"true"(),
+            "modal", @as(c_int, 1),
             "artists", @as([*][*:0]const u8, @ptrCast(@constCast(&ARTISTS))),
             "authors", @as([*][*:0]const u8, @ptrCast(@constCast(&AUTHORS))),
             "documenters", @as([*][*:0]const u8, @ptrCast(@constCast(&DOCUMENTERS))),
@@ -66,10 +66,10 @@ fn onActivate(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
             "copyright", COPYRIGHT,
             "version", VERSION,
             "license", LICENSE,
-            "wrap-license", gtk.@"true"(),
+            "wrap-license", @as(c_int, 1),
             "website", WEBSITE,
             "website-label", WEBSITE_TEXT,
-            "destroy-with-parent", gtk.@"true"(),
+            "destroy-with-parent", @as(c_int, 1),
             // Zig doesn't allow `null` values on variadic functions, so I added this instead
             @as([*:0]const u8, ""),
         );
@@ -85,5 +85,5 @@ fn onStartup(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
     gtk.Container.add(window.as(gtk.Container), label.as(gtk.Widget));
     gtk.Container.setBorderWidth(window.as(gtk.Container), 10);
 
-    gtk.Widget.setVisible(label.as(gtk.Widget), gtk.@"true"());
+    gtk.Widget.setVisible(label.as(gtk.Widget), 1);
 }
