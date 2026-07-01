@@ -47,7 +47,7 @@ foreach name : src
     )
   elif name == 'glarea'
     executable(name, name + '.c',
-      dependencies: [ gtk4, epoxy ],
+      dependencies: [ gtk4, epoxy, m ],
       c_args: [ '-std=c23' ],
     )
   elif name == 'image-1'

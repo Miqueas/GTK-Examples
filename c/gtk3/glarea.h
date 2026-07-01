@@ -3,9 +3,7 @@
 #include <math.h>
 
 typedef struct {
-  GLuint program;
-  GLuint vao;
-  GLuint uniform_transform;
+  GLuint vao, program, uniform_transform;
   gint64 start_time;
 } AppContext;
 

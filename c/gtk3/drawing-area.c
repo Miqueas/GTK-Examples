@@ -11,7 +11,6 @@ const static gchar* APP_TITLE = "GtkDrawingArea";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);
-
   g_signal_connect(app, "startup", G_CALLBACK(on_app_startup), NULL);
   g_signal_connect(app, "activate", G_CALLBACK(on_app_activate), NULL);
 

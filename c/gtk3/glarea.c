@@ -55,8 +55,6 @@ static void on_app_startup(GApplication* self, gpointer data) {
   gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
 
   gtk_widget_show(gl_area);
-  gtk_widget_set_vexpand(gl_area, TRUE);
-  gtk_widget_set_hexpand(gl_area, TRUE);
   gtk_widget_add_tick_callback(gl_area, gl_area_tick_callback, NULL, NULL);
   gtk_gl_area_set_has_depth_buffer(GTK_GL_AREA(gl_area), TRUE);
   g_signal_connect(gl_area, "render", G_CALLBACK(on_gl_area_render), context);
