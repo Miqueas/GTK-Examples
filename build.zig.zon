@@ -1,0 +1,12 @@
+.{
+    .name = .GTK_Examples,
+    .version = "0.16.0",
+    .dependencies = .{},
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "c",
+        "zig",
+    },
+    .fingerprint = 0xdb7c543c52562ee2,
+}
