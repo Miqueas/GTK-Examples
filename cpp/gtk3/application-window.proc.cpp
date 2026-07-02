@@ -19,8 +19,8 @@ void on_app_activate(Glib::RefPtr<Gtk::Application> self) {
 }
 
 void on_app_startup(Glib::RefPtr<Gtk::Application> self) {
-  // Because Gtk::ApplicationWindow doesn't have a parent widget per se, there's
-  // no point in using Gtk::make_managed() with it.
+  // Here `Gtk::ApplicationWindow` doesn't have a parent widget, so there's no point in using Gtk::make_managed() in
+  // this case.
   auto window = new Gtk::ApplicationWindow(self);
   window->set_title(APP_TITLE);
   window->set_default_size(400, 400);

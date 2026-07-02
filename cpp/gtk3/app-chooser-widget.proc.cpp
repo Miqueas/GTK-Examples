@@ -28,8 +28,8 @@ static void on_app_activate(const Glib::RefPtr<Gtk::Application>& self) {
 }
 
 static void on_app_startup(const Glib::RefPtr<Gtk::Application>& self) {
-  // Because `Gtk::ApplicationWindow` doesn't have a parent widget per se, there's
-  // no point in using `Gtk::make_managed()` with it.
+  // Here `Gtk::ApplicationWindow` doesn't have a parent widget, so there's no point in using Gtk::make_managed() in
+  // this case.
   auto window = new Gtk::ApplicationWindow(self);
   auto box = Gtk::make_managed<Gtk::Box>(Gtk::ORIENTATION_VERTICAL, 10);
   auto app_chooser_widget = Gtk::make_managed<Gtk::AppChooserWidget>("image/png");

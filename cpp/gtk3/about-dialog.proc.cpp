@@ -44,8 +44,8 @@ static void on_app_activate(const Glib::RefPtr<Gtk::Application>& self) {
 }
 
 static void on_app_startup(const Glib::RefPtr<Gtk::Application>& self) {
-  // Because `Gtk::AboutDialog` doesn't have a parent widget per se, there's no
-  // point in using `Gtk::make_managed()` with it.
+  // Here `Gtk::ApplicationWindow` doesn't have a parent widget, so there's no point in using Gtk::make_managed() in
+  // this case.
   Gtk::AboutDialog* dialog = new Gtk::AboutDialog();
   dialog->set_modal(true);
   dialog->set_application(self);

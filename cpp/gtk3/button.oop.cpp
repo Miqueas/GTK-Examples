@@ -1,7 +1,8 @@
+#include <print>
 #include <gtkmm.h>
 
-static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.OOP.AppChooserButton";
-static const Glib::ustring APP_TITLE = "Gtk::AppChooserButton";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.OOP.Button";
+static const Glib::ustring APP_TITLE = "Gtk::Button";
 
 class App : public Gtk::Application {
   public:
@@ -14,24 +15,26 @@ class App : public Gtk::Application {
 
     void on_activate() override {
       Gtk::Window* window = get_active_window();
-      if (window) window->present();
+      if (window != nullptr) window->present();
     }
 
     void on_startup() override {
-      // Ensures chain-up
+      // Required for chain-up
       Gtk::Application::on_startup();
 
       auto window = new Gtk::ApplicationWindow();
-      auto app_chooser_button = Gtk::make_managed<Gtk::AppChooserButton>("image/png");
+      auto button = Gtk::make_managed<Gtk::Button>("Click Me");
 
-      window->add(*app_chooser_button);
+      window->add(*button);
       window->set_title(APP_TITLE);
-      window->set_border_width(10);
       window->set_default_size(400, 400);
 
-      app_chooser_button->show();
-      app_chooser_button->set_halign(Gtk::Align::ALIGN_CENTER);
-      app_chooser_button->set_valign(Gtk::Align::ALIGN_CENTER);
+      button->show();
+      button->set_halign(Gtk::Align::ALIGN_CENTER);
+      button->set_valign(Gtk::Align::ALIGN_CENTER);
+      button->signal_clicked().connect([]() {
+        std::println("You clicked me!");
+      });
 
       add_window(*window);
     }

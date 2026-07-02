@@ -17,7 +17,7 @@ class App : public Gtk::Application {
     }
 
     void on_startup() override {
-      // Ensures chain-up
+      // Required for chain-up
       Gtk::Application::on_startup();
       std::println("::startup");
     }

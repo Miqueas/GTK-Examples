@@ -1,8 +1,7 @@
-#include <print>
 #include <gtkmm.h>
 
-static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.OOP.Button";
-static const Glib::ustring APP_TITLE = "Gtk::Button";
+static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.OOP.ApplicationWindow";
+static const Glib::ustring APP_TITLE = "Gtk::ApplicationWindow";
 
 class App : public Gtk::Application {
   public:
@@ -15,26 +14,16 @@ class App : public Gtk::Application {
 
     void on_activate() override {
       Gtk::Window* window = get_active_window();
-      if (window != nullptr) window->present();
+      if (window) window->present();
     }
 
     void on_startup() override {
-      // Ensures chain-up
+      // Required for chain-up
       Gtk::Application::on_startup();
 
       auto window = new Gtk::ApplicationWindow();
-      auto button = Gtk::make_managed<Gtk::Button>("Click Me");
-
-      window->add(*button);
       window->set_title(APP_TITLE);
       window->set_default_size(400, 400);
-
-      button->show();
-      button->set_halign(Gtk::Align::ALIGN_CENTER);
-      button->set_valign(Gtk::Align::ALIGN_CENTER);
-      button->signal_clicked().connect([]() {
-        std::println("You clicked me!");
-      });
 
       add_window(*window);
     }
