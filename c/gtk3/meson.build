@@ -79,43 +79,10 @@ src = [
   'window'
 ]
 
-builder = configure_file(
-  input: 'builder.c.in',
-  output: 'builder.c',
-  configuration: builder_gtk3_ui
-)
-
-css_provider = configure_file(
-  input: 'css-provider.c.in',
-  output: 'css-provider.c',
-  configuration: css_conf
-)
-
-image1 = configure_file(
-  input: 'image-1.c.in',
-  output: 'image-1.c',
-  configuration: image_conf
-)
-
 foreach name : src
-  if name == 'builder'
-    executable(name, builder,
-      dependencies: gtk3,
-      c_args: [ '-std=c11' ],
-    )
-  elif name == 'css-provider'
-    executable(name, css_provider,
-      dependencies: gtk3,
-      c_args: [ '-std=c11' ],
-    )
-  elif name == 'glarea'
+  if name == 'glarea'
     executable(name, name + '.c',
       dependencies: [ gtk3, epoxy, m ],
-      c_args: [ '-std=c11' ],
-    )
-  elif name == 'image-1'
-    executable(name, image1,
-      dependencies: gtk3,
       c_args: [ '-std=c11' ],
     )
   else
