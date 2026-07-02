@@ -1,0 +1,41 @@
+#!/usr/bin/env fish
+
+# Generates the compile_commands.json file for integration with code editors
+# like Zed and VS Code
+function gencc
+  # GTK version
+  set -l v $argv[1]
+  set -l pkg
+
+  switch $v
+    case 3
+      set pkg "gtk+-3.0"
+    case 4
+      set pkg "gtk4"
+    case '*'
+      return
+  end
+
+  set -l outDir ".cache/c/gtk$v"
+
+  if [ -e $outDir -a -d $outDir ]
+    rm -rf $outDir
+  end
+
+  mkdir -p $outDir
+
+  for f in c/gtk$v/*.c
+    set -l name (path basename -E $f)
+    set -l outPath "$outDir/$name"
+    set -l flags (pkg-config --cflags --libs $pkg | string split -n " ")
+
+    if [ $name = "glarea" ]
+      bear -a -- clang $flags -lepoxy -lm $f -o $outPath
+    else
+      bear -a -- clang $flags $f -o $outPath
+    end
+  end
+end
+
+gencc 3
+gencc 4
