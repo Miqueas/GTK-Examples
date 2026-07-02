@@ -27,32 +27,10 @@ src = [
   'window',
 ]
 
-builder = configure_file(
-  input: 'builder.c.in',
-  output: 'builder.c',
-  configuration: builder_gtk4_ui
-)
-
-image1 = configure_file(
-  input: 'image-1.c.in',
-  output: 'image-1.c',
-  configuration: image_conf
-)
-
 foreach name : src
-  if name == 'builder'
-    executable(name, builder,
-      dependencies: gtk4,
-      c_args: [ '-std=c23' ],
-    )
-  elif name == 'glarea'
+  if name == 'glarea'
     executable(name, name + '.c',
       dependencies: [ gtk4, epoxy, m ],
-      c_args: [ '-std=c23' ],
-    )
-  elif name == 'image-1'
-    executable(name, image1,
-      dependencies: gtk4,
       c_args: [ '-std=c23' ],
     )
   else
