@@ -9,7 +9,7 @@ static void init_shaders(AppContext* ctx);
 static void init_buffers(AppContext* ctx);
 static GLuint compile_shader(GLenum type, const gchar* source);
 
-static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.GLArea";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.GLArea";
 static const gchar* APP_TITLE = "GtkGLArea";
 
 gint main(gint argc, gchar** argv) {
