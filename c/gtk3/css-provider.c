@@ -25,6 +25,9 @@ static void on_app_activate(GApplication* self, gpointer data) {
 }
 
 static void on_app_startup(GApplication* self, gpointer data) {
+  gchar* src_path = g_path_get_dirname(__FILE__);
+  gchar* css_path = g_build_filename(src_path, "../../data/", "css-provider.css", NULL);
+
   GtkCssProvider* cssProvider;
   GtkWidget* window, *box, *label, *button;
 
@@ -34,7 +37,7 @@ static void on_app_startup(GApplication* self, gpointer data) {
   label = gtk_label_new("Hi there!");
   button = gtk_button_new_with_label("Toggle label style");
 
-  gtk_css_provider_load_from_path(cssProvider, "@cssPath@", NULL);
+  gtk_css_provider_load_from_path(cssProvider, css_path, NULL);
 
   gtk_container_add(GTK_CONTAINER(window), box);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
@@ -53,6 +56,8 @@ static void on_app_startup(GApplication* self, gpointer data) {
   );
 
   g_signal_connect(button, "clicked", G_CALLBACK(onButtonClicked), label);
+  g_free(src_path);
+  g_free(css_path);
 }
 
 void onButtonClicked(GtkButton* self, gpointer data) {
