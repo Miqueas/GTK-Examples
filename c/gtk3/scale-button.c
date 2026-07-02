@@ -8,7 +8,7 @@ void on_value_changed(GtkScaleButton* self, gdouble value, gpointer data);
 
 const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ScaleButton";
 const static gchar* APP_TITLE = "GtkScaleButton";
-const static gchar* ICONS[2] = { "zoom-out", "zoom-in" };
+const static gchar* ICONS[3] = { "zoom-out", "zoom-in", NULL };
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

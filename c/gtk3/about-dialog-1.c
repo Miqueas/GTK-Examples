@@ -5,9 +5,9 @@ static void on_app_startup(GApplication* self, gpointer data);
 
 const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog1";
 const static gchar* APP_TITLE = "GtkAboutDialog";
-const static gchar* AUTHORS[1] = { "Josué Martínez\0" };
-const static gchar* ARTISTS[1] = { "Josué Martínez\0" };
-const static gchar* DOCUMENTERS[1] = { "Josué Martínez\0" };
+const static gchar* AUTHORS[2] = { "Josué Martínez\0", NULL };
+const static gchar* ARTISTS[2] = { "Josué Martínez\0", NULL };
+const static gchar* DOCUMENTERS[2] = { "Josué Martínez\0", NULL };
 const static gchar* TRANSLATOR_CREDITS = "Josué Martínez\0";
 const static gchar* COMMENTS = "GTK+ 3.0 AboutDialog Example";
 const static gchar* COPYRIGHT = "Copyright © 2021-2025 Josué Martínez\0";
