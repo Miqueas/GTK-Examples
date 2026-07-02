@@ -23,7 +23,7 @@ static void on_app_activate(GApplication* self, gpointer data) {
 
 static void on_app_startup(GApplication* self, gpointer data) {
   gchar* src_path = g_path_get_dirname(__FILE__);
-  gchar* builder_path = g_build_filename(src_path, "../../data/", "builder-gtk3.ui", NULL);
+  gchar* builder_path = g_build_filename(src_path, "../../data/", "builder-gtk4.ui", NULL);
 
   GtkBuilder* builder = gtk_builder_new_from_file(builder_path);
   GObject* window = gtk_builder_get_object(builder, "window");
