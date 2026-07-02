@@ -15,7 +15,7 @@ const BuildContext = struct {
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
-    const zigGObject = b.dependency("zigGObject", .{
+    const zigGObject = b.dependency("zig_gobject", .{
         .target = target,
         .optimize = optimize,
     });

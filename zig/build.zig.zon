@@ -4,7 +4,7 @@
     .fingerprint = 0xdb7c543ce716cccb, // Changing this has security and trust implications.
     .minimum_zig_version = "0.16.0",
     .dependencies = .{
-        .zigGObject = .{
+        .zig_gobject = .{
             .path = "../zig-gobject/zig-out/bindings",
         },
         .zgl = .{
