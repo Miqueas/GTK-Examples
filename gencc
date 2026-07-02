@@ -4,38 +4,45 @@
 # like Zed and VS Code
 function gencc
   # GTK version
-  set -l v $argv[1]
+  set -l l $argv[1]
+  set -l v $argv[2]
   set -l pkg
+  set -l compiler
+
+  test $l = "c";   and set compiler "cc"
+  test $l = "cpp"; and set compiler "c++"
 
   switch $v
     case 3
-      set pkg "gtk+-3.0"
+      test $l = "c";   and set pkg "gtk+-3.0"
+      test $l = "cpp"; and set pkg "gtkmm-$v.0"
     case 4
-      set pkg "gtk4"
+      test $l = "c";   and set pkg "gtk4"
+      test $l = "cpp"; and set pkg "gtkmm-$v.0"
     case '*'
       return
   end
 
-  set -l outDir ".cache/c/gtk$v"
-
-  if [ -e $outDir -a -d $outDir ]
-    rm -rf $outDir
-  end
-
+  set -l outDir ".cache/$l/gtk$v"
+  test -d $outDir; and rm -rf $outDir
   mkdir -p $outDir
 
-  for f in c/gtk$v/*.c
+  for f in $l/gtk$v/*.$l
     set -l name (path basename -E $f)
     set -l outPath "$outDir/$name"
     set -l flags (pkg-config --cflags --libs $pkg | string split -n " ")
 
-    if [ $name = "glarea" ]
-      bear -a -- clang $flags -lepoxy -lm $f -o $outPath
-    else
-      bear -a -- clang $flags $f -o $outPath
-    end
+    test $l = "c";         and set -p flags -std=c11
+    test $l = "cpp";       and set -p flags -std=c++23
+    test $name = "glarea"; and set -a flags -lepoxy -lm
+
+    bear -a -- $compiler $flags $f -o $outPath
   end
 end
 
-gencc 3
-gencc 4
+test -e "compile_commands.json"; and rm -rf "compile_commands.json"
+
+gencc c 3
+gencc c 4
+gencc cpp 3
+gencc cpp 4
