@@ -6,7 +6,7 @@ const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.Box";
 const APP_TITLE = "GtkBox";
 
 pub fn main(init: std.process.Init) void {
-    var app = gtk.Application.new(APP_ID, .{});
+    const app = gtk.Application.new(APP_ID, .{});
     defer app.unref();
 
     _ = gio.Application.signals.startup.connect(app, ?*anyopaque, &onStartup, null, .{});
@@ -26,10 +26,10 @@ fn onActivate(self: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
 }
 
 fn onStartup(self: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
-    var window = gtk.ApplicationWindow.new(self);
-    var box = gtk.Box.new(.vertical, 10);
-    var hint_text = gtk.Label.new("Click the button");
-    var button = gtk.Button.newWithLabel("🤔");
+    const window = gtk.ApplicationWindow.new(self);
+    const box = gtk.Box.new(.vertical, 10);
+    const hint_text = gtk.Label.new("Click the button");
+    const button = gtk.Button.newWithLabel("🤔");
 
     window.as(gtk.Window).setTitle(APP_TITLE);
     window.as(gtk.Window).setChild(box.as(gtk.Widget));

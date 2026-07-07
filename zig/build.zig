@@ -91,7 +91,7 @@ fn genExes(ctx: BuildContext) !void {
             mod.addImport("glarea-shared", glarea_shared);
         }
 
-        const basename = std.mem.trimEnd(u8, path, ".zig");
+        const basename = std.mem.cutSuffix(u8, path, ".zig").?;
         const exe = ctx.b.addExecutable(.{
             .name = ctx.b.fmt("{s}-{s}", .{ gtkModName, basename }),
             .use_lld = if (isGLArea) true else null,

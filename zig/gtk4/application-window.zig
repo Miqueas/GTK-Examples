@@ -6,7 +6,7 @@ const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.ApplicationWindow";
 const APP_TITLE = "GtkApplicationWindow";
 
 pub fn main(init: std.process.Init) void {
-    var app = gtk.Application.new(APP_ID, .{});
+    const app = gtk.Application.new(APP_ID, .{});
     defer app.unref();
 
     _ = gio.Application.signals.startup.connect(app, ?*anyopaque, &onStartup, null, .{});
@@ -26,7 +26,7 @@ fn onActivate(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
 }
 
 fn onStartup(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
-    var window = gtk.ApplicationWindow.new(app);
+    const window = gtk.ApplicationWindow.new(app);
     window.as(gtk.Window).setTitle(APP_TITLE);
     window.as(gtk.Window).setDefaultSize(400, 400);
 }

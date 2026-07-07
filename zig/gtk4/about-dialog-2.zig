@@ -35,7 +35,7 @@ const LICENSE =
 ;
 
 pub fn main(init: std.process.Init) void {
-    var app = gtk.Application.new(APP_ID, .{});
+    const app = gtk.Application.new(APP_ID, .{});
     defer app.unref();
 
     _ = gio.Application.signals.startup.connect(app, ?*anyopaque, &onStartup, null, .{});
@@ -77,8 +77,8 @@ fn onActivate(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
 }
 
 fn onStartup(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
-    var window = gtk.ApplicationWindow.new(app);
-    var label = gtk.Label.new("(This is just an empty window)");
+    const window = gtk.ApplicationWindow.new(app);
+    const label = gtk.Label.new("(This is just an empty window)");
 
     gtk.Window.setTitle(window.as(gtk.Window), APP_TITLE);
     gtk.Window.setChild(window.as(gtk.Window), label.as(gtk.Widget));

@@ -6,7 +6,7 @@ const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.Gtk4.ActionBar";
 const APP_TITLE = "GtkActionBar";
 
 pub fn main(init: std.process.Init) void {
-    var app = gtk.Application.new(APP_ID, .{});
+    const app = gtk.Application.new(APP_ID, .{});
     defer app.unref();
 
     _ = gio.Application.signals.startup.connect(app, ?*anyopaque, &onStartup, null, .{});
@@ -27,12 +27,12 @@ fn onActivate(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
 }
 
 fn onStartup(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
-    var window = gtk.ApplicationWindow.new(app);
-    var action_bar = gtk.ActionBar.new();
-    var action_bar_label = gtk.Label.new("Something");
-    var action_bar_button = gtk.Button.newWithLabel("A button");
-    var box = gtk.Box.new(.vertical, 0);
-    var box_label = gtk.Label.new("App content");
+    const window = gtk.ApplicationWindow.new(app);
+    const action_bar = gtk.ActionBar.new();
+    const action_bar_label = gtk.Label.new("Something");
+    const action_bar_button = gtk.Button.newWithLabel("A button");
+    const box = gtk.Box.new(.vertical, 0);
+    const box_label = gtk.Label.new("App content");
 
     gtk.Window.setTitle(window.as(gtk.Window), APP_TITLE);
     gtk.Window.setChild(window.as(gtk.Window), box.as(gtk.Widget));

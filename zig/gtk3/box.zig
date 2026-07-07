@@ -27,10 +27,10 @@ fn onActivate(self: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
 }
 
 fn onStartup(self: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
-    var window = gtk.ApplicationWindow.new(self);
-    var label = gtk.Label.new("Click the button");
-    var button = gtk.Button.newWithLabel("🤔");
-    var box = gtk.Box.new(.vertical, 10);
+    const window = gtk.ApplicationWindow.new(self);
+    const label = gtk.Label.new("Click the button");
+    const button = gtk.Button.newWithLabel("🤔");
+    const box = gtk.Box.new(.vertical, 10);
 
     gtk.Window.setTitle(window.as(gtk.Window), APP_TITLE);
     gtk.Window.setDefaultSize(window.as(gtk.Window), 400, 400);

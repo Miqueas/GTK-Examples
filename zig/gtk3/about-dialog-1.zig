@@ -35,7 +35,7 @@ const LICENSE =
 ;
 
 pub fn main(init: std.process.Init) void {
-    var app = gtk.Application.new(APP_ID, .{});
+    const app = gtk.Application.new(APP_ID, .{});
     defer app.unref();
 
     _ = gio.Application.signals.startup.connect(app, ?*anyopaque, &onStartup, null, .{});
@@ -53,14 +53,14 @@ pub fn main(init: std.process.Init) void {
 
 fn onActivate(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
     if (app.getActiveWindow()) |window| {
-        var dialog = gobject.ext.cast(gtk.Dialog, window).?;
+        const dialog = gobject.ext.cast(gtk.Dialog, window).?;
         _ = dialog.run();
         gtk.Widget.destroy(window.as(gtk.Widget));
     }
 }
 
 fn onStartup(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
-    var dialog = gtk.AboutDialog.new();
+    const dialog = gtk.AboutDialog.new();
 
     gtk.Window.setModal(dialog.as(gtk.Window), 1);
     gtk.Window.setApplication(dialog.as(gtk.Window), app);

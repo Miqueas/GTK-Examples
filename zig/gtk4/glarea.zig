@@ -16,7 +16,7 @@ const mat4f_identity = Mat4F.new();
 var context = AppContext.new();
 
 pub fn main(init: std.process.Init) void {
-    var app = gtk.Application.new(APP_ID, .{});
+    const app = gtk.Application.new(APP_ID, .{});
     defer app.unref();
 
     _ = gio.Application.signals.startup.connect(app, *AppContext, &onStartup, &context, .{});
@@ -37,8 +37,8 @@ fn onActivate(self: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
 }
 
 fn onStartup(self: *gtk.Application, ctx: *AppContext) callconv(.c) void {
-    var window = gtk.ApplicationWindow.new(self);
-    var gl_area = gtk.GLArea.new();
+    const window = gtk.ApplicationWindow.new(self);
+    const gl_area = gtk.GLArea.new();
 
     gtk.Window.setTitle(window.as(gtk.Window), APP_TITLE);
     gtk.Window.setChild(window.as(gtk.Window), gl_area.as(gtk.Widget));

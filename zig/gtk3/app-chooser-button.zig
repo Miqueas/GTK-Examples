@@ -6,7 +6,7 @@ const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.Gtk3.AppChooserButton";
 const APP_TITLE = "GtkAppChooserButton";
 
 pub fn main(init: std.process.Init) void {
-    var app = gtk.Application.new(APP_ID, .{});
+    const app = gtk.Application.new(APP_ID, .{});
     defer app.unref();
 
     _ = gio.Application.signals.startup.connect(app, ?*anyopaque, &onStartup, null, .{});

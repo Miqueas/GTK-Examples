@@ -27,7 +27,7 @@ fn onActivate(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
 }
 
 fn onStartup(app: *gtk.Application, _: ?*anyopaque) callconv(.c) void {
-    var window = gtk.ApplicationWindow.new(app);
+    const window = gtk.ApplicationWindow.new(app);
     gtk.Window.setTitle(window.as(gtk.Window), APP_TITLE);
     gtk.Window.setDefaultSize(window.as(gtk.Window), 400, 400);
 }
