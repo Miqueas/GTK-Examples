@@ -7,11 +7,11 @@ const gobject = @import("gobject");
 const APP_ID = "io.github.Miqueas.GTK-Examples.Zig.Gtk3.Subclassing";
 const APP_TITLE = "Subclassing";
 
-pub fn main(init: std.process.Init) void {
+pub fn main(init: std.process.Init.Minimal) void {
     const app = App.new();
     defer app.unref();
 
-    const argv = init.minimal.args.vector;
+    const argv = init.args.vector;
     const status = gio.Application.run(
         app.as(gio.Application),
         @intCast(argv.len),
@@ -26,7 +26,7 @@ const App = extern struct {
 
     pub const Parent = gtk.Application;
 
-    pub const getGObjectType =  gobject.ext.defineClass(App, .{
+    pub const getGObjectType = gobject.ext.defineClass(App, .{
         .classInit = &Class.init,
         .parent_class = &Class.parent,
     });
@@ -50,9 +50,7 @@ const App = extern struct {
     fn doStartup(self: *App) callconv(.c) void {
         gio.Application.virtual_methods.startup.call(Class.parent, self.as(Parent));
 
-        const window = gtk.ApplicationWindow.new(self.as(Parent));
-        gtk.Window.setTitle(window.as(gtk.Window), APP_TITLE);
-        gtk.Window.setDefaultSize(window.as(gtk.Window), 400, 400);
+        _ = AppWindow.new(self);
     }
 
     pub const Class = extern struct {
@@ -69,6 +67,37 @@ const App = extern struct {
         fn init(self: *Class) callconv(.c) void {
             gio.Application.virtual_methods.startup.implement(self, &doStartup);
             gio.Application.virtual_methods.activate.implement(self, &doActivate);
+        }
+    };
+};
+
+const AppWindow = extern struct {
+    parent_instance: Parent,
+
+    pub const Parent = gtk.ApplicationWindow;
+
+    pub const getGObjectType = gobject.ext.defineClass(AppWindow, .{});
+
+    pub fn new(app: *App) *AppWindow {
+        return gobject.ext.newInstance(AppWindow, .{
+            .title = APP_TITLE,
+            .application = app.as(gtk.Application),
+            .default_width = @as(c_int, 400),
+            .default_height = @as(c_int, 400),
+        });
+    }
+
+    pub fn as(self: *AppWindow, comptime T: type) *T {
+        return gobject.ext.as(T, self);
+    }
+
+    pub const Class = extern struct {
+        parent_class: Parent.Class,
+
+        pub const Instance = AppWindow;
+
+        pub fn as(self: *Class, comptime T: type) *T {
+            return gobject.ext.as(T, self);
         }
     };
 };
