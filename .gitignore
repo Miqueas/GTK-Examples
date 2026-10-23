@@ -1,6 +1,7 @@
 .cache/
 .zig-cache/
+compile_commands.json
+vala-out/
 zig-cache/
 zig-out/
 zig-pkg/
-compile_commands.json
