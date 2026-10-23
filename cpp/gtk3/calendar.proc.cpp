@@ -1,5 +1,3 @@
-#include "glibmm/datetime.h"
-#include "sigc++/functors/ptr_fun.h"
 #include <gtkmm.h>
 
 static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.Procedural.Calendar";

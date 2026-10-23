@@ -9,7 +9,7 @@ static const Glib::ustring APP_ID = "io.github.Miqueas.GTK-Examples.Cpp.Gtk3.Pro
 static const Glib::ustring APP_TITLE = "Gtk::AppChooserDialog";
 
 int main(int argc, char** argv) {
-  Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(APP_ID);
+  auto app = Gtk::Application::create(APP_ID);
   app->signal_activate().connect(sigc::bind(sigc::ptr_fun(&on_app_activate), app));
   app->signal_startup().connect(sigc::bind(sigc::ptr_fun(&on_app_startup), app));
   return app->run(argc, argv);
@@ -24,7 +24,7 @@ static void on_app_activate(Glib::RefPtr<Gtk::Application> self) {
 
   switch (dialog->run()) {
     case Gtk::RESPONSE_OK: {
-      Glib::RefPtr<Gio::AppInfo> info = dialog->get_app_info();
+      auto info = dialog->get_app_info();
       std::println("ID: {}", info->get_id());
       std::println("Executable: {}", info->get_executable());
       std::println("Description: {}", info->get_description());
