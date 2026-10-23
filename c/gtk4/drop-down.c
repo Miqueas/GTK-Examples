@@ -4,9 +4,9 @@ static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 static void on_drop_down_notify(GObject* self, GParamSpec* pspec, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.DropDown";
-const static gchar* APP_TITLE = "GtkLabel";
-const static gchar* ITEMS[9] = {
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.DropDown";
+static const gchar* APP_TITLE = "GtkLabel";
+static const gchar* ITEMS[9] = {
   "GNOME\0",
   "KDE Plasma\0",
   "XFCE\0",

@@ -9,16 +9,16 @@ static void init_shaders(AppContext* ctx);
 static void init_buffers(AppContext* ctx);
 static GLuint compile_shader(GLenum type, const gchar* source);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.GLArea";
-const static gchar* APP_TITLE = "GtkGLArea";
-const static gchar* FRAGMENT_SHADER = "#version 100\n"
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.GLArea";
+static const gchar* APP_TITLE = "GtkGLArea";
+static const gchar* FRAGMENT_SHADER = "#version 100\n"
 "precision mediump float;\n"
 "varying vec3 color;\n"
 "void main() {\n"
 "  gl_FragColor = vec4(color, 1.0);\n"
 "}";
 
-const static gchar* VERTEX_SHADER = "#version 100\n"
+static const gchar* VERTEX_SHADER = "#version 100\n"
 "precision mediump float;\n"
 "attribute vec3 pos;\n"
 "attribute vec3 vertex_color;\n"

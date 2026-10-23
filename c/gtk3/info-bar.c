@@ -6,8 +6,8 @@ void on_info_bar_response(GtkInfoBar* self, gint responseID, gpointer data);
 void build_info_bar(GtkButton* self, gpointer data);
 GtkMessageType string_to_gtk_message_type(const gchar* label);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.InfoBar";
-const static gchar* APP_TITLE = "GtkInfoBar";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.InfoBar";
+static const gchar* APP_TITLE = "GtkInfoBar";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

@@ -3,9 +3,9 @@
 static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FlowBox";
-const static gchar* APP_TITLE = "GtkFlowBox";
-const static gchar* ICONS[] = {
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FlowBox";
+static const gchar* APP_TITLE = "GtkFlowBox";
+static const gchar* ICONS[] = {
   "face-angel\0",
   "face-angry\0",
   "face-surprise\0",

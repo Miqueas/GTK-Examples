@@ -3,10 +3,10 @@
 static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Expander";
-const static gchar* APP_TITLE = "GtkExpander";
-const static gchar* EXPANDER_LABEL = "  <span size=\"large\" font_weight=\"bold\">Lorem ipsum</span>  ";
-const static gchar* LOREM_TEXT = "Duis in metus eros. Duis faucibus rutrum eros eu vestibulum.\n"
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Expander";
+static const gchar* APP_TITLE = "GtkExpander";
+static const gchar* EXPANDER_LABEL = "  <span size=\"large\" font_weight=\"bold\">Lorem ipsum</span>  ";
+static const gchar* LOREM_TEXT = "Duis in metus eros. Duis faucibus rutrum eros eu vestibulum.\n"
 "Proin et arcu nulla. Etiam at lacinia nibh. Vivamus pellentesque nunc nibh,\n"
 "ac dignissim massa lobortis ut. Integer eu felis in elit semper ullamcorper\n"
 "at in ipsum. Suspendisse tempus massa vel nibh tristique vestibulum.\n"

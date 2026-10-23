@@ -3,18 +3,18 @@
 static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog1";
-const static gchar* APP_TITLE = "GtkAboutDialog";
-const static gchar* AUTHORS[2] = { "Josué Martínez\0", NULL };
-const static gchar* ARTISTS[2] = { "Josué Martínez\0", NULL };
-const static gchar* DOCUMENTERS[2] = { "Josué Martínez\0", NULL };
-const static gchar* TRANSLATOR_CREDITS = "Josué Martínez\0";
-const static gchar* COMMENTS = "GTK+ 3.0 AboutDialog Example";
-const static gchar* COPYRIGHT = "Copyright © 2021-2025 Josué Martínez\0";
-const static gchar* VERSION = "0.1.0";
-const static gchar* WEBSITE = "https://github.com/Miqueas/GTK-Examples\0";
-const static gchar* WEBSITE_TEXT = "GitHub Repository\0";
-const static gchar* LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AboutDialog1\0";
+static const gchar* APP_TITLE = "GtkAboutDialog\0";
+static const gchar* AUTHORS[2] = { "Josué Martínez\0", NULL };
+static const gchar* ARTISTS[2] = { "Josué Martínez\0", NULL };
+static const gchar* DOCUMENTERS[2] = { "Josué Martínez\0", NULL };
+static const gchar* TRANSLATOR_CREDITS = "Josué Martínez\0";
+static const gchar* COMMENTS = "GTK+ 3.0 AboutDialog Example";
+static const gchar* COPYRIGHT = "Copyright © 2021-2025 Josué Martínez\0";
+static const gchar* VERSION = "0.1.0";
+static const gchar* WEBSITE = "https://github.com/Miqueas/GTK-Examples\0";
+static const gchar* WEBSITE_TEXT = "GitHub Repository\0";
+static const gchar* LICENSE = "Copyright (C) 2021-2025 Josué Martínez\n"
 "\n"
 "  This software is provided 'as-is', without any express or implied\n"
 "  warranty.  In no event will the authors be held liable for any damages\n"

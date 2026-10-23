@@ -4,9 +4,9 @@ static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 void on_combo_box_changed(GtkComboBox* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ComboBox";
-const static gchar* APP_TITLE = "GtkComboBox";
-const static gchar* ITEMS[8] = {
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ComboBox";
+static const gchar* APP_TITLE = "GtkComboBox";
+static const gchar* ITEMS[8] = {
   "GNOME",
   "KDE Plasma",
   "XFCE",

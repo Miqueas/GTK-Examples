@@ -4,8 +4,8 @@ static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 void on_button_clicked(GtkButton* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Box";
-const static gchar* APP_TITLE = "GtkBox";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Box";
+static const gchar* APP_TITLE = "GtkBox";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

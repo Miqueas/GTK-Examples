@@ -4,8 +4,8 @@ static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 void on_entry_changed(GtkEditable* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Entry";
-const static gchar* APP_TITLE = "GtkEntry";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Entry";
+static const gchar* APP_TITLE = "GtkEntry";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);
@@ -26,7 +26,7 @@ static void on_app_activate(GApplication* self, gpointer data) {
 
 static void on_app_startup(GApplication* self, gpointer data) {
   GtkWidget* window, *box, *hintLabel, *entry, *outputLabel;
-  
+
   window = gtk_application_window_new(GTK_APPLICATION(self));
   box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
   hintLabel = gtk_label_new("Enter some text");

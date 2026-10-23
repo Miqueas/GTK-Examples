@@ -3,8 +3,8 @@
 static void on_app_activate(const GApplication* self, gpointer data);
 static void on_app_startup(const GApplication* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ToggleButton";
-const static gchar* APP_TITLE = "GtkToggleButton";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.ToggleButton";
+static const gchar* APP_TITLE = "GtkToggleButton";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

@@ -3,11 +3,11 @@
 static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Expander";
-const static gchar* APP_TITLE = "GtkExpander";
-const static gchar* EXPANDER_TEXT =
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Expander";
+static const gchar* APP_TITLE = "GtkExpander";
+static const gchar* EXPANDER_TEXT =
 "  <span size=\"large\" font_weight=\"bold\">Lorem ipsum</span>  ";
-const static gchar* LOREM_IPSUM = "Duis in metus eros. Duis faucibus rutrum eros eu vestibulum.\n"
+static const gchar* LOREM_IPSUM = "Duis in metus eros. Duis faucibus rutrum eros eu vestibulum.\n"
 "Proin et arcu nulla. Etiam at lacinia nibh. Vivamus pellentesque nunc nibh,\n"
 "ac dignissim massa lobortis ut. Integer eu felis in elit semper ullamcorper\n"
 "at in ipsum. Suspendisse tempus massa vel nibh tristique vestibulum.\n"
@@ -39,7 +39,7 @@ static void on_app_startup(GApplication* self, gpointer data) {
   gtk_window_set_child(GTK_WINDOW(window), expander);
   gtk_window_set_title(GTK_WINDOW(window), APP_TITLE);
   gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
-  
+
   gtk_widget_set_margin_top(expander, 10);
   gtk_widget_set_margin_end(expander, 10);
   gtk_widget_set_margin_bottom(expander, 10);

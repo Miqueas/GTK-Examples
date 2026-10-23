@@ -3,8 +3,8 @@
 static void on_app_activate(const GApplication* self, gpointer data);
 static void on_app_startup(const GApplication* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Toolbar";
-const static gchar* APP_TITLE = "GtkToolbar";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Toolbar";
+static const gchar* APP_TITLE = "GtkToolbar";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

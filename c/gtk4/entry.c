@@ -4,8 +4,8 @@ static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 static void on_entry_changed(GtkEditable* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Entry";
-const static gchar* APP_TITLE = "GtkEntry";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk4.Entry";
+static const gchar* APP_TITLE = "GtkEntry";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);
@@ -40,11 +40,11 @@ static void on_app_startup(GApplication* self, gpointer data) {
   gtk_widget_set_margin_bottom(box, 10);
   gtk_widget_set_margin_start(box, 10);
   gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
-  gtk_widget_set_valign(box, GTK_ALIGN_CENTER);  
+  gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
   gtk_box_append(GTK_BOX(box), hint_label);
   gtk_box_append(GTK_BOX(box), entry);
   gtk_box_append(GTK_BOX(box), output_label);
-  
+
   gtk_label_set_wrap(GTK_LABEL(output_label), TRUE);
   gtk_label_set_wrap_mode(GTK_LABEL(output_label), PANGO_WRAP_CHAR);
   gtk_label_set_max_width_chars(GTK_LABEL(output_label), 18);

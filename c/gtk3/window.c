@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 
-const static gchar* APP_TITLE = "GtkWindow";
+static const gchar* APP_TITLE = "GtkWindow";
 
 gint main(gint argc, gchar** argv) {
   gtk_init(&argc, &argv);

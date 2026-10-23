@@ -4,8 +4,8 @@ static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 static void on_button_toggled(GtkToggleButton* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.CheckButton";
-const static gchar* APP_TITLE = "GtkCheckButton";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.CheckButton";
+static const gchar* APP_TITLE = "GtkCheckButton";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

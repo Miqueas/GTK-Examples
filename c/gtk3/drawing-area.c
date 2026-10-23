@@ -6,8 +6,8 @@ gboolean onDrawSquare(GtkWidget* self, cairo_t* cr, gpointer data);
 gboolean onDrawCircle(GtkWidget* self, cairo_t* cr, gpointer data);
 gboolean onDrawTriangle(GtkWidget* self, cairo_t* cr, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.DrawingArea";
-const static gchar* APP_TITLE = "GtkDrawingArea";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.DrawingArea";
+static const gchar* APP_TITLE = "GtkDrawingArea";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

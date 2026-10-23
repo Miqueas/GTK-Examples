@@ -6,8 +6,8 @@ static void on_selection_changed(GtkFileChooser* self, gpointer data);
 static void on_show_hidden(GtkFileChooserWidget* self, gpointer data);
 static void on_file_activated(GtkFileChooser* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FileChooserWidget";
-const static gchar* APP_TITLE = "GtkFileChooserWidget";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.FileChooserWidget";
+static const gchar* APP_TITLE = "GtkFileChooserWidget";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

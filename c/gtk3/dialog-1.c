@@ -3,8 +3,8 @@
 static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Dialog1";
-const static gchar* APP_TITLE = "GtkDialog";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Dialog1";
+static const gchar* APP_TITLE = "GtkDialog";
 const gchar* TITLE_TEXT = "<span size='x-large' font-weight='bold'>"
 "Universe destruction</span>";
 const gchar* EPILOG_TEXT = "<span size='large' font-weight='bold'>"

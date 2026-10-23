@@ -7,9 +7,9 @@ static void on_app_startup(const GApplication* self, gpointer data);
 static void on_search_changed(const GtkSearchEntry* self, gpointer data);
 static gboolean tree_model_filter_func(GtkTreeModel* self, GtkTreeIter* iter, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.SearchEntry";
-const static gchar* APP_TITLE = "GtkSearchEntry";
-const static gchar* ITEMS[7] = { "GNOME", "Linux", "C", "GTK 3", "Examples", "Hello", "World", };
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.SearchEntry";
+static const gchar* APP_TITLE = "GtkSearchEntry";
+static const gchar* ITEMS[7] = { "GNOME", "Linux", "C", "GTK 3", "Examples", "Hello", "World", };
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

@@ -17,12 +17,12 @@ gint get_matches(const gchar* pattern, const gchar* password);
 const gchar* password_strength_to_string(PasswordStrength strength);
 PasswordStrength check_password_strength(const gchar* password);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.LevelBar";
-const static gchar* APP_TITLE = "GtkLevelBar";
-const static gchar* DIGITS_PATTERN = "[0-9]";
-const static gchar* LOWERCASE_PATTERN = "[a-z]";
-const static gchar* UPPERCASE_PATTERN = "[A-Z]";
-const static gchar* SYMBOLS_PATTERN = "\\W";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.LevelBar";
+static const gchar* APP_TITLE = "GtkLevelBar";
+static const gchar* DIGITS_PATTERN = "[0-9]";
+static const gchar* LOWERCASE_PATTERN = "[a-z]";
+static const gchar* UPPERCASE_PATTERN = "[A-Z]";
+static const gchar* SYMBOLS_PATTERN = "\\W";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

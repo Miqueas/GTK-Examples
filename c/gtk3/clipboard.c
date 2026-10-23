@@ -5,8 +5,8 @@ static void on_app_startup(GApplication* self, gpointer data);
 static void on_copy_clicked(GtkButton* self, gpointer data);
 static void on_set_clicked(GtkButton* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Clipboard";
-const static gchar* APP_TITLE = "GtkClipboard";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.Clipboard";
+static const gchar* APP_TITLE = "GtkClipboard";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

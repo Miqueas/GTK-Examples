@@ -10,8 +10,8 @@ static GtkWidget* build_page_2(GtkWidget* assistant);
 static GtkWidget* build_page_3(GtkWidget* assistant);
 static GtkWidget* build_page_4(void);
 
-const static gchar* app_id = "io.github.Miqueas.GTK-Examples.C.Gtk3.Assistant";
-const static gchar* app_title = "GtkAssistant";
+static const gchar* app_id = "io.github.Miqueas.GTK-Examples.C.Gtk3.Assistant";
+static const gchar* app_title = "GtkAssistant";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(app_id, 0);

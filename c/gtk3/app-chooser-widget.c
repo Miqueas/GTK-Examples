@@ -18,8 +18,8 @@ static void on_app_startup(GApplication* self, gpointer data);
 static void on_app_shutdown(GApplication* self, gpointer data);
 static void on_button_toggled(GtkToggleButton* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AppChooserWidget";
-const static gchar* APP_TITLE = "GtkAppChooserWidget";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AppChooserWidget";
+static const gchar* APP_TITLE = "GtkAppChooserWidget";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);
@@ -201,7 +201,7 @@ static void on_app_shutdown(GApplication* self, gpointer data) {
 }
 
 static void on_button_toggled(GtkToggleButton* self, gpointer data) {
-  ToggleButtonData* _data = (ToggleButtonData*) data; 
+  ToggleButtonData* _data = (ToggleButtonData*) data;
   GPtrArray* widgets = _data->widgets;
   AppChooserWidgetSetting setting = _data->setting;
   GtkAppChooserWidget* app_chooser_widget = GTK_APP_CHOOSER_WIDGET(widgets->pdata[0]);

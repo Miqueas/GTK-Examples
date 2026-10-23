@@ -6,8 +6,8 @@ static void on_drag_begin(double start_x, double start_y);
 static void on_drag_update(double offset_x, double offset_y);
 static void on_drag_end(double offset_x, double offset_y);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.GestureDrag";
-const static gchar* APP_TITLE = "GtkGestureDrag";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.GestureDrag";
+static const gchar* APP_TITLE = "GtkGestureDrag";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

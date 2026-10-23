@@ -3,10 +3,10 @@
 static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.MessageDialog";
-const static gchar* APP_TITLE = "GtkMessageDialog";
-const static gchar* TITLE_TEXT = "<span size=\"x-large\" font-weight=\"bold\">Universe destruction</span>";
-const static gchar* SUMMARY_TEXT = "Our universe has a lot of problems and the only way to fix\n"
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.MessageDialog";
+static const gchar* APP_TITLE = "GtkMessageDialog";
+static const gchar* TITLE_TEXT = "<span size=\"x-large\" font-weight=\"bold\">Universe destruction</span>";
+static const gchar* SUMMARY_TEXT = "Our universe has a lot of problems and the only way to fix\n"
 "it is destroying the entire universe and this important decision\nis now in your hands.";
 
 gint main(gint argc, gchar** argv) {

@@ -44,8 +44,8 @@ static TreeItem ROWS[] = {
   { TRUE, "Web browsers", ROW3 }
 };
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.TreeView";
-const static gchar* APP_TITLE = "GtkTreeView";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.TreeView";
+static const gchar* APP_TITLE = "GtkTreeView";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

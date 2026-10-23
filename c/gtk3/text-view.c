@@ -3,9 +3,9 @@
 static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.TextView";
-const static gchar* APP_TITLE = "GtkTextView";
-const static gchar* LOREM_IPSUM =
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.TextView";
+static const gchar* APP_TITLE = "GtkTextView";
+static const gchar* LOREM_IPSUM =
 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
 "incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad"
 "sapientiam perveniri potest, non paranda nobis solum ea, sed fruenda etiam"

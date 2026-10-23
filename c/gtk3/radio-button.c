@@ -3,8 +3,8 @@
 static void on_app_activate(GApplication* self, gpointer data);
 static void on_app_startup(GApplication* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.RadioButton";
-const static gchar* APP_TITLE = "GtkRadioButton";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.RadioButton";
+static const gchar* APP_TITLE = "GtkRadioButton";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);

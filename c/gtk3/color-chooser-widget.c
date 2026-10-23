@@ -5,8 +5,8 @@ static void on_app_startup(GApplication* self, gpointer data);
 static void on_show_editor_toggled(GtkToggleButton* self, gpointer data);
 static void on_print_clicked(GtkButton* self, gpointer data);
 
-const static gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AppChooserWidget";
-const static gchar* APP_TITLE = "GtkAppChooserWidget";
+static const gchar* APP_ID = "io.github.Miqueas.GTK-Examples.C.Gtk3.AppChooserWidget";
+static const gchar* APP_TITLE = "GtkAppChooserWidget";
 
 gint main(gint argc, gchar** argv) {
   GtkApplication* app = gtk_application_new(APP_ID, 0);
