@@ -13,7 +13,9 @@ src = [
   'application.proc',
   'button.oop',
   'button.proc',
+  'calendar.oop',
   'calendar.proc',
+  'check-button.proc',
 ]
 
 foreach name : src
