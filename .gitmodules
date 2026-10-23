@@ -1,3 +1,4 @@
 [submodule "zig-gobject"]
 	path = zig-gobject
 	url = https://github.com/ianprime0509/zig-gobject
+	branch = main
