@@ -28,7 +28,6 @@ void on_app_startup(Application self) {
   actionBar.pack_start(actionBarLabel);
   actionBar.pack_end(actionBarButton);
 
-  box.pack_start(actionBar, false, true, 0);
   box.pack_start(boxLabel, true, true, 0);
   box.pack_end(actionBar, false, true, 0);
   box.show_all();
